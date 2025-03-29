@@ -1693,7 +1693,7 @@ function harvest(world)
 
                     end
 
-                    bots:collect_range = 2
+                    bots.collect_range = 2
 
                     sleep(30)
 
@@ -1753,7 +1753,7 @@ function harvest(world)
 
                     bots:findPath(tile.x,tile.y - 1)
 
-                    while bots:getWorld()getTile(tile.x,tile.y - 1).fg == itmSeed do
+                    while bots:getWorld():getTile(tile.x,tile.y - 1).fg == itmSeed do
 
                         bots:hit(0,0)
 
@@ -1829,7 +1829,7 @@ end
 
 if takePick and bots:getInventory():findItem(98) == 0 then
 
-    bots:warp(storagePack,doorPack)
+    warp(storagePack,doorPack)
 
     sleep(100)
 
@@ -1839,7 +1839,7 @@ if takePick and bots:getInventory():findItem(98) == 0 then
 
             if obj.id == 98 then
 
-                bots:findPath(round(obj.x / 32),math.floor(obj.y / 32))
+                bots:findPath(round(obj.x),math.floor(obj.y))
 
                 sleep(1000)
 
