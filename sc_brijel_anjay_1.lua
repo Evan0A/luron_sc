@@ -1,7 +1,7 @@
 start = 1
 Bot = {}
 
-Bot["SX7GEN"] = {
+Bot[getBot().name:upper()] = {
 
     slot = 1, -- Bot slot info in webhook
 
