@@ -1245,9 +1245,9 @@ function buy()
 
         for i = 1, packLimit do
 
-            if getBot():gem_count > packPrice then
+            if getBot():gem_count >= packPrice then
 
-                sendPacket("action|buy\nitem|"..packName",2)
+                bots:buy(packName)
 
                 sleep(500)
 
