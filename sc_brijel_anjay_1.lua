@@ -356,7 +356,7 @@ function bl(world)
 
     fossil[world] = 0
 
-    for _,tile in pairs(bots:getWorld()getTiles()) do
+    for _,tile in pairs(bots:getWorld():getTiles()) do
 
         if tile.fg == 6 then
 
