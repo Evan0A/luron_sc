@@ -1453,7 +1453,7 @@ function pnb(world)
 
         if tileNumber > 1 then
 
-            while getBot()getInventory():findItem(itmId) >= tileNumber and findItem(itmSeed) < 190 do
+            while getBot():getInventory():findItem(itmId) >= tileNumber and getBot():getInventory():findItem(itmSeed) < 190 do
 
                 while tilePlace(ex,ye) do
 
