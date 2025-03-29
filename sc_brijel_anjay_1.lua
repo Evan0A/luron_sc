@@ -5,7 +5,7 @@ Bot["SXSENDIRI30"] = {
 
     slot = 1, -- Bot slot info in webhook
 
-    password = "ptv1140#", -- Bot Password
+    password = "hrtmain1140", -- Bot Password
 
     proxyIp = "92.119.183.180:61110:jevanshop123:jevanshop123", -- Proxy ip | ip:port:user:pass
 
