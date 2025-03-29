@@ -1245,7 +1245,7 @@ function buy()
 
         for i = 1, packLimit do
 
-            if getBot():gem_count >= packPrice then
+            if getBot().gem_count >= packPrice then
 
                 bots:buy(packName)
 
