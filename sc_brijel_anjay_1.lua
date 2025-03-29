@@ -27,7 +27,7 @@ Bot["BIJASU"] = {
 
     storagePack = "HEARTPTVPA0", -- Storage world
 
-    doorPack = "0858PTVVL",, -- Storage world door
+    doorPack = "0858PTVVL", -- Storage world door
 
     storageSeed = "HEARTPTVSE0", -- Storage world
 
