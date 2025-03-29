@@ -1615,7 +1615,7 @@ function harvest(world)
 
                     end
 
-                    bots:collect_range = 2
+                    bots.collect_range = 2
 
                     sleep(30)
 
