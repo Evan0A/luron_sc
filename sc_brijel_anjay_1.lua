@@ -448,7 +448,7 @@ function warp(world,id)
 
         while getBot().status ~= "online" do
 
-            connect()
+            bots:connect()
 
             sleep(5000)
 
