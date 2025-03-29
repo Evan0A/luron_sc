@@ -1318,7 +1318,7 @@ function take(world)
 
             if obj.id == itmSeed then
 
-                bots:findPath(round(obj.x, obj.y)
+                bots:findPath(round(obj.x, obj.y))
 
                 sleep(1000)
 
