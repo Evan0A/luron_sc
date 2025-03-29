@@ -1291,7 +1291,7 @@ function clear()
 
         if not includesNumber(goods, item.id) then
 
-            getBot():trash(item.id, item.count
+            getBot():trash(item.id, item.count)
             sleep(200)
 
         end
