@@ -1,7 +1,7 @@
 start = 1
 Bot = {}
 
-Bot["BIJASU"] = {
+Bot["SX7GEN"] = {
 
     slot = 1, -- Bot slot info in webhook
 
