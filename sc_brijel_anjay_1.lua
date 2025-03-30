@@ -438,9 +438,9 @@ function check(x,y)
 
 end
 
-
-
 function warps(world,id)
+
+    nuked = false
 
     cok = 0
 
@@ -472,7 +472,7 @@ function warps(world,id)
 
     if id ~= "" and not nuked then
 
-        while bots:getWorld():getTile(math.floor(getBot().x / 32),math.floor(getBot().y / 32)).fg == 6 and not nuked do
+        while bots:getWorld():getTile(getBot().x, getBot().y).fg == 6 and not nuked do
 
             while getBot().status ~= "online" do
 
