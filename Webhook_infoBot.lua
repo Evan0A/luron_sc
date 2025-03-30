@@ -17,7 +17,7 @@ function botInfo(info)
     webhook.embed1:addField(":robot: ] Bot's name: ", "||"..getBot().name.."||")
     webhook.embed1:addField(stats.." ] Bot's status: ", getBot().status, true)
     webhook.embed1:addField("<:ruby:1355776434219651243> ] Bot's gems:", getBot().gem_count, true)
-    webhook.embed1:addField("<:Earth_Minecraft:1355777709443121212> ] Bot's world: ", "||"..getBot().getWorld().name.."||", true)
+    webhook.embed1:addField("<:Earth_Minecraft:1355777709443121212> ] Bot's world: ", "||"..getBot():getWorld().name.."||", true)
     webhook.embed1:addField("<:fossil_rock:1011972962573881464> ] Fossil: ")
     webhook.embed1.footer.text = "]]"..os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 7 * 60 * 60).."[["
     if messageId ~= "" then
