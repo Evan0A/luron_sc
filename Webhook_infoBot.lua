@@ -26,3 +26,4 @@ function botInfo(info)
         webhook:send()
     end
 end
+botInfo(info)
