@@ -439,58 +439,80 @@ function check(x,y)
 end
 
 function warps(world,id)
-
     nuked = false
-
-    cok = 0
-
-    while not getBot():isInWorld(world) and not nuked do
-
-        while getBot().status ~= "online" do
-
-            bots:connect()
-
-            sleep(5000)
-
-        end
-
-        bots:warp(world, id)
-
-        sleep(5000)
-
-        if cok == 10 then
-
-            nuked = true
-
-        else
-
-            cok = cok + 1
-
-        end
-
+    worldTry = 0
+    useDoorId = false
+    if id ~= "" then
+        useDoorId = true
     end
-
-    if id ~= "" and not nuked then
-
-        while bots:getWorld():getTile(getBot().x, getBot().y).fg == 6 and not nuked do
-
-            while getBot().status ~= "online" do
-
-                getBot():connect()
-
-                sleep(5000)
-
+    if getBot().status == "online" then
+        while worldTry ~= 10 do 
+            if not getBot():isInWorld(world) and not nuked then
+                getBot():warp(world, id)
+                sleep(10000)
+            elseif not nuked and useDoorId and getBot():isInWorld(world) and getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 then
+                getBot():warp(world, id)
+                sleep(10000)
             end
-
-            bots:warp(world, id)
-
-            sleep(1000)
-
+            worldTry = worldTry + 1
         end
-
+        if worldTry == 10 then
+            nuked = true
+        end
     end
-
 end
+                
+    --nuked = false
+
+    --cok = 0
+
+--    while not getBot():isInWorld(world) and not nuked do
+--
+  --      while getBot().status ~= "online" do
+
+    --        bots:connect()
+
+      --      sleep(5000)
+
+       -- end
+
+       -- bots:warp(world, id)
+
+        --sleep(5000)
+
+        --if cok == 10 then
+
+          --  nuked = true
+
+        --else
+
+          --  cok = cok + 1
+
+        --end
+
+    --end
+
+    --if id ~= "" and not nuked then
+
+      --  while bots:getWorld():getTile(getBot().x, getBot().y).fg == 6 and not nuked do
+
+        --    while getBot().status ~= "online" do
+
+          --      getBot():connect()
+
+            --    sleep(5000)
+
+            --end
+
+            --bots:warp(world, id)
+
+            --sleep(1000)
+
+        --end
+
+    --end
+
+--end
 
 
 
