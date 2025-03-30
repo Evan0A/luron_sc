@@ -440,11 +440,11 @@ end
 
 
 
-function warp(world,id)
+function warps(world,id)
 
     cok = 0
 
-    while bots:getWorld().name ~= world:upper() and not nuked do
+    while not getBot():isInWorld(world) and not nuked do
 
         while getBot().status ~= "online" do
 
@@ -892,7 +892,7 @@ function reconnect(world,id,x,y)
 
             while getBot().status == "online" and not getBot():isInWorld(world) do
 
-                getBot():warp(world:upper())
+                warps(world:upper())
 
                 sleep(5000)
 
@@ -904,7 +904,7 @@ function reconnect(world,id,x,y)
 
                     while getBot():getWorld():getTile(getBot().x, getBot()).fg == 6 do
 
-                        getBot():warp(world, id)
+                        warps(world, id)
 
                         sleep(1000)
 
@@ -1158,7 +1158,7 @@ function storeSeed(world)
 
     sleep(100)
 
-    bots:warp(storageSeed,doorSeed)
+    warps(storageSeed,doorSeed)
 
     sleep(100)
 
@@ -1189,7 +1189,7 @@ function storeSeed(world)
 
             end
 
-            if findItem(itmSeed) <= 40 then
+            if getBot():getInventory():findItem(itmSeed) <= 40 then
 
                 break
 
@@ -1211,7 +1211,7 @@ function storeSeed(world)
 
     end
 
-    getBot():warp(world,doorFarm)
+    warps(world,doorFarm)
 
     sleep(100)
 
@@ -1229,7 +1229,7 @@ function buy()
 
     sleep(100)
 
-    getBot():warp(storagePack,doorPack)
+    warps(storagePack,doorPack)
 
     sleep(100)
 
@@ -1310,7 +1310,7 @@ function take(world)
 
     while getBot():getInventory():findItem(itmSeed) == 0 do
 
-        getBot():warp(storageSeed,doorSeed)
+        warps(storageSeed,doorSeed)
 
         sleep(100)
 
@@ -1349,7 +1349,7 @@ function take(world)
 
         end
 
-        bots:warp(world,doorFarm)
+        warps(world,doorFarm)
 
         sleep(100)
 
@@ -1539,7 +1539,7 @@ function pnb(world)
 
             sleep(100)
 
-            bots:warp(world,doorFarm)
+            warps(world,doorFarm)
 
             sleep(100)
 
@@ -1829,7 +1829,7 @@ end
 
 if takePick and bots:getInventory():findItem(98) == 0 then
 
-    warp(storagePack,doorPack)
+    warps(storagePack,doorPack)
 
     sleep(100)
 
@@ -1883,7 +1883,7 @@ while true do
 
         sleep(100)
 
-        warp(world,doorFarm)
+        warps(world,doorFarm)
 
         sleep(100)
 
