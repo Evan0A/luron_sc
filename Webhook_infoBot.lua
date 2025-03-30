@@ -4,7 +4,7 @@ function botInfo(info)
     fossill = fossil[getBot():getWorld().name] or 0
     if getBot().status == "online" then
         colour = 65280
-        stats = "<a:Online1:1355754776955977788>""
+        stats = "<a:Online1:1355754776955977788>"
     else
         colour = 16711680
         stats = "<a:offline:1355765716267171850>"
