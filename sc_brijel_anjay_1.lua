@@ -441,6 +441,7 @@ end
 function warps(world, id)
     print("warps called"..world.." "..id)
     world = world:upper()
+    getBot():warp(world, id)
     id = id or ''
     nuked = false
     stuck = false
