@@ -1387,11 +1387,9 @@ function pnb(world)
 
 end
 
-
-
 function harvest(world)
-
-    getBot().auto_collect = true
+    
+    getBot():auto_collect = true
 
     botInfo("Farming")
 
@@ -1403,99 +1401,9 @@ function harvest(world)
 
         for _,tile in pairs(getBot():getWorld():getTiles()) do
 
-            if getBot():getInventory():findItem(itmSeed) == 0 and not dontPlant then
+            if getBot():getWorld():getTile(tile.x,tile.y):canHarvest() then
 
-                take(world)
-
-                sleep(100)
-
-                botInfo("Farming")
-
-                sleep(100)
-
-            end
-
-            if tile:canHarvest() then
-
-                if not blacklistTile or check(tile.x,tile.y) then
-
-                    tree[world] = tree[world] + 1
-
-                    getBot():findPath(tile.x,tile.y - 1)
-
-                    while tile.fg == itmSeed do
-
-                        getBot():hit(0,0)
-
-                        sleep(delayHarvest)
-
-                        reconnect(world,doorFarm,tile.x,tile.y - 1)
-
-                    end
-
-                    if root then
-
-                        while getBot():getWorld():getTile(tile.x, tile.y).fg == (itmId + 4) and getBot():getWorld():getTile(tile.x, tile.y).flags ~= 0 do
-
-                            getBot():hit(0, 1)
-
-                            sleep(delayHarvest)
-
-                            reconnect(world,doorFarm,tile.x,tile.y - 1)
-
-                        end
-
-                        clear()
-
-                        sleep(100)
-
-                    end
-
-                    getBot().collect_range = 2
-
-                    sleep(30)
-
-                end
-
-            end
-
-            if getBot():getInventory():findItem(itmId) >= 180 then
-
-                pnb(world)
-
-                sleep(100)
-
-                if getBot():getInventory():findItem(itmSeed) >= 180 then
-
-                    storeSeed(world)
-
-                    sleep(100)
-
-                end
-
-            end
-
-        end
-
-    elseif not separatePlant then
-
-        for _,tile in pairs(getBot():getWorld():getTiles()) do
-
-            if getBot():getInventory():findItem(itmSeed) == 0 and not dontPlant then
-
-                take(world)
-
-                sleep(100)
-
-                botInfo("Farming")
-
-                sleep(100)
-
-            end
-
-            if tile:canHarvest() or (not tile:hasFlag(0) and tile.y ~= 0) then
-
-                if not blacklistTile or check(tile.x,tile.y) then
+                if not blacklistTile or check(tile.x,tile.y) and getBot():getWorld():hasAccess(tile.x, tile.y) then
 
                     tree[world] = tree[world] + 1
 
@@ -1511,38 +1419,6 @@ function harvest(world)
 
                     end
 
-                    if root then
-
-                        while getBot():getWorld():getTile(tile.x, tile.y).fg == (itmId + 4) and getBot():getWorld():getTile(tile.x, tile.y).flags ~= 0 do
-
-                            getBot():hit(0, 1)
-
-                            sleep(delayHarvest)
-
-                            reconnect(world,doorFarm,tile.x,tile.y - 1)
-
-                        end
-
-                        clear()
-
-                        sleep(100)
-
-                    end
-
-                    getBot().collect_range = 2
-
-                    sleep(30)
-
-                    while getBot():getWorld():getTile(tile.x,tile.y).fg == 0 do
-
-                        getBot():place(0,0, itmSeed)
-
-                        sleep(delayPlant)
-
-                        reconnect(world,doorFarm,tile.x,tile.y - 1)
-
-                    end
-
                 end
 
             end
@@ -1553,13 +1429,57 @@ function harvest(world)
 
                 sleep(100)
 
-                if getBot():getInventory():findItem(itmSeed) >= 190 then
+                storeSeed(world)
 
-                    storeSeed(world)
+            end
 
-                    sleep(100)
+        end
 
+    elseif not separatePlant then
+        
+        for _,tile in pairs(getBot():getWorld():getTiles()) do
+
+            if getBot():getWorld():getTile(tile.x,tile.y):canHarvest() and getBot():getWorld():getTile(tile.x,tile.y + 1).fg ~= itmId then
+    
+                    if (not blacklistTile or check(tile.x,tile.y)) and getBot():getWorld():hasAccess(tile.x, tile.y) then
+    
+                        tree[world] = tree[world] + 1
+    
+                        getBot():findPath(tile.x,tile.y)
+    
+                        while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do
+    
+                            getBot():hit(0,0)
+    
+                            sleep(delayHarvest)
+    
+                            reconnect(world,doorFarm,tile.x,tile.y)
+    
+                        end
+    
+                        while getBot():getWorld():getTile(tile.x,tile.y).fg == 0 and getBot():getWorld():getTile(tile.x, tile.y + 1):hasFlag(0) do
+    
+                            getBot():place(0,0, itmSeed)
+    
+                            sleep(delayPlant)
+    
+                            reconnect(world,doorFarm,tile.x,tile.y)
+    
+                        end
+    
+                    end
+    
                 end
+
+            if getBot():getInventory():findItem(itmId) >= 180 then
+
+                pnb(world)
+
+                sleep(100)
+
+                plant(world)
+
+                sleep(100)
 
             end
 
@@ -1569,56 +1489,24 @@ function harvest(world)
 
         for _,tile in pairs(getBot():getWorld():getTiles()) do
 
-            if getBot():getInventory():findItem(itmSeed) == 0 and not dontPlant then
+            if getBot():getWorld():getTile(tile.x,tile.y):canHarvest() then
 
-                take(world)
-
-                sleep(100)
-
-                botInfo("Farming")
-
-                sleep(100)
-
-            end
-
-            if tile:canHarvest() and tile.id == itmSeed then
-
-                if not blacklistTile or check(tile.x,tile.y) then
+                if (not blacklistTile or check(tile.x,tile.y)) and getBot():getWorld():hasAccess(tile.x, tile.y) then
 
                     tree[world] = tree[world] + 1
 
-                    getBot():findPath(tile.x, tile.y)
+                    getBot():findPath(tile.x,tile.y)
 
-                    while tile.fg == itmSeed do
+                    while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do
 
                         getBot():hit(0,0)
 
                         sleep(delayHarvest)
 
-                        reconnect(world,doorFarm,tile.x,tile.y - 1)
+                        reconnect(world,doorFarm,tile.x,tile.y)
 
                     end
-
-                    if root then
-
-                        while getBot():getWorld():getTile(tile.x, tile.y).fg == (itmId + 4) and getBot():getWorld():getTile(tile.x, tile.y).flags ~= 0 do
-
-                            getBot():hit(0, 1)
-
-                            sleep(delayHarvest)
-
-                            reconnect(world,doorFarm,tile.x,tile.y - 1)
-
-                        end
-
-                        clear()
-
-                        sleep(100)
-
-                    end
-
-                    sleep(30)
-
+                    
                 end
 
             end
