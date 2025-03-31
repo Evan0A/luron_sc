@@ -878,7 +878,7 @@ function storePack()
 
                     end
 
-                    while getBot():getInventory():findItem(pack) > 0 and tileDrop1(tile.x,tile.y,findItem(pack)) do
+                    while getBot():getInventory():getItemCount(pack) > 0 and tileDrop1(tile.x,tile.y,getBot():getInventory():findItem(pack)) do
 
                         getBot():drop(pack, getBot():getInventory():findItem(pack))
                         
