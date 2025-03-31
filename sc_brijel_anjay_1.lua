@@ -459,15 +459,15 @@ function warps(world, id)
             while client.status ~= BotStatus.online do
                 sleep(5000)
             end
-            getBot():warp(id == '' and world or world .. ('|' .. id))
+            getBot():warp(world, id)
             listenEvents(math.floor(10000 / 1000))
             sleep(10000)
         end
         removeEvent(Event.variantlist)
     end
-    if getBot():isInWorld(world) and id ~= '' and getTile(client.x, client.y).fg == 6 then
+    if getBot():isInWorld(world) and id ~= '' and getTile(getBot().x, getBot.y).fg == 6 then
         local count = 0
-        while getTile(client.x, client.y).fg == 6 and not stuck do
+        while getBot():getWorld():getTile(client.x, client.y).fg == 6 and not stuck do
             getBot():warp(id == '' and world or world .. ('|' .. id))
             sleep(10000)
             count = count + 1
