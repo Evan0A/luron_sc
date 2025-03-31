@@ -1612,15 +1612,15 @@ function harvest(world)
 
             end
 
-            if getBot():getWorld():getTile(tile.x,tile.y - 1):canHarvest() then
+            if tile:canHarvest() and tile.id == itmSeed then
 
                 if not blacklistTile or check(tile.x,tile.y) then
 
                     tree[world] = tree[world] + 1
 
-                    getBot():findPath(tile.x,tile.y - 1)
+                    getBot():findPath(tile.x, tile.y)
 
-                    while getBot():getWorld():getTile(tile.x,tile.y - 1).fg == itmSeed do
+                    while tile.fg == itmSeed do
 
                         getBot():hit(0,0)
 
@@ -1741,7 +1741,7 @@ end
 
 
 while true do
-    print("v6, enter while true")
+    print("v7, enter while true")
 
     for index,world in pairs(worlds) do
 
