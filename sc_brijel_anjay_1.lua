@@ -1493,7 +1493,7 @@ function harvest(world)
 
             end
 
-            if tile:canHarvest() or (not tile:hasFlag(0) and tile.y ~= 0 then
+            if tile:canHarvest() or (not tile:hasFlag(0) and tile.y ~= 0) then
 
                 if not blacklistTile or check(tile.x,tile.y) then
 
