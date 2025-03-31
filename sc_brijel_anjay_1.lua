@@ -730,7 +730,7 @@ function reconnect(world,id,x,y)
 
                 if id ~= "" then
 
-                    while getBot():getWorld():getTile(getBot().x, getBot()).fg == 6 do
+                    while getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 do
 
                         warps(world, id)
 
@@ -1710,7 +1710,7 @@ end
 
 
 while true do
-    print("v11, enter while true")
+    print("v12, enter while true")
 
     for index,world in pairs(worlds) do
 
