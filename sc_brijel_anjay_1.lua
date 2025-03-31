@@ -9,9 +9,9 @@ Bot[getBot().name:upper()] = {
 
     proxyIp = "92.119.183.180:61110:jevanshop123:jevanshop123", -- Proxy ip | ip:port:user:pass
 
-    webhookLink = "https://discord.com/api/webhooks/1114483839444729936/yQzzCt22cCIF3Wz9XdhGMSmD78yCx3UxyzZNGThl01kbmM34Z2ern42Sy3slDjPI3xto", -- Bot webhook link
+    webhookLink = "https://discord.com/api/webhooks/1114483738169061407/qTtcN8JaYq4yUbB7UUA3ATFD1keCObX9cJcSNvEU0ut1qG4S3_Ywg0veu-0VaAgh3IWA", -- Bot webhook link
 
-    messageId = "1355497648756625408",-- Webhook message id
+    messageId = "",-- Webhook message id
 
     worldList = {"XYJMWXNMLTJC"}, -- World list
 
@@ -40,7 +40,7 @@ Bot[getBot().name:upper()] = {
 
 webhookOffline = "https://discord.com/api/webhooks/1114483391446913024/fxbR3p8-UzNNj2uTPykEZefq7iibKSoKazREgod2rDgo5c2Q95X4fSAHehy2fugh1W9s" -- Bot On/Off with tag webhook link
 
-patokanSeed, patokanPack = 4584, 4584 -- Patokan Seed and Pack
+patokanSeed, patokanPack = 858, 858 -- Patokan Seed and Pack
 
 
 
@@ -88,7 +88,8 @@ customY = 0 -- Custom breaking pos y
 
 proxy = true -- Set true if using proxy
 
-separatePlant = true -- Set true if separate harvest and plant
+separatePlant = false
+-- Set true if separate harvest and plant
 
 dontPlant = false -- Set true if store all seed and dont plant any
 
@@ -684,33 +685,9 @@ end
 
 
 function reconnect(world,id,x,y)
-
-    while getBot().captcha:find("wrong") or getBot().captcha:find("failed") or getBot().captcha:find("no_access") or getBot().captcha:find("invalid_key") or getBot().captcha:find("invalid_token") do
-
-        namez = getBot().name
-
-        removeBot(getBot().name)
-
-        sleep(10000)
-
-        if proxy then
-
-            addBot(namez, password)
-
-            sleep(2000)
-
-        else
-
-            addBot(namez, password)
-
-            sleep(2000)
-
-        end
-
-        recon = true
-
-    end
-
+    recon = false
+    if getBot().status ~= 0 then recon = true end
+    
     if getBot().status ~= 1 or recon then
 
         botInfo("Reconnecting")
@@ -1100,21 +1077,13 @@ function buy()
 
         end
 
-        for i = 1, packLimit do
+        while getBot().gem_count >= minimumGem do
 
-            if getBot().gem_count >= packPrice then
+            getBot():buy(packName)
 
-                getBot():buy(packName)
+            sleep(1000)
 
-                sleep(500)
-
-                profit = profit + 1
-
-            else
-
-                break
-
-            end
+            profit = profit + 1
 
         end
 
@@ -1524,7 +1493,7 @@ function harvest(world)
 
             end
 
-            if getBot():getWorld():getTile(tile.x,tile.y - 1):canHarvest() or (tile.flags ~= 0 and tile.y ~= 0 and getBot():getWorld():getTile(tile.x,tile.y - 1).fg == 0) then
+            if getBot():getWorld():getTile(tile.x,tile.y - 1):canHarvest() or (not tile:hasFlag(0) and tile.y ~= 0 and getBot():getWorld():getTile(tile.x,tile.y - 1).fg == 0) then
 
                 if not blacklistTile or check(tile.x,tile.y) then
 
@@ -1741,7 +1710,7 @@ end
 
 
 while true do
-    print("v8, enter while true")
+    print("v9, enter while true")
 
     for index,world in pairs(worlds) do
 
