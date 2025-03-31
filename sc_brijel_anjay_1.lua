@@ -467,7 +467,7 @@ function warps(world, id)
         end
         removeEvent(Event.variantlist)
     end
-    if getBot():isInWorld(world) and id ~= '' and getBot():getWorld():getTile(getBot().x, getBot.y).fg == 6 then
+    if getBot():isInWorld(world) and id ~= '' and getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 then
         local count = 0
         while getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 and not stuck do
             getBot():warp(id == '' and world or world .. ('|' .. id))
@@ -1741,7 +1741,7 @@ end
 
 
 while true do
-    print("v5, enter while true")
+    print("v6, enter while true")
 
     for index,world in pairs(worlds) do
 
