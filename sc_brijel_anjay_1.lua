@@ -1236,7 +1236,7 @@ function plant(world)
 
         end
 
-        if not tile:hasFlags(0) and tile.y ~= 0 and getBot():getWorld():getTile(tile.x,tile.y - 1).fg == 0 then
+        if not tile:hasFlag(0) and tile.y ~= 0 and getBot():getWorld():getTile(tile.x,tile.y - 1).fg == 0 then
 
             if not blacklistTile or check(tile.x,tile.y) then
 
