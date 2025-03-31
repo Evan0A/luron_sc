@@ -671,7 +671,7 @@ end
 
 function reconInfo(status)
     statss = translatestatus(getBot().status)
-    webhook = Webhook.new(webhookOffline
+    webhook = Webhook.new(webhookOffline)
     if status then
         webhook.content = getBot().name.."(slot-"..Bot[getBot().name:upper()].slot..") Status is"..statss.." @everyone"
     end
