@@ -88,7 +88,7 @@ customY = 0 -- Custom breaking pos y
 
 proxy = true -- Set true if using proxy
 
-separatePlant = false
+separatePlant = true
 -- Set true if separate harvest and plant
 
 dontPlant = false -- Set true if store all seed and dont plant any
@@ -1493,7 +1493,7 @@ function harvest(world)
 
             end
 
-            if tile:canHarvest() or (not tile:hasFlag(0) and tile.y ~= 0 and getBot():getWorld():getTile(tile.x,tile.y - 1).fg == 0) then
+            if tile:canHarvest() or (not tile:hasFlag(0) and tile.y ~= 0 then
 
                 if not blacklistTile or check(tile.x,tile.y) then
 
@@ -1533,7 +1533,7 @@ function harvest(world)
 
                     sleep(30)
 
-                    while getBot():getWorld():getTile(tile.x,tile.y).fg == 0 and not getBot():getWorld():getTile(tile.x,tile.y):hasFlag(0) do
+                    while getBot():getWorld():getTile(tile.x,tile.y).fg == 0 do
 
                         getBot():place(0,0, itmSeed)
 
@@ -1710,7 +1710,7 @@ end
 
 
 while true do
-    print("v12, enter while true")
+    print("v13, enter while true")
 
     for index,world in pairs(worlds) do
 
