@@ -1370,7 +1370,9 @@ function pnb(world)
 
                 end
 
-                getBot().collect_range(2)
+                getBot().auto_collect = true
+
+                getBot().collect_range = 2
 
                 sleep(30)
 
@@ -1708,7 +1710,7 @@ if takePick and getBot():getInventory():findItem(98) == 0 then
 
     end
 
-    getBot():move(-1,0)
+    getBot():moveLeft(1)
 
     sleep(100)
 
