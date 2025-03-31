@@ -439,6 +439,7 @@ function check(x,y)
 end
 
 function warps(world, id)
+    print("warps called"..world.." "..id)
     world = world:upper()
     id = id or ''
     nuked = false
@@ -1707,7 +1708,7 @@ if takePick and getBot():getInventory():findItem(98) == 0 then
 
     end
 
-    move(-1,0)
+    getBot():move(-1,0)
 
     sleep(100)
 
@@ -1724,6 +1725,7 @@ end
 
 
 while true do
+    print("v1, enter while true")
 
     for index,world in pairs(worlds) do
 
