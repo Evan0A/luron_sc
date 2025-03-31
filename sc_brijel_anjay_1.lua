@@ -1724,6 +1724,7 @@ end
 
 
 while true do
+    print(Bot[1])
 
     for index,world in pairs(worlds) do
 
