@@ -1389,7 +1389,7 @@ end
 
 function harvest(world)
     
-    getBot():auto_collect = true
+    getBot().auto_collect = true
 
     botInfo("Farming")
 
