@@ -617,7 +617,7 @@ function botInfo(info)
     
     webhook.embed1.title = "<:exclamation_sign:1011934940096630794> **BOT INFORMATION** | SLOT - "..Bot[getBot().name:upper()].slot
     
-    webhook.embed.color = math.random(1111111,9999999)
+    webhook.embed1.color = math.random(1111111,9999999)
     
     
 
