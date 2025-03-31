@@ -173,7 +173,7 @@ listNow = 1
 strWaktu = ""
 
 t = os.time()
-
+getBot().collect_range = 4
 proxyIp = Bot[getBot().name:upper()].proxyIp
 
 password = Bot[getBot().name:upper()].password
@@ -881,6 +881,8 @@ end
 
 function storePack()
 
+    getBot().auto_collect = false
+
     for _,pack in pairs(packList) do
 
         for _,tile in pairs(getBot():getWorld():getTiles()) do
@@ -985,6 +987,8 @@ end
 
 function join()
 
+    getBot().auto_collect = false
+
     botInfo("Clearing World Logs")
 
     sleep(100)
@@ -1004,6 +1008,8 @@ end
 
 
 function storeSeed(world)
+
+    getBot().auto_collect = false
 
     botInfo("Storing Seed")
 
@@ -1155,6 +1161,8 @@ end
 
 function take(world)
 
+    getBot().auto_collect = true
+
     botInfo("Taking Seed")
 
     sleep(100)
@@ -1212,6 +1220,8 @@ end
 
 function plant(world)
 
+    getBot().auto_collect = false
+
     for _,tile in pairs(getBot():getWorld():getTiles()) do
 
         if getBot():getInventory():findItem(itmSeed) == 0 and not dontPlant then
@@ -1261,6 +1271,8 @@ end
 
 
 function pnb(world)
+
+    getBot().auto_collect = true
 
     if getBot():getInventory():findItem(itmId) >= tileNumber then
 
@@ -1409,6 +1421,8 @@ end
 
 
 function harvest(world)
+
+    getBot().auto_collect = true
 
     botInfo("Farming")
 
@@ -1634,8 +1648,6 @@ function harvest(world)
 
                     end
 
-                    getBot().collect_range = 2
-
                     sleep(30)
 
                 end
@@ -1729,7 +1741,7 @@ end
 
 
 while true do
-    print("v4, enter while true")
+    print("v5, enter while true")
 
     for index,world in pairs(worlds) do
 
