@@ -682,27 +682,24 @@ function reconInfo(status)
     webhook:send()
 end
 
-
-
 function reconnect(world,id,x,y)
     recon = false
-    if getBot().status ~= 0 then recon = true end
-    
-    if getBot().status ~= 1 or recon then
+    if getBot().status ~= BotStatus.online
+
+        recon = true
+
+    end
+
+    if recon then
 
         botInfo("Reconnecting")
+        getBot().auto_reconnect = false
 
         sleep(100)
 
-        if not recon then
+        reconInfo(true)
 
-            reconInfo(true)
-
-            sleep(100)
-
-        end
-
-        while true do
+        while getBot().status ~= BotStatus.online do
 
             if getBot().status == 3 or getBot().status == 4 then
 
@@ -717,30 +714,41 @@ function reconnect(world,id,x,y)
                 removeBot(getBot().name)
 
             end
-
-            while getBot().status == 1 and not getBot():isInWorld(world) do
-
-                warps(world:upper())
-
-                sleep(5000)
-
+            if getBot().status == BotStatus.maintenance then
+                botInfo("Server maintenance!, re-connecting 5 minunes")
+                reconInfo(true)
+                sleep(50000)
+                getBot():connect()
             end
+            if getBot().status == BotStatus.version_update then
+                botInfo("Version update")
+                reconInfo(true)
+                sleep(50000)
+            end
+        end
+        while getBot().status == BotStatus.online and not getBot():isInWorld(world) do
 
-            if getBot().status == 1 and getBot():isInWorld(world) then
+                warps(world, id)
 
-                if id ~= "" then
+                sleep(joinDelay)
 
-                    while getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 do
+        end
 
-                        warps(world, id)
+        if getBot().status == BotStatus.online and getBot():isInWorld(world) then
 
-                        sleep(1000)
+            if id ~= "" then
 
-                    end
+                while getBot():getWorld():getTile(getBot().x, getBot()).fg == 6 do
+
+                    warps(world, id)
+
+                    sleep(1000)
 
                 end
 
-                if x and y and getBot().status == 1 and getBot().world == world:upper() then
+            end
+
+            if x and y and getBot().status == BotStatus.online and getBot().world == world then
 
                     while getBot().x ~= x or getBot().y ~= y do
 
@@ -749,8 +757,6 @@ function reconnect(world,id,x,y)
                         sleep(1000)
 
                     end
-
-                    break
 
                 end
 
@@ -785,8 +791,6 @@ function reconnect(world,id,x,y)
     end
 
 end
-
-
 
 function round(n)
 
@@ -1398,6 +1402,7 @@ function harvest(world)
     tree[world] = 0
 
     if dontPlant then
+        print("harvest dont plant(1)")
 
         for _,tile in pairs(getBot():getWorld():getTiles()) do
 
@@ -1409,7 +1414,7 @@ function harvest(world)
 
                     getBot():findPath(tile.x,tile.y)
 
-                    while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do
+                    while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do print("ht 1")
 
                         getBot():hit(0,0)
 
@@ -1436,6 +1441,7 @@ function harvest(world)
         end
 
     elseif not separatePlant then
+        print("harvest no seperatePlant(2)")
         
         for _,tile in pairs(getBot():getWorld():getTiles()) do
 
@@ -1447,7 +1453,7 @@ function harvest(world)
     
                         getBot():findPath(tile.x,tile.y)
     
-                        while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do
+                        while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do print(" ht 2")
     
                             getBot():hit(0,0)
     
@@ -1486,6 +1492,7 @@ function harvest(world)
         end
 
     else
+        print("harvest else(3)")
 
         for _,tile in pairs(getBot():getWorld():getTiles()) do
 
@@ -1497,7 +1504,7 @@ function harvest(world)
 
                     getBot():findPath(tile.x,tile.y)
 
-                    while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do
+                    while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do print("ht 3")
 
                         getBot():hit(0,0)
 
