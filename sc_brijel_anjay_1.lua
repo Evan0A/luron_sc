@@ -658,7 +658,7 @@ function packInfo(link,id,desc)
     webhook = Webhook.new(link)
     webhook.embed1.use = true
     webhook.embed1.thumbnail = "https://komikkamvret.com/wp-content/uploads/2021/04/Pus-Nyangami-Roger-1024x978.png"
-    webhook.embed1.footer.text = "os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 7 * 60 * 60)
+    webhook.embed1.footer.text = os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 7 * 60 * 60)
     webhook.embed1:addField("Dropped items", desc, false)
 
     webhook.embed1.title = "<:exclamation_sign:1011934940096630794> **PACK/SEED INFORMATION**"
