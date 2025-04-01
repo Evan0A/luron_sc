@@ -746,23 +746,6 @@ function reconInfo(status)
     webhook:send()
 end
 
-function reconnect(world,id,x,y)
-    recon = false
-    print("reconnect called")
-    if getBot().status ~= BotStatus.online then
-        recon = true
-    end
-    print(recon)
-    if recon then
-        botInfo("Reconnecting")
-        getBot().auto_reconnect = false
-        sleep(100)
-        reconInfo(true)
-        while getBot().status ~= BotStatus.online do
-            if getBot().status == 3 or getBot().status == 4 then
-                botInfo(getBot().status)
-
-
 function round(n)
 
     return n % 1 > 0.5 and math.ceil(n) or math.floor(n)
@@ -783,7 +766,7 @@ function tileDrop1(x,y,num)
 
             count = count + obj.count
 
-            stack = stack + 1
+          stack = stack + 1
 
         end
 
