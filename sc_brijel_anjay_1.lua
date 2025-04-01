@@ -647,12 +647,7 @@ function botInfo(info)
     webhook.embed1:addField("<:change_of_address:1012566655995490354> World List", strWaktu, false)
 
     webhook.embed1:addField("<:growtopia_clock:1011929976628596746> Bot Uptime", math.floor(te/3600).." Days "..math.floor(te%86400/3600).." Hours "..math.floor(te%86400%3600/60).." Minutes", false)
-
-    if messageId ~= "" then
-        webhook:edit(messageId)
-    else
-        webhook:send()
-    end
+    webhook:send()
 end
 
 
@@ -668,7 +663,7 @@ function packInfo(link,id,desc)
     webhook.embed1.title = "<:exclamation_sign:1011934940096630794> **PACK/SEED INFORMATION**"
     webhook.embed1.color = math.random(111111, 999999)
     
-    if id ~= "" then webhook:edit(id) else webhook:send() end 
+    webhook:send() 
 end
 
 
@@ -684,11 +679,13 @@ end
 
 function reconnect(world,id,x,y)
     recon = false
+    print("reconnect called")
     if getBot().status ~= BotStatus.online
 
         recon = true
 
     end
+    print(recon)
 
     if recon then
 
@@ -1192,6 +1189,7 @@ end
 
 
 function plant(world)
+    print("called plant")
 
     getBot().auto_collect = false
 
@@ -1218,6 +1216,7 @@ function plant(world)
                 while getBot():getWorld():getTile(tile.x,tile.y - 1).fg == 0 and getBot():getWorld():getTile(tile.x,tile.y).flags ~= 0 do
 
                     getBot():place(0,0, itmSeed)
+                    print("loop plant")
 
                     sleep(delayPlant)
 
@@ -1421,6 +1420,7 @@ function harvest(world)
                         sleep(delayHarvest)
 
                         reconnect(world,doorFarm,tile.x,tile.y - 1)
+                        print("loop dontplnt")
 
                     end
 
@@ -1460,6 +1460,7 @@ function harvest(world)
                             sleep(delayHarvest)
     
                             reconnect(world,doorFarm,tile.x,tile.y)
+                            print("loop seperate ht")
     
                         end
     
@@ -1511,6 +1512,7 @@ function harvest(world)
                         sleep(delayHarvest)
 
                         reconnect(world,doorFarm,tile.x,tile.y)
+                        print("ht else loop")
 
                     end
                     
@@ -1519,6 +1521,7 @@ function harvest(world)
             end
 
             if getBot():getInventory():findItem(itmId) >= 180 then
+                print("ht ceked block 180")
 
                 pnb(world)
 
@@ -1533,6 +1536,7 @@ function harvest(world)
         end
 
     end
+    print("done HT")
 
     pnb(world)
 
