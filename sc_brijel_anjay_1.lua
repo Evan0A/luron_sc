@@ -666,7 +666,76 @@ function packInfo(link,id,desc)
     webhook:send() 
 end
 
+function reconnect(world, id, x, y)
+    recon = false
+    print("reconnect called")
+    if getBot().status ~= BotStatus.online then
+        recon = true
+    end
+    print(recon)
+    
+    if recon then
+        botInfo("Reconnecting")
+        getBot().auto_reconnect = false
+        sleep(100)
+        reconInfo(true)
 
+        while getBot().status ~= BotStatus.online do
+            if getBot().status == 3 or getBot().status == 4 then
+                botInfo(getBot().status)
+                sleep(100)
+                reconInfo(true)
+                sleep(100)
+                removeBot(getBot().name)
+            end
+
+            if getBot().status == BotStatus.maintenance then
+                botInfo("Server maintenance!, re-connecting in 5 minutes")
+                reconInfo(true)
+                sleep(50000)
+                getBot():connect()
+            end
+
+            if getBot().status == BotStatus.version_update then
+                botInfo("Version update")
+                reconInfo(true)
+                sleep(50000)
+            end
+        end
+
+        while getBot().status == BotStatus.online and not getBot():isInWorld(world) do
+            warps(world, id)
+            sleep(joinDelay)
+        end
+
+        if getBot().status == BotStatus.online and getBot():isInWorld(world) then
+            if id ~= "" then
+                while getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 do
+                    warps(world, id)
+                    sleep(1000)
+                end
+            end
+
+            if x and y and getBot().status == BotStatus.online and getBot().world == world then
+                while getBot().x ~= x or getBot().y ~= y do
+                    getBot():findPath(x, y)
+                    sleep(1000)
+                end
+            end
+        end
+
+        botInfo("Successfully Reconnected")
+        sleep(100)
+
+        reconInfo(false)
+        sleep(100)
+
+        botInfo("Farming")
+        sleep(100)
+        
+        recon = false
+    end
+end
 
 function reconInfo(status)
     statss = translatestatus(getBot().status)
@@ -692,56 +761,7 @@ function reconnect(world,id,x,y)
         while getBot().status ~= BotStatus.online do
             if getBot().status == 3 or getBot().status == 4 then
                 botInfo(getBot().status)
-                sleep(100)
-                reconInfo(true)
-                sleep(100)
-                removeBot(getBot().name)
-            end
-            if getBot().status == BotStatus.maintenance then
-                botInfo("Server maintenance!, re-connecting 5 minunes")
-                reconInfo(true)
-                sleep(50000)
-                getBot():connect()
-            end
-            if getBot().status == BotStatus.version_update then
-                botInfo("Version update")
-                reconInfo(true)
-                sleep(50000)
-            end
-        end
-        while getBot().status == BotStatus.online and not getBot():isInWorld(world) do
-            warps(world, id)
-            sleep(joinDelay)
-        end
-        if getBot().status == BotStatus.online and getBot():isInWorld(world) then
-            if id ~= "" then
-                while getBot():getWorld():getTile(getBot().x, getBot()).fg == 6 do
-                    warps(world, id)
-                    sleep(1000)
-                end
-            end
-            if x and y and getBot().status == BotStatus.online and getBot().world == world then
-                while getBot().x ~= x or getBot().y ~= y do
-                        getBot():findPath(x,y)
-                        sleep(1000)
-                    end
-                end
-            end
-        end
-        botInfo("Succesfully Reconnected")
-        sleep(100)
-        if recon then
-            reconInfo(false)
-            sleep(100)
-        else
-            reconInfo(true)
-            sleep(100)
-        end
-        botInfo("Farming")
-        sleep(100)
-        recon = false
-    end
-end
+
 
 function round(n)
 
@@ -1563,7 +1583,7 @@ end
 
 
 while true do
-    print("v14, enter while true")
+    print("v20, enter while true")
 
     for index,world in pairs(worlds) do
 
