@@ -446,28 +446,7 @@ function warps(world, id)
     sleep(10000)
     id = id or ''
     nuked = false
-    stuck = false
-    if not getBot():isInWorld(world) then
-        getBot():leaveWorld()
-        sleep(2000)
-        addEvent(Event.variantlist, function(var, netid)
-            if var:get(0):getString() == 'OnConsoleMessage' then
-                if var:get(1):getString() == 'That world is inaccessible.' then
-                    nuked = true
-                    unlistenEvents()
-                end
-            end
-        end)
-        while not getBot():isInWorld(world) and not nuked do
-            while client.status ~= BotStatus.online do
-                sleep(5000)
-            end
-            getBot():warp(world, id)
-            listenEvents(math.floor(10000 / 1000))
-            sleep(10000)
-        end
-        removeEvent(Event.variantlist)
-    end
+    stuck = false        
     if getBot():isInWorld(world) and id ~= '' and getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 then
         local count = 0
         while getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 and not stuck do
