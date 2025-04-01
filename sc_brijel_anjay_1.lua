@@ -680,7 +680,7 @@ end
 function reconnect(world,id,x,y)
     recon = false
     print("reconnect called")
-    if getBot().status ~= BotStatus.online
+    if getBot().status ~= BotStatus.online then
 
         recon = true
 
