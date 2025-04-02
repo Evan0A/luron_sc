@@ -462,8 +462,6 @@ end
 
 
 
-botInfo("cekcek")
-
 function waktuWorld()
 
     strWaktu = ""
@@ -1432,6 +1430,7 @@ end
 
 while true do
     print("v24, enter while true")
+    botInfo("cekcek")
     clear()
 
     for index,world in pairs(worlds) do
