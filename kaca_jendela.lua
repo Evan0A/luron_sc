@@ -462,7 +462,7 @@ end
 
 
 
-
+botInfo("cekcek")
 
 function waktuWorld()
 
@@ -939,7 +939,7 @@ end
 
 function clear()
 
-    for _,item in pairs(getBot():getInventory()) do
+    for _, item in pairs(getBot():getInventory()) do
 
         if not includesNumber(goods, item.id) then
 
