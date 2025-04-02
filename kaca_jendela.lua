@@ -1093,7 +1093,8 @@ function pnb(world)
                 ye = ye - 1
                 print("ceking y pnb: "..ex.." | "..ye)
 
-            end        
+            end 
+        end
 
         while getBot().x ~= ex or getBot().y ~= ye do
 
