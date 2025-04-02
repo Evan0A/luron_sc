@@ -1094,10 +1094,11 @@ function pnb(world)
                 print("ceking y pnb: "..ex.." | "..ye)
 
             end 
+            print("pnb at:".. ex.." | "..ye)
         end
 
         while getBot().x ~= ex or getBot().y ~= ye do
-            print("pnb pathfinding to: "..x.." | "..y)
+            print("pnb pathfinding to: "..ex.." | "..ye)
             getBot():findPath(ex,ye)
 
             sleep(100)
@@ -1430,7 +1431,7 @@ end
 
 
 while true do
-    print("v22, enter while true")
+    print("v23, enter while true")
 
     for index,world in pairs(worlds) do
 
