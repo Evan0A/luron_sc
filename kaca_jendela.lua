@@ -9,7 +9,7 @@ Bot[getBot().name:upper()] = {
 
     proxyIp = "92.119.183.180:61110:jevanshop123:jevanshop123", -- Proxy ip | ip:port:user:pass
 
-    webhookLink = "https://discord.com/api/webhooks/1114483738169061407/qTtcN8JaYq4yUbB7UUA3ATFD1keCObX9cJcSNvEU0ut1qG4S3_Ywg0veu-0VaAgh3IWA", -- Bot webhook link
+    webhookLink = "https://discord.com/api/webhooks/1114483674671501312/iWPOCtPzT67TckJcOwmo-xcRAv4U4xVNGuFCCrRFqavXmi3hHvr5LFmkM_V8Xms6ouxw", -- Bot webhook link
 
     messageId = "",-- Webhook message id
 
@@ -939,11 +939,11 @@ end
 
 function clear()
 
-    for _, item in pairs(getBot():getInventory()) do
+    for _, inv in pairs(getBot():getInventory()) do
 
-        if not includesNumber(goods, item.id) then
+        if not includesNumber(goods, inv.id) then
 
-            getBot():trash(item.id, item.count)
+            getBot():trash(inv.id, inv.count)
             sleep(200)
 
         end
@@ -1431,7 +1431,8 @@ end
 
 
 while true do
-    print("v23, enter while true")
+    print("v24, enter while true")
+    clear()
 
     for index,world in pairs(worlds) do
 
