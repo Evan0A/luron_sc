@@ -1088,16 +1088,16 @@ function pnb(world)
 
             end
 
-            while not getBot():getWorld():getTile(ex,ye):hasFlag(0) or getBot():getWorld():getTile(ex,ye).fg == itmSeed do
-
-                ye = ye - 1
+            while getBot():getWorld():getTile(ex,ye).fg ~= itmSeed do
+                ye = ye + 1
+                
                 print("ceking y pnb: "..ex.." | "..ye)
 
             end 
         end
 
         while getBot().x ~= ex or getBot().y ~= ye do
-
+            print("pnb pathfinding to: "..x.." | "..y)
             getBot():findPath(ex,ye)
 
             sleep(100)
@@ -1105,6 +1105,7 @@ function pnb(world)
         end
 
         if tileNumber > 1 then
+            print("pnb tile >1")
 
             while getBot():getInventory():findItem(itmId) >= tileNumber and getBot():getInventory():findItem(itmSeed) < 100 do
 
@@ -1151,6 +1152,7 @@ function pnb(world)
             end
 
         else
+            print("pnb else tile")
 
             while getBot():getInventory():findItem(itmId) > 0 and getBot():getInventory():findItem(itmSeed) < 100 do
 
@@ -1428,7 +1430,7 @@ end
 
 
 while true do
-    print("v21, enter while true")
+    print("v22, enter while true")
 
     for index,world in pairs(worlds) do
 
