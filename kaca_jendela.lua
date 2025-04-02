@@ -937,7 +937,7 @@ end
 
 function clear()
 
-    for _, inv in pairs(getBot():getInventory()) do
+    for _, inv in ipairs(getBot():getInventory()) do
 
         if not includesNumber(goods, inv.id) then
 
@@ -1429,7 +1429,7 @@ end
 
 
 while true do
-    print("v24, enter while true")
+    print("v25, enter while true")
     botInfo("cekcek")
     clear()
 
