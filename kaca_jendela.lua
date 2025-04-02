@@ -1069,7 +1069,7 @@ end
 function pnb(world)
     getBot().collect_range = 5
     getBot().auto_collect = true
-
+    print("pnb detek")
     if getBot():getInventory():findItem(itmId) >= tileNumber then
 
         if not customTile then
@@ -1088,13 +1088,12 @@ function pnb(world)
 
             end
 
-            if getBot():getWorld():getTile(ex,ye).fg ~= 0 or getBot():getWorld():getTile(ex,ye).fg == itmSeed then
+            while not getBot():getWorld():getTile(ex,ye):hasFlag(0) or getBot():getWorld():getTile(ex,ye).fg == itmSeed do
 
                 ye = ye - 1
+                print("ceking y pnb: "..ex.." | "..ye..)
 
-            end
-
-        end
+            end        
 
         while getBot().x ~= ex or getBot().y ~= ye do
 
