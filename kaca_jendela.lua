@@ -1132,7 +1132,7 @@ function pnb(world)
 
                         if getTile(ex - 1,ye + i).fg ~= 0 or getTile(ex - 1,ye + i).bg ~= 0 then
 
-                            getBot():hit(-1,i)
+                            getBot():hit(getBot().x + -1,getBot().y + i)
 
                             sleep(delayPunch)
 
@@ -1166,7 +1166,7 @@ function pnb(world)
 
                 while getBot():getWorld():getTile(ex - 1,ye).fg ~= 0 or getTile(ex - 1,ye).bg ~= 0 do
 
-                    getBot():hit(-1,0)
+                    getBot():hit(getBot().x + -1, getBot().y)
 
                     sleep(delayPunch)
 
@@ -1233,7 +1233,7 @@ function harvest(world)
 
                     while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do print("ht 1")
 
-                        getBot():hit(0,0)
+                        getBot():hit(getBot().x, getBot().y)
 
                         sleep(delayHarvest)
 
@@ -1273,7 +1273,7 @@ function harvest(world)
     
                         while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do print(" ht 2")
     
-                            getBot():hit(0,0)
+                            getBot():hit(getBot().x, getBot().y)
     
                             sleep(delayHarvest)
     
@@ -1326,7 +1326,7 @@ function harvest(world)
 
                     while getBot():getWorld():getTile(tile.x,tile.y).fg == itmSeed do print("ht 3")
 
-                        getBot():hit(0,0)
+                        getBot():hit(getBot().x, getBot().y)
 
                         sleep(delayHarvest)
 
