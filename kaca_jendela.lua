@@ -1091,7 +1091,7 @@ function pnb(world)
             while not getBot():getWorld():getTile(ex,ye):hasFlag(0) or getBot():getWorld():getTile(ex,ye).fg == itmSeed do
 
                 ye = ye - 1
-                print("ceking y pnb: "..ex.." | "..ye..)
+                print("ceking y pnb: "..ex.." | "..ye)
 
             end        
 
@@ -1427,7 +1427,7 @@ end
 
 
 while true do
-    print("v20, enter while true")
+    print("v21, enter while true")
 
     for index,world in pairs(worlds) do
 
