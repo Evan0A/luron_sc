@@ -1039,7 +1039,7 @@ function plant(world)
 
                 while getBot():getWorld():getTile(tile.x,tile.y).fg == 0 do
 
-                    getBot():place(0,0, itmSeed)
+                    getBot():place(getBot().x, getBot().y, itmSeed)
                     print("loop plant")
 
                     sleep(delayPlant)
@@ -1114,7 +1114,7 @@ function pnb(world)
 
                         if getTile(ex - 1,ye + i).fg == 0 and getTile(ex - 1,ye + i).bg == 0 then
 
-                            getBot():place(-1,i, itmId)
+                            getBot():place(getBot().x - 1, getBot().y + i, itmId)
 
                             sleep(delayPlace)
 
@@ -1156,7 +1156,7 @@ function pnb(world)
 
                 while getBot():getWorld():getTile(ex - 1,ye).fg == 0 and getBot():getWorld():getTile(ex - 1,ye).bg == 0 do
 
-                    getBot():place(-1,0, itmId)
+                    getBot():place(getBot().x - 1, getBot().y, itmId)
 
                     sleep(delayPlace)
 
@@ -1284,7 +1284,7 @@ function harvest(world)
     
                         while getBot():getWorld():getTile(tile.x,tile.y).fg == 0 and getBot():getWorld():getTile(tile.x, tile.y + 1):hasFlag(0) do
     
-                            getBot():place(0,0, itmSeed)
+                            getBot():place(getBot().x, getBot().y, itmSeed)
     
                             sleep(delayPlant)
     
