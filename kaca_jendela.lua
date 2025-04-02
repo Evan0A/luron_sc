@@ -1032,7 +1032,7 @@ function plant(world)
 
         end
 
-        if not dontPlant and getBot():getWorld():hasAccess(tile.x, tile.y) and tile.fg == 0 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= 0 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= itmId
+        if not dontPlant and getBot():getWorld():hasAccess(tile.x, tile.y) and tile.fg == 0 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= 0 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= itmId then
             if not blacklistTile or check(tile.x,tile.y) then
 
                 getBot():findPath(tile.x,tile.y)
