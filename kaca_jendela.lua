@@ -870,7 +870,7 @@ end
 
 
 function buy()
-
+    getBot().auto_collect = false
     botInfo("Buying and Storing Pack")
 
     sleep(100)
@@ -927,11 +927,12 @@ function clear()
 
     for _, inv in ipairs(getBot():getInventory()) do
 
-        if not includesNumber(goods, inv.id) then
+        for _, gid in pairs(goods) do
+            if gid ~= inv.id then
 
-            getBot():trash(inv.id, inv.count)
-            sleep(200)
-
+                getBot():fastTrash(inv.id, inv.count)
+                sleep(600)
+            end
         end
 
     end
@@ -1178,6 +1179,7 @@ function pnb(world)
         sleep(100)
 
         if buyAfterPNB and getBot().gem_count >= minimumGem then
+            getBot().auto_collect = false
 
             buy()
 
@@ -1417,7 +1419,7 @@ end
 
 
 while true do
-    print("33v, enter while true")
+    print("35v, enter while true")
     botInfo("cekcek")
     clear()
 
