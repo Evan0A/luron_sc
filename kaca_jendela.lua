@@ -678,7 +678,15 @@ function round(n)
 
 end
 
-
+function drop_pack()
+    botInfo("drop pack function")
+    for _, pid in pairs(packList) do 
+        if getBot():getInventory():getItemCount(pid) ~= 0 then
+            getBot():fastDrop(pid, getBot():getInventory():getItemCount(pid))
+            sleep(4000)
+        end
+    end
+end
 
 function tileDrop(x, y, num, world, door)
     getBot():setDirection(true)
@@ -723,14 +731,7 @@ function storePack()
     for _, obj in pairs(getBot():getWorld():getObjects()) do 
         if obj.id == packList then 
             if tileDrop(obj.x, obj.y, obj.count, storagePack, doorPack) then
-                for _, pid in pairs(packList) do
-                    while getBot():getInventory():getItemCount(pid) ~= 0 do
-                        print("entered while drop pack")
-                        getBot():fastDrop(pid, getBot():getInventory():getItemCount(pid))
-                        sleep(4000)
-                        reconnect(storagePack, doorPack, getBot().x, getBot().y)
-                    end
-                end
+                drop_pack()
             end
             doneallpack = true
             for _, paid in pairs(packList) do
@@ -1469,7 +1470,7 @@ end
 
 
 while true do
-    print("44v, enter while true")
+    print("45v, enter while true")
     botInfo("cekcek")
     clear()
 
