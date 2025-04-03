@@ -717,7 +717,7 @@ function storePack()
     warps(storagePack, doorPack)
     
     for _, obj in pairs(getBot():getWorld():getObjects()) do 
-        if obj.id == itmSeed then 
+        if obj.id == packList then 
             if tileDrop(obj.x, obj.y, obj.count, storagePack, doorPack) then
                 for _, pid in pairs(packList) do
                     while getBot():getInventory():findItem(pid) ~= 0 do
@@ -879,7 +879,7 @@ function buy()
 
     sleep(100)
 
-    while getBot().gem_count >= packPrice do
+    if getBot().gem_count >= minimumGem then
 
         while getBot():getInventory().slotcount < 16 do
 
@@ -889,7 +889,7 @@ function buy()
 
         end
 
-        while getBot().gem_count >= minimumGem do
+        while getBot().gem_count >= packPrice do
 
             getBot():buy(packName)
 
@@ -1419,7 +1419,7 @@ end
 
 
 while true do
-    print("35v, enter while true")
+    print("36v, enter while true")
     botInfo("cekcek")
     clear()
 
