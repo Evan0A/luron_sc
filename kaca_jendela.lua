@@ -1231,7 +1231,7 @@ function harvest(world)
 
         for _,tile in pairs(getBot():getWorld():getTiles()) do
             for _, obj in pairs(getBot():getWorld():getObjects()) do 
-                while obj.id == itmId and getBot():getInventory():findItem(itmId) => 170 do 
+                while obj.id == itmId and getBot():getInventory():findItem(itmId) >= 170 do 
                     getBot():findPath(obj.x, obj.y)
                     sleep(600)
                 end
@@ -1279,7 +1279,7 @@ function harvest(world)
         
         for _,tile in pairs(getBot():getWorld():getTiles()) do
             for _, obj in pairs(getBot():getWorld():getObjects()) do 
-                while obj.id == itmId and getBot():getInventory():findItem(itmId) => 170 do 
+                while obj.id == itmId and getBot():getInventory():findItem(itmId) >= 170 do 
                     getBot():findPath(obj.x, obj.y)
                     sleep(600)
                 end
@@ -1340,7 +1340,7 @@ function harvest(world)
 
         for _,tile in pairs(getBot():getWorld():getTiles()) do
             for _, obj in pairs(getBot():getWorld():getObjects()) do 
-                while obj.id == itmId and getBot():getInventory():findItem(itmId) => 170 do 
+                while obj.id == itmId and getBot():getInventory():findItem(itmId) >= 170 do 
                     getBot():findPath(obj.x, obj.y)
                     sleep(600)
                 end
