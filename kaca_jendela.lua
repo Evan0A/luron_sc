@@ -1429,7 +1429,7 @@ end
 
 
 while true do
-    print("31v, enter while true")
+    print("32v, enter while true")
     botInfo("cekcek")
     clear()
 
