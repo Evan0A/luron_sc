@@ -556,7 +556,7 @@ function botInfo(info)
 
     webhook.embed1:addField("<:heart_monitor:1012587208902987776> Bot Status", botstatus, true)
 
-    webhook.embed1:addField("<:rogetBot():1037182734067576842> Bot Captcha", getBot().captcha, true)
+    webhook.embed1:addField("<:rogetBot:1037182734067576842> Bot Captcha", getBot().captcha, true)
 
     webhook.embed1:addField("<:gems:1011931178510602240> Bot Gems", getBot().gem_count, true)
     
