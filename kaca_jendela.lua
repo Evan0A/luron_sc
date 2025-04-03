@@ -725,17 +725,21 @@ function storePack()
             if tileDrop(obj.x, obj.y, obj.count, storagePack, doorPack) then
                 for _, pid in pairs(packList) do
                     while getBot():getInventory():findItem(pid) ~= 0 do
-                        getBot():drop(pid, getBot():getInventory():findItem(pid))
+                        getBot():drop(pid, getBot():getInventory():getItemCount(pid))
                         sleep(1000)
-                        tileDrop(obj.x, obj.y, obj.count, storagePack, doorPack)
+                        reconnect(storagePack, doorPack, getBot().x, getBot().y)
                     end
                 end
             end
+            doneallpack = true
+            for _, paid in pairs(packList) do
 
-            if getBot():getInventory():findItem(pack) == 0 then
-
+                if getBot():getInventory():getItemCount(paid) ~= 0 then
+                    doneallpack = false
+                end
+            end
+            if doneallpack then
                 break
-
             end
 
         end
@@ -1037,7 +1041,7 @@ function plant(world)
 
         end
 
-        if not dontPlant and (getBot():getWorld():hasAccess(tile.x, tile.y) and tile.fg == 0 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= 0 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= itmId and getBot():getWorld():getTile(tile.x, tile.y + 1):hasFlag(0) and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= 12 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= itmSeed) then
+        if not dontPlant and (getBot():getWorld():hasAccess(tile.x, tile.y) and tile.fg == 0 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= 0 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= itmId and getBot():getWorld():getTile(tile.x, tile.y + 1):hasFlag(0) and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= 12 and getBot():getWorld():getTile(tile.x, tile.y + 1).fg ~= itmSeed) and tile.fg ~= itmSeed then
             if not blacklistTile or check(tile.x,tile.y) then
 
                 getBot():findPath(tile.x,tile.y)
@@ -1464,7 +1468,7 @@ end
 
 
 while true do
-    print("41v, enter while true")
+    print("42v, enter while true")
     botInfo("cekcek")
     clear()
 
