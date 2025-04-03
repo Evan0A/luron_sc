@@ -1429,7 +1429,7 @@ end
 
 
 while true do
-    print(version.." enter while true")
+    print("28v, enter while true")
     botInfo("cekcek")
     clear()
 
