@@ -683,6 +683,8 @@ end
 function tileDrop(x, y, num, world, door)
     getBot():setDirection(true)
     direction = "left"
+    getBot():moveLeft()
+    x = x - 1
     numsy = "a"
     num = math.floor(num/4000)
     maxx = 96
@@ -1460,7 +1462,7 @@ end
 
 
 while true do
-    print("37v, enter while true")
+    print("38v, enter while true")
     botInfo("cekcek")
     clear()
 
