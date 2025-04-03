@@ -687,18 +687,6 @@ function tileDrop(x, y, num, world, door)
     num = math.floor(num/4000)
     maxx = 96
     minx = 3 
-    for ax = 3,96 do 
-        local atile = getBot():getWorld():getTile(ax, y)
-        if atile.fg ~= 0 then 
-            maxx = atilre.x 
-        end 
-    end 
-    for mx = 96, 3, -1 do
-        local atile = getBot():getWorld():getTile(mx, y)
-        if atile.fg ~= 0 then 
-            minx = atilre.x 
-        end 
-    end 
     for i = 0, num do 
         if x < minx and direction == "left" then
             direction = "right"
@@ -1429,7 +1417,7 @@ end
 
 
 while true do
-    print("32v, enter while true")
+    print("33v, enter while true")
     botInfo("cekcek")
     clear()
 
