@@ -1339,8 +1339,8 @@ function harvest(world)
         print("harvest else(3)")
 
         for _,tile in pairs(getBot():getWorld():getTiles()) do
-            for _, obj in pairs(getBot():getWorld():getObjects()) do 
-                while obj.id == itmId and getBot():getInventory():findItem(itmId) >= 170 do 
+            for _, obj in pairs(getBot():getWorld():getObjects()) do print("entered while obj ht 3")
+                if obj.id == itmId and getBot():getInventory():findItem(itmId) >= 170 then
                     getBot():findPath(obj.x, obj.y)
                     sleep(600)
                 end
@@ -1460,7 +1460,7 @@ end
 
 
 while true do
-    print("36v, enter while true")
+    print("37v, enter while true")
     botInfo("cekcek")
     clear()
 
