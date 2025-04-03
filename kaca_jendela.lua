@@ -724,9 +724,10 @@ function storePack()
         if obj.id == packList then 
             if tileDrop(obj.x, obj.y, obj.count, storagePack, doorPack) then
                 for _, pid in pairs(packList) do
-                    while getBot():getInventory():findItem(pid) ~= 0 do
+                    while getBot():getInventory():getItemCount(pid) ~= 0 do
+                        print("entered while drop pack")
                         getBot():drop(pid, getBot():getInventory():getItemCount(pid))
-                        sleep(1000)
+                        sleep(4000)
                         reconnect(storagePack, doorPack, getBot().x, getBot().y)
                     end
                 end
@@ -1468,7 +1469,7 @@ end
 
 
 while true do
-    print("42v, enter while true")
+    print("43v, enter while true")
     botInfo("cekcek")
     clear()
 
