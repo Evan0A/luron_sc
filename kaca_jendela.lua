@@ -726,7 +726,7 @@ function storePack()
                 for _, pid in pairs(packList) do
                     while getBot():getInventory():getItemCount(pid) ~= 0 do
                         print("entered while drop pack")
-                        getBot():drop(pid, getBot():getInventory():getItemCount(pid))
+                        getBot():fastDrop(pid, getBot():getInventory():getItemCount(pid))
                         sleep(4000)
                         reconnect(storagePack, doorPack, getBot().x, getBot().y)
                     end
@@ -1469,7 +1469,7 @@ end
 
 
 while true do
-    print("43v, enter while true")
+    print("44v, enter while true")
     botInfo("cekcek")
     clear()
 
