@@ -627,6 +627,14 @@ function reconnect(world, id, x, y)
                 reconInfo(true)
                 sleep(50000)
             end
+            if getBot().status == BotStatus.offline then 
+                getBot():connect()
+                sleep(2000)
+                if getBot():getPing() == 0 then
+                    botInfo("Offline, maybe error connecting")
+                    sleep(13000)
+                end
+            end
         end
 
         while getBot().status == BotStatus.online and not getBot():isInWorld(world) do
@@ -1470,7 +1478,7 @@ end
 
 
 while true do
-    print("45v, enter while true")
+    print("46v, enter while true")
     botInfo("cekcek")
     clear()
 
