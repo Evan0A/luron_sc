@@ -600,7 +600,7 @@ function reconnect(world, id, x, y)
     end
     print(recon)
     
-    if recon then
+    if recon and getBot().status ~= BotStatus.online then
         botInfo("Reconnecting")
         getBot().auto_reconnect = false
         sleep(100)
@@ -650,7 +650,7 @@ function reconnect(world, id, x, y)
                 end
             end
 
-            if x and y and getBot().status == BotStatus.online and getBot().world == world then
+            if x and y and getBot().status == BotStatus.online and getBot():isInWorld(world) then
                 while getBot().x ~= x or getBot().y ~= y do
                     getBot():findPath(x, y)
                     sleep(1000)
@@ -1478,7 +1478,7 @@ end
 
 
 while true do
-    print("46v, enter while true")
+    print("47v, enter while true")
     botInfo("cekcek")
     clear()
 
