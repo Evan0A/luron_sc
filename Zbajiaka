@@ -1,0 +1,42 @@
+
+local accounts = [[
+fhytf3368@gmail.com|84:1d:a8:8d:9d:6d:a5db0c71ea7f658d49a59b619fb98ee2:C1D6DCE6C09C9BA0C4238FD04E6E9FD5:poJjFNG7mWhqKFxhLM0KGDjhw11Z1eYUnJoaoG+5/sTXHAr93AZa4QB9yXSpQD4BFLGXGKU8p+cxmGcbxF3qs+y1N07Le9qJZzQVCCUAra/PguywLctvf08tam5F58EID7QFPqsUQVha40RvoJnO2zDFAtrksuV11WUgg80nyc9lJT4DLn4EG2ykNaHJOow0pAs7I/NXfTCnQ/EwrMmVpj5l5tJ1W1YwFgG/BFRsjvheVCGvd0Zu1xunegGEMV8QlX2177uwfb0rYku7VaOrbCbL1ixtfAUxKcKawlahdbVx5wmT7/eRAzE3nNcZvcS3VHTpb81zaFFoRWv7mw8I0G+dDEwT8d1szEhIu4dpNNClNS303Q4kxrZHbzai2FbQjp7FVr8HKO2++74LhhfzCyi4oEAC2eCqwQ+TuypY8FySqyC1PI4Mar3X98OKq21EwYw6Ir4cLtXB0sP2OPxW0Q==
+gwendolynfitzgerald28@gmail.com|6b:25:76:30:4d:db:5293eb36572565062b8bb29840d42c6d:6AA9F4025DE8BE887B4FC1D08B7DD77D:poJjFNG7mWhqKFxhLM0KGFyelWCbEXFM+3px1SSkBxyVJbw5qYB1HXHaVyIQMEJHvg4RdKaY2hYwhPP9LvB13L43pD1tNRcSPf7idklPvNZkCDgJcMvC+5kDlPhgIrh9hgML0orKN4s8o4wwP8lz3zd8drshV1GV0kGwpCHR7ThOO2VMy95QqonErwsJOufkH/dLcw78WT3t2hrx3YxEjdWVUgYCZ4KiinD0eDJx6aQdGGkq5rziXiX2a0Ci9HF+dWMz4syD0Cx7SLos6DmjWE3+8t30Bsz4DD7lySvbX0evJVAXQK0Xa+B3uHVhdmjdcts0zek1tcksmyzRVrfgeQNws5+CO+IV7vvK1KuJVjbTm4Is3QO+WY++xVpFcSSXHP7vBiy92RTj7mFpiqIEVYoVjIikyk/+k4XDWHz+kiIsYehTCB7khjP16qHuzhByyl18v1iPBejmRMVt62rj/A==
+
+]]
+
+for account in accounts:gmatch("[^\n]+") do
+    local email, sisa = account:match("([^|]+)|(.+)")
+
+    if email and sisa then
+        local mac, rid, wk, ltoken = sisa:match("([^|]+):([^|]+):([^|]+):(.+)")
+        if mac and rid and wk and ltoken then
+            local details = {
+                ["display"] = email,
+                ["secret"] = email,
+                ["name"] = ltoken,
+                ["rid"] = rid,
+                ["mac"] = mac,
+                ["wk"] = wk,
+                ["platform"] = 0,
+            }
+            local bot = addBot(details)
+            bot:getConsole().enabled = true
+            sleep(3)
+        end
+    else
+        local mac, rid, wk, ltoken = sisa:match("([^|]+):([^|]+):([^|]+):(.+)")
+        if mac and rid and wk and ltoken then
+            local details = {
+                ["name"] = ltoken,
+                ["rid"] = rid,
+                ["mac"] = mac,
+                ["wk"] = wk,
+                ["platform"] = 0,
+            }
+            local bot = addBot(details)
+            bot:getConsole().enabled = true
+            sleep(3)
+        end
+    end
+end
