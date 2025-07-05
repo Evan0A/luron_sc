@@ -1,4 +1,4 @@
-version = 20
+version = 21
 print("version "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -374,6 +374,9 @@ function getUserData(bool)
     bool = bool or false
     local data = getHttp(access_url)
     local found = false
+    if bool then 
+        api = tostring(data.api)
+    end
     for _, users in pairs(data.access_list) do
         if users.name == myUsername then
             found = true
@@ -710,7 +713,7 @@ function startThisSoGoodScriptAnjayy()
         getBot().custom_status = "wait"
         sleep(2000)
         print(get_cpu_usage())
-        if not getUserData() then 
+        if not getUserData(false) then 
             getBot().custom_status = "invalid"
             sleep(2000)
             enable = false
