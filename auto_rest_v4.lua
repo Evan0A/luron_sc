@@ -1,4 +1,4 @@
-version = 12
+version = 13
 
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -445,11 +445,11 @@ function reconnect()
     if reconnect_after_rest then 
         if getBot().index == captain then 
             webhookRecon(getBot().name, lastrestid)
-            getBot().custom_status = "Online"
+            getBot(captain).custom_status = "Online"
             getBot().auto_reconnect = true
         else 
             sleep(500)
-            getBot().custom_status == "Online" then 
+            getBot(captain).custom_status == "Online" then 
             getBot().auto_reconnect = true
             if script_mode == "ROTATION" then 
                 rotation.enabled = true
