@@ -1,4 +1,4 @@
-version = 15
+version = 16
 print("version "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -669,7 +669,7 @@ function restSchedule()
             end
             disconnectBot()
             sleep(delay_schedule * 1000 * 60)
-            if getBot(captain).custom_status == "Schedule" and not getBot(captan):isRunningScript() then 
+            if tostring(getBot(captain).custom_status) == "Schedule" and not getBot(captain):isRunningScript() then 
                 getBot().custom_status = "Getting new captain"
                 sleep(1000)
                 getCaptain()
