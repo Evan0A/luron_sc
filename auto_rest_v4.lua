@@ -1,4 +1,4 @@
-version = 21
+version = 22
 print("version "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -375,7 +375,8 @@ function getUserData(bool)
     local data = getHttp(access_url)
     local found = false
     if bool then 
-        api = tostring(data.api)
+        api = data.api
+        print("getuserdata bool:true, api: "..api)
     end
     for _, users in pairs(data.access_list) do
         if users.name == myUsername then
