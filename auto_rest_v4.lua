@@ -1,4 +1,4 @@
-version = 6
+version = 8
 
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -344,19 +344,20 @@ function getCaptain()
     end
     local status, num = cekRunning()
     if status then 
+        print("getCaptain status true | "..getBot().name)
         captain = num
         print("captain: "..captain)
         return true
     end
-    sleep(5000)
+    sleep(10000)
     getBot().custom_status = "REST VERIFICATION 1"
-    sleep(3000)
+    sleep(10000)
     for i = 1, botCount do 
         if getBot(i).custom_status == "REST VERIFICATION 1" then 
             cekDouble(bot_indexs, tonumber(getBot(i).index))
         end 
     end
-    sleep(2000)
+    sleep(5000)
     captain = bot_indexs[math.ceil(#bot_indexs / 2)]
     if getBot().index == captain then 
         print("done, captain rest: "..getBot(captain).name)
