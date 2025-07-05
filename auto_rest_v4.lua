@@ -1,4 +1,4 @@
-version = 22
+version = 23
 print("version "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -742,6 +742,7 @@ function startThisSoGoodScriptAnjayy()
                 local now = os.date("*t")
                 local nowMin = now.hour * 60 + now.min  -- menit total sejak tengah malam
                 if nowMin % check_delay == 0 and nowMin ~= lastCheckedMinute then
+                    lastCheckedMinute = nowMin
                     restAll()
                     print("cpu check: " ..get_cpu_usage())
                 end
