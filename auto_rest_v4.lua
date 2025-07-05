@@ -1,4 +1,4 @@
-version = 3
+version = 4
 
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -339,7 +339,7 @@ function getCaptain()
             return true
         end 
     end
-    sleep(500)
+    sleep(3000)
     getBot().custom_status = "REST VERIFICATION 1"
     sleep(3000)
     local bot1 = {}
