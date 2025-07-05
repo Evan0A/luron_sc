@@ -1,4 +1,4 @@
-version = 5
+version = 6
 
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -309,7 +309,7 @@ end
 
 function isIn(arr, val)
     for _, key in pairs(arr) do 
-        if key == val then 
+        if key:upper() == val:upper() then 
             return true 
         end 
     end 
@@ -332,18 +332,25 @@ end
  
 function getCaptain()
     local botCount = #getBots()
-    for i = 1, botCount do
-        local Cstatus = tostring(getBot(i).custom_status)
-        if isIn(captainStatus, Cstatus) and getBot(i):isRunningScript() then 
-            captain = i
-            getBot().custom_status = string.format("Following captain(%s)", getBot(i).name)
-            return true
+    local function cekRunning()
+        for i = 1, botCount do
+            local Cstatus = tostring(getBot(i).custom_status)
+            if isIn(captainStatus, Cstatus) and getBot(i):isRunningScript() then 
+                getBot().custom_status = string.format("Following captain(%s)", getBot(i).name)
+                return true, i
+            end
         end 
+        return false, 0
+    end
+    local status, num = cekRunning()
+    if status then 
+        captain = num
+        print("captain: "..captain)
+        return true
     end
     sleep(5000)
     getBot().custom_status = "REST VERIFICATION 1"
     sleep(3000)
-    local bot1 = {}
     for i = 1, botCount do 
         if getBot(i).custom_status == "REST VERIFICATION 1" then 
             cekDouble(bot_indexs, tonumber(getBot(i).index))
