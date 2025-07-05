@@ -7,7 +7,7 @@ specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not ness
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
-    "10:30 - 11:00"
+    "10:30 - 11:20"
 }
 
 auto_rest_player = true 
