@@ -1,4 +1,4 @@
-version = 4
+version = 5
 
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -333,13 +333,14 @@ end
 function getCaptain()
     local botCount = #getBots()
     for i = 1, botCount do
-        if isIn(captainStatus, tostring(getBot(i).custom_status)) and getBot(i):isRunningScript() then 
+        local Cstatus = tostring(getBot(i).custom_status)
+        if isIn(captainStatus, Cstatus) and getBot(i):isRunningScript() then 
             captain = i
             getBot().custom_status = string.format("Following captain(%s)", getBot(i).name)
             return true
         end 
     end
-    sleep(3000)
+    sleep(5000)
     getBot().custom_status = "REST VERIFICATION 1"
     sleep(3000)
     local bot1 = {}
@@ -351,7 +352,7 @@ function getCaptain()
     sleep(2000)
     captain = bot_indexs[math.ceil(#bot_indexs / 2)]
     if getBot().index == captain then 
-        print("done, captain rest: "..captain)
+        print("done, captain rest: "..getBot(captain).name)
     else 
         getBot().custom_status = string.format("Following captain(%s)", getBot(captain).name)
     end
