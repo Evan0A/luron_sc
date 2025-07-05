@@ -1,4 +1,4 @@
-version = 8
+version = 9
 
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -335,7 +335,7 @@ function getCaptain()
     local function cekRunning()
         for i = 1, botCount do
             local Cstatus = tostring(getBot(i).custom_status)
-            if isIn(captainStatus, Cstatus) and getBot(i):isRunningScript() then 
+            if isIn(captainStatus, Cstatus) and getBot(i):isRunningScript() and getBot(i).name ~= getBot().name then 
                 getBot().custom_status = string.format("Following captain(%s)", getBot(i).name)
                 return true, i
             end
