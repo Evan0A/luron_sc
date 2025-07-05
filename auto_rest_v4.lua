@@ -1,4 +1,4 @@
-version = 17
+version = 18
 print("version "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -496,7 +496,7 @@ function restSpecificMod()
                 mod_detected = value
                 webhookRest(getBot().name, 2)
                 disconnectBot()
-                sleep(delay_banrate * 60 * 1000)
+                sleep(delay_specific_mod * 60 * 1000)
                 getModList()
                 status, value = haveSame(specific_mod_list, mods_list)
                 end
@@ -504,10 +504,7 @@ function restSpecificMod()
         else 
             while getBot(captain).custom_status == "SpecificMod" and getBot(captain):isRunningScript() do 
                 disconnectBot()
-                sleep(delay_banrate * 61 * 1000)
-                if script_mode == "ROTATION" then 
-                    rotation.enabled = false
-                end
+                sleep(delay_specific_mod * 61 * 1000)
             end 
             if getBot(captain).custom_status == "SpecificMod" and not getBot(captain):isRunningScript() then 
                 getBot().custom_status = "Getting new captain"
