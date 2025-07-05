@@ -182,7 +182,7 @@ function webhookRest(nameBot, from)
             extra_info = string.format("👥 Mods Online: %d / %d", #mods_list, minimum_many_mods)
             lastrestid = 1
         elseif from == 2 then
-            extra_info = "Mod detected: **" .. mod_detected .. "**"
+            extra_info = "Mod detected: **".. mod_detected .."**"
             lastrestid = 2
         elseif from  == 3 then 
             extra_info = string.format("Rest until: %s (%s)", end_schedule, schedule_zone)
