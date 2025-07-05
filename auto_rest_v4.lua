@@ -481,8 +481,8 @@ function restSpecificMod()
             local status, value = haveSame(specific_mod_list, mods_list)
             while status do 
                 getBot(captain).custom_status = "SpecificMod"
-                webhookRest(getBot().name, 2)
                 mod_detected = value
+                webhookRest(getBot().name, 2)
                 disconnectBot()
                 sleep(delay_banrate * 60 * 1000)
                 getModList()
