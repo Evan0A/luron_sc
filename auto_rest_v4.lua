@@ -1,4 +1,4 @@
-version = 19
+version = 20
 print("version "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -214,15 +214,13 @@ function webhookRest(nameBot, from)
         if getBot().index == captain then 
             if whrestdone and lastrestid ~= from then 
                 wh:edit(midrest)
-                whrestdone = true
                 lastrestid = from
-                if edit_message_reconnect then 
-                    midrest = wh.message_i
-                end
+                midrest = wh.message_id
             elseif not whrestdone then
                 wh:send()
                 whrestdone = true 
                 lastrestid = from
+                midrest = wh.message_id
             end
         end 
     end 
@@ -331,7 +329,8 @@ function cekDouble(arr, val)
     return false 
 end
  
-function getCaptain()
+function getCaptain(bool)
+    bool = bool or false
     local botCount = #getBots()
     local function cekRunning()
         for i = 1, botCount do
@@ -362,12 +361,17 @@ function getCaptain()
     captain = bot_indexs[math.ceil(#bot_indexs / 2)]
     if getBot().index == captain then 
         print("done, captain rest: "..getBot(captain).name)
+        if bool then
+            getUserData(true)
+            getModList()
+        end
     else 
         getBot().custom_status = string.format("Following captain(%s)", getBot(captain).name)
     end
 end
 
-function getUserData()
+function getUserData(bool)
+    bool = bool or false
     local data = getHttp(access_url)
     local found = false
     for _, users in pairs(data.access_list) do
@@ -378,8 +382,10 @@ function getUserData()
                 enable = true
                 api = tostring(data.api)
                 reason = "License approved, welcome "..myUsername
-                webhookAny("Username valid, Thanks for buying NEXORA Script!<:pepeheart:1368523385755144223>")
-                print(reason)
+                if not bool then
+                    webhookAny("Username valid, Thanks for buying NEXORA Script!<:pepeheart:1368523385755144223>")
+                    print(reason)
+                end
                 return true 
             else
                 local year, month, day = users.expired:match("(%d+)%-(%d+)%-(%d+)")
@@ -395,15 +401,16 @@ function getUserData()
                     enable = false
                     reason = "Expired script license"
                     print(reason)
-                    webhookAny("It seem your license has been expired, script expired from: "..users.expired)
+                    webhookAny("It seem your license has been expired, script expired from: "..users.expired..", with user: "..myUsername)
                     return false
                 else 
                     enable = true
                     api = tostring(data.api)
                     reason = "License approved, welcome "..myUsername
-                    webhookAny("Username valid, Thanks for buying NEXORA Script!<:pepeheart:1368523385755144223>")
-                    print(reason)
-                    api = data.api 
+                    if not bool then 
+                        webhookAny("Username valid, Thanks for buying NEXORA Script!<:pepeheart:1368523385755144223>")
+                        print(reason)
+                    end 
                     return true 
                 end
             end 
@@ -508,7 +515,7 @@ function restSpecificMod()
             if getBot(captain).custom_status == "SpecificMod" and not getBot(captain):isRunningScript() then 
                 getBot().custom_status = "Getting new captain"
                 sleep(1000)
-                getCaptain()
+                getCaptain(true)
             end
         end
     end 
