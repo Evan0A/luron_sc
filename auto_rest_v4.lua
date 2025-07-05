@@ -1,4 +1,4 @@
-version = 18
+version = 19
 print("version "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -499,7 +499,6 @@ function restSpecificMod()
                 sleep(delay_specific_mod * 60 * 1000)
                 getModList()
                 status, value = haveSame(specific_mod_list, mods_list)
-                end
             end 
         else 
             while getBot(captain).custom_status == "SpecificMod" and getBot(captain):isRunningScript() do 
