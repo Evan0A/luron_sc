@@ -1,4 +1,4 @@
-version = 2
+version = 3
 
 auto_rest_many_mods = true
 minimum_many_mods = 5
