@@ -1,5 +1,5 @@
-version = 14
-
+version = 15
+print("version "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
 
@@ -666,22 +666,13 @@ function restSchedule()
             if getBot().index == captain then 
                 webhookRest(getBot().name, 3)
                 getBot(captain).custom_status = "Schedule"
-                webhookRest(getBot().name, 3)
-                disconnectBot()
-                sleep(delay_schedule * 1000 * 60)
-            else 
-                while getBot(captain).custom_status == "Schedule" and getBot(captan):isRunningScript() do
-                    disconnectBot()
-                    sleep(delay_schedule * 1000 * 62)
-                    if script_mode == "ROTATION" then 
-                        rotation.enabled = false 
-                    end 
-                end 
-                if getBot(captain).custom_status == "Schedule" and not getBot(captan):isRunningScript() then 
-                    getBot().custom_status = "Getting new captain"
-                    sleep(1000)
-                    getCaptain()
-                end
+            end
+            disconnectBot()
+            sleep(delay_schedule * 1000 * 60)
+            if getBot(captain).custom_status == "Schedule" and not getBot(captan):isRunningScript() then 
+                getBot().custom_status = "Getting new captain"
+                sleep(1000)
+                getCaptain()
             end 
         end
     end
