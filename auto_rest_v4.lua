@@ -1,4 +1,4 @@
-version = 16
+version = 17
 print("version "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -470,14 +470,14 @@ function restManyMods()
                 end
             end
         else 
-            while getBot(captain).custom_status == "ManyMod" and getBot(captan):isRunningScript() do 
+            while getBot(captain).custom_status == "ManyMod" and getBot(captain):isRunningScript() do 
                 disconnectBot()
                 sleep(delay_many_mods * 60 * 1000)
                 if script_mode == "ROTATION" then 
                     rotation.enabled = false
                 end
             end
-            if getBot(captain).custom_status == "ManyMod" and not getBot(captan):isRunningScript() then 
+            if getBot(captain).custom_status == "ManyMod" and not getBot(captain):isRunningScript() then 
                 getBot().custom_status = "Getting new captain"
                 sleep(1000)
                 getCaptain()
@@ -499,19 +499,17 @@ function restSpecificMod()
                 sleep(delay_banrate * 60 * 1000)
                 getModList()
                 status, value = haveSame(specific_mod_list, mods_list)
-                if script_mode == "ROTATION" then 
-                rotation.enabled = false
                 end
             end 
         else 
-            while getBot(captain).custom_status == "SpecificMod" and getBot(captan):isRunningScript() do 
+            while getBot(captain).custom_status == "SpecificMod" and getBot(captain):isRunningScript() do 
                 disconnectBot()
                 sleep(delay_banrate * 61 * 1000)
                 if script_mode == "ROTATION" then 
                     rotation.enabled = false
                 end
             end 
-            if getBot(captain).custom_status == "SpecificMod" and not getBot(captan):isRunningScript() then 
+            if getBot(captain).custom_status == "SpecificMod" and not getBot(captain):isRunningScript() then 
                 getBot().custom_status = "Getting new captain"
                 sleep(1000)
                 getCaptain()
@@ -536,14 +534,14 @@ function restPlayer()
                 end 
             end
         else 
-            while getBot(captain).custom_status == "Player" and getBot(captan):isRunningScript() do 
+            while getBot(captain).custom_status == "Player" and getBot(captain):isRunningScript() do 
                 disconnectBot()
                 sleep(delay_player* 60 * 1000)
                 if script_mode == "ROTATION" then 
                     rotation.enabled = false
                 end
             end 
-            if getBot(captain).custom_status == "Player" and not getBot(captan):isRunningScript() then
+            if getBot(captain).custom_status == "Player" and not getBot(captain):isRunningScript() then
                 getBot().custom_status = "Getting new captain"
                 
                 sleep(1000)
@@ -569,14 +567,14 @@ function restBanrate()
                 end 
             end
         else 
-            while getBot(captain).custom_status == "Banrate" and getBot(captan):isRunningScript() do 
+            while getBot(captain).custom_status == "Banrate" and getBot(captain):isRunningScript() do 
                 disconnectBot()
                 sleep(delay_specific_mod * 62 * 1000)
                 if script_mode == "ROTATION" then 
                     rotation.enabled = false
                 end
             end 
-            if getBot(captain).custom_status == "Banrate" and not getBot(captan):isRunningScript() then 
+            if getBot(captain).custom_status == "Banrate" and not getBot(captain):isRunningScript() then 
                 getBot().custom_status = "Getting new captain"
                 sleep(1000)
                 getCaptain()
