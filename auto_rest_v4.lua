@@ -1,4 +1,4 @@
-version = 11
+version = 12
 
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -449,7 +449,7 @@ function reconnect()
             getBot().auto_reconnect = true
         else 
             sleep(500)
-            getBot(captain).custom_status == "Online" then 
+            getBot().custom_status == "Online" then 
             getBot().auto_reconnect = true
             if script_mode == "ROTATION" then 
                 rotation.enabled = true
