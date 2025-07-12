@@ -1,4 +1,4 @@
-version = 2
+version = 3
 print("version: "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -36,11 +36,11 @@ cpu_minimum = 100
 
 check_delay = 2
 execute_delay = 1000 -- milisecond
-delay_many_mods = 2 --minutes 
-delay_specific_mod = 2 -- minutes
-delay_schedule = 1 -- minutes
-delay_banrate = 1
-delay_player = 1
+delay_many_mods = 5 --minutes 
+delay_specific_mod = 5 -- minutes
+delay_schedule = 2 -- minutes
+delay_banrate = 5
+delay_player = 5
 
 
 
@@ -1403,10 +1403,7 @@ function startThisSoGoodScriptAnjayy()
     if enable then 
         sleep(execute_delay * getBot().index)
         if script_mode:upper() == "ANY" or script_mode == "" then 
-            lastCheckedMinute = -1
-            if getBot().index == captain then 
-                restAll()
-            end
+            local lastCheckedMinute = -1
             while true do 
                 local now = os.date("*t")
                 local nowMin = now.hour * 60 + now.min  -- menit total sejak tengah malam
