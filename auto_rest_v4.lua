@@ -1,4 +1,4 @@
-
+print("VERSION: 4")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -25,15 +25,10 @@ minimum_banrate = 2.0
 
 use_webhook = true
 webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
-edit_message_reconnect = true -- true if edit message rest to reconnect/false if send new message
+edit_message_reconnect = false -- true if edit message rest to reconnect/false if send new message
 
 hide_bot_identity = false
 reconnect_after_rest = true
-custom_captain = false 
-captain_index = 1
-cpu_stopper = false
-cpu_minimum = 100
-
 check_delay = 2
 execute_delay = 1000 -- milisecond
 delay_many_mods = 5 --minutes 
@@ -45,6 +40,10 @@ delay_player = 5
 
 
 -----[===== CODE AREA =====]-----
+cpu_stopper = false
+cpu_minimum = 100
+custom_captain = false 
+captain_index = 1
 -- Module options:
 local always_try_using_lpeg = true
 local register_global_module_table = false
@@ -745,18 +744,18 @@ last_banrate = 0.0
 last_player = 0
 captainStatus = {"Online", "ManyMod", "SpecificMod", "Banrate", "Schedule", "Player"}
 
-cekplant = false 
-cekpnb = false
-cekharvest = false
-cekdropseed = false
-cekdroppack = false
+--webhook 
+wh_mod_detected = ""
+wh_many_mod = -1 
+wh_player = -1 
+wh_banrate = -1
 
 function getHttp(url)
     local client = HttpClient.new()
     client.url = url
     local result = client:request()
     if result.error ~= 0 then
-        webhookAny("error result: " ..result:getError().." | link: "..url)
+        return true
     else
         if result.status == 200 then
             local success, data = pcall(json.decode, result.body)
@@ -827,15 +826,18 @@ function webhookRest(nameBot, from)
         local extra_info = ""
         if from == 1 then
             extra_info = string.format("👥 Mods Online: %d / %d", #mods_list, minimum_many_mods)
+            wh_many_mod = #mods_list
             lastrestid = 1
         elseif from == 2 then
             extra_info = string.format("Mod detected: **%s**", mod_detected)
+            wh_mod_detected = mod_detected
             lastrestid = 2
         elseif from  == 3 then 
             extra_info = string.format("Rest until: %s (%s)", end_schedule, schedule_zone)
             lastrestid = 3
         elseif from  == 4 then 
             extra_info = string.format("Rest until Ban-rate lower, ban-rate: %f", banrate)
+            wh_banrate = banrate
             lastrestid = 4
         elseif from  == 5 then 
             extra_info = ""
@@ -844,6 +846,7 @@ function webhookRest(nameBot, from)
             else 
                 extra_info = string.format("Rest until player count get higher: %d / %d", player_count, minimum_player)
             end
+            wh_player = player_count
             lastrestid = 5
         end
         wh.embed1.use = true
@@ -857,7 +860,15 @@ function webhookRest(nameBot, from)
         wh.embed1.footer.text = "Made with love by NEXORA"
         wh.embed1.footer.icon_url = image_url
         if getBot().index == captain then 
-            if whrestdone and lastrestid ~= from then 
+            if whrestdone and lastrestid == 2 and wh_mod_detected ~= mod_detected then 
+                wh:edit(midrest)
+                lastrestid = from
+                midrest = wh.message_id
+            elseif whrestdone and lastrestid == 1 and wh_many_mod ~= #mods_list then 
+                wh:edit(midrest)
+                lastrestid = from
+                midrest = wh.message_id
+            elseif whrestdone and lastrestid ~= from then 
                 wh:edit(midrest)
                 lastrestid = from
                 midrest = wh.message_id
@@ -959,7 +970,7 @@ end
 function haveSame(arr1, arr2)
     for _, a1 in pairs(arr1) do 
         for _, a2 in pairs(arr2) do 
-            if a1 == a2 then 
+            if a1:upper() == a2:upper() then 
                 return true, a1
             end 
         end 
@@ -993,19 +1004,6 @@ end
 function getCaptain(bool)
     bool = bool or false
     local botCount = #getBots()
-    if custom_captain and not bool then 
-        captain = captain_index
-        if getBot().index == captain then 
-            print("done, captain rest: "..getBot(captain).name)
-            if bool then
-                getUserData(true)
-                getModList()
-            end
-        else 
-            getBot().custom_status = string.format("Following captain(%s)", getBot(captain).name)
-        end
-        return true
-    end
     local function cekRunning()
         for i = 1, botCount do
             local Cstatus = tostring(getBot(i).custom_status)
@@ -1018,9 +1016,7 @@ function getCaptain(bool)
     end
     local status, num = cekRunning()
     if status then 
-        print("getCaptain status true | "..getBot().name)
         captain = num
-        print("captain: "..captain)
         return true
     end
     sleep(10000)
@@ -1034,7 +1030,7 @@ function getCaptain(bool)
     sleep(5000)
     captain = bot_indexs[math.ceil(#bot_indexs / 2)]
     if getBot().index == captain then 
-        print("done, captain rest: "..getBot(captain).name)
+        print("changed captain rest: "..getBot(captain).name)
         if bool then
             getUserData(true)
             getModList()
@@ -1102,6 +1098,31 @@ function getUserData(bool)
         return false
     end
 end 
+function cekModInput()
+    local pair_mods = {
+        MISHTHIOS = "JACKBOWE",
+        JACKBOWE = "MISHTHIOS",
+        KAILYX = "SOLABOWE",
+        SOLABOWE = "KAILYX",
+        PINUSKI = "CAITRIONA",
+        CAITRIONA = "PINUSKI",
+        MONIUET = "OILLA",
+        OILLA = "MONIUET",
+        WINDYPLAY = "IPLAYFULS",
+        IPLAYFULS = "WINDYPLAY",
+        ZOHROS = "STYX",
+        STYX = "ZOHROS",
+    }
+
+    for _, mod in pairs(mods_list) do
+        local mod_upper = mod:upper()
+        local pasangannya = pair_mods[mod_upper]
+        if pasangannya and not isIn(mods_list, pasangannya) then
+            table.insert(mods_list, pasangannya)
+        end
+    end
+end
+
 
 function getModList()
     if getBot().index == captain then 
@@ -1382,7 +1403,6 @@ function startThisSoGoodScriptAnjayy()
     if getBot().index == captain then 
         getBot().custom_status = "wait"
         sleep(2000)
-        print(get_cpu_usage())
         if not getUserData(false) then 
             getBot().custom_status = "invalid"
             sleep(2000)
