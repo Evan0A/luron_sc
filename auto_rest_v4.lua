@@ -1,4 +1,5 @@
-
+version = 1
+print("version: "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
 
@@ -83,11 +84,21 @@ function json.encode(tbl)
 end
 
 function json.decode(str)
-  local f, err = load("return " .. str)
-  if not f then return nil, err end
-  local ok, result = pcall(f)
-  if not ok then return nil, result end
-  return result
+    -- ganti kata kunci JSON jadi versi Lua
+    str = str:gsub("null", "nil")
+             :gsub("true", "true")
+             :gsub("false", "false")
+
+    -- ganti kutip ganda jadi kutip satu (karena load butuh string Lua)
+    str = str:gsub('"(.-)"', function(s)
+        return "'" .. s:gsub("'", "\\'") .. "'"
+    end)
+
+    local f, err = load("return " .. str)
+    if not f then return nil, err end
+    local ok, result = pcall(f)
+    if not ok then return nil, result end
+    return result
 end
 
 -- Sekarang kamu bisa langsung pakai json.encode() dan json.decode()
