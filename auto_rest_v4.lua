@@ -1,5 +1,5 @@
-version = 3
-print("version: "..version)
+
+---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
 
@@ -16,22 +16,22 @@ schedule_list = {
 
 auto_rest_player = true 
 minimum_player = 30000
-maximum_player = 80000
+maximum_player = 130000
 
 auto_rest_banrate = true 
 minimum_banrate = 2.0 
 
---====================--
+---[=== SETTINGS ===]---
 
 use_webhook = true
 webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
+edit_message_reconnect = true -- true if edit message rest to reconnect/false if send new message
 
 hide_bot_identity = false
 reconnect_after_rest = true
-edit_message_reconnect = true -- true if edit message rest to reconnect/false if send new message
 custom_captain = false 
 captain_index = 1
-cpu_stopper = true 
+cpu_stopper = false
 cpu_minimum = 100
 
 check_delay = 2
@@ -44,7 +44,7 @@ delay_player = 5
 
 
 
------ ===== CODE AREA ===== -----
+-----[===== CODE AREA =====]-----
 -- Module options:
 local always_try_using_lpeg = true
 local register_global_module_table = false
