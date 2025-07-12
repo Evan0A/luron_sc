@@ -1,4 +1,4 @@
-version = 1
+version = 2
 print("version: "..version)
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -66,8 +66,6 @@ local json = { version = "dkjson 2.5" }
 if register_global_module_table then
   _G[global_module_name] = json
 end
-
-local _ENV = nil -- blocking globals in Lua 5.2
 
 pcall (function()
   -- Enable access to blocked metatables.
