@@ -1,4 +1,4 @@
-print("VERSION: 7")
+print("VERSION: 8")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1011,6 +1011,8 @@ end
  
 function getCaptain(bool)
     bool = bool or false
+    getBot().custom_status = ""
+    sleep(1000)
     local botCount = #getBots()
     local function cekRunning()
         for i = 1, botCount do
@@ -1418,8 +1420,6 @@ function restAll()
 end
 
 function startThisSoGoodScriptAnjayy()
-    getBot().custom_status = ""
-    sleep(1000)
     if getBot().index == captain then 
         getBot().custom_status = "wait"
         sleep(2000)
