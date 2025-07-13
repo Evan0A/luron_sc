@@ -1,4 +1,4 @@
-print("VERSION: 8")
+print("VERSION: 9")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1107,6 +1107,7 @@ function getUserData(bool)
         webhookAny(reason)
         return false
     end
+    sleep(5000)
 end 
 function cekModInput()
     local pair_mods = {
@@ -1191,7 +1192,7 @@ function restManyMods()
                 end
             end
         else 
-            while (getBot(captain).custom_status == "ManyMod" or isIn(captainStatus, getBot(captain).custom_status)) and getBot(captain):isRunningScript() do 
+            while (getBot(captain).custom_status == "ManyMod" or isIn(captainStatus, getBot(captain).custom_status) and getBot(captain).custom_status ~= "Online") and getBot(captain):isRunningScript() do 
                 disconnectBot()
                 sleep(delay_many_mods * 60 * 1000)
                 if script_mode == "ROTATION" then 
@@ -1223,7 +1224,7 @@ function restSpecificMod()
                 status, value = haveSame(specific_mod_list, mods_list)
             end 
         else 
-            while (getBot(captain).custom_status == "SpecificMod" or isIn(captainStatus, getBot(captain).custom_status)) and getBot(captain):isRunningScript() do 
+            while (getBot(captain).custom_status == "SpecificMod" or isIn(captainStatus, getBot(captain).custom_status) and getBot(captain).custom_status ~= "Online") and getBot(captain):isRunningScript() do 
                 disconnectBot()
                 sleep(delay_specific_mod * 61 * 1000)
             end 
@@ -1253,7 +1254,7 @@ function restPlayer()
                 end 
             end
         else 
-            while (getBot(captain).custom_status == "Player" or isIn(captainStatus, getBot(captain).custom_status)) and getBot(captain):isRunningScript() do 
+            while (getBot(captain).custom_status == "Player" or isIn(captainStatus, getBot(captain).custom_status) and getBot(captain).custom_status ~= "Online") and getBot(captain):isRunningScript() do 
                 disconnectBot()
                 sleep(delay_player* 60 * 1000)
                 if script_mode == "ROTATION" then 
@@ -1287,7 +1288,7 @@ function restBanrate()
                 end 
             end
         else 
-            while (getBot(captain).custom_status == "Banrate" or isIn(captainStatus, getBot(captain).custom_status)) and getBot(captain):isRunningScript() do 
+            while (getBot(captain).custom_status == "Banrate" or isIn(captainStatus, getBot(captain).custom_status) and getBot(captain).custom_status ~= "Online") and getBot(captain):isRunningScript() do 
                 disconnectBot()
                 sleep(delay_specific_mod * 62 * 1000)
                 if script_mode == "ROTATION" then 
