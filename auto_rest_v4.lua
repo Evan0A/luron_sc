@@ -803,6 +803,19 @@ local function get_cpu_usage()
     end 
 end
 
+function selisih(var1, var2, diff)
+    local sum = 0 
+    if var1 > var2 then 
+        sum = var1 - var2 
+    else 
+        sum = var2 - var1
+    end 
+    if sum >= diff then
+        return true 
+    end 
+    return false
+end 
+
 function webhookRest(nameBot, from)
     if use_webhook then 
         wh = Webhook.new(webhook_link)
@@ -866,25 +879,20 @@ function webhookRest(nameBot, from)
         wh.embed1.footer.text = "Made with love by NEXORA"
         wh.embed1.footer.icon_url = image_url
         if getBot().index == captain then 
-            if whrestdone and lastrestid == 2 and wh_mod_detected ~= mod_detected then 
-                wh:edit(midrest)
-                lastrestid = from
-                midrest = wh.message_id
-                wh_mod_detected = mod_detected
-            elseif whrestdone and lastrestid == 1 and wh_many_mod ~= #mods_list then 
-                wh:edit(midrest)
-                lastrestid = from
-                midrest = wh.message_id
-                wh_many_mod = #mods_list
-            elseif whrestdone and lastrestid ~= from then 
-                wh:edit(midrest)
-                lastrestid = from
-                midrest = wh.message_id
-            elseif not whrestdone then
+            if not whrestdone then 
                 wh:send()
                 whrestdone = true 
-                lastrestid = from
                 midrest = wh.message_id
+            elseif whrestdone and from ~= lastrestid then 
+                wh:edit(midrest)
+            elseif whrestdone and from == lastrestid and lastrestid == 1 and wh_many_mod ~= #mods_list then 
+                wh:edit(midrest)
+                wh_many_mod = #mods_list
+            elseif whrestdone and from == lastrestid and lastrestid == 2 and wh_mod_detected ~= mod_detected then 
+                wh:edit(midrest)
+                wh_mod_detected = mod_detected
+            elseif whrestdone and from == lastrestid and lastrestid == 5 and selisih(wh_player, player_count, 2000) then wh:edit(midrest)
+                wh_player = player_count
             end
         end 
     end 
