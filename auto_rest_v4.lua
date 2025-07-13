@@ -1,4 +1,4 @@
-print("VERSION: 6")
+print("VERSION: 7")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1418,6 +1418,8 @@ function restAll()
 end
 
 function startThisSoGoodScriptAnjayy()
+    getBot().custom_status = ""
+    sleep(1000)
     if getBot().index == captain then 
         getBot().custom_status = "wait"
         sleep(2000)
