@@ -1,4 +1,4 @@
-print("VERSION: 1")
+print("VERSION: 2")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1450,7 +1450,7 @@ function startThisSoGoodScriptAnjayy()
         while true do 
             restAll()
             print("cpu check: " ..get_cpu_usage())
-            listenEvent(1000)
+            listenEvents(1000)
         end
     end
 end
