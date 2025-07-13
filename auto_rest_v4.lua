@@ -1,4 +1,4 @@
-print("VERSION: 3")
+print("VERSION: 5")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -762,7 +762,7 @@ function getHttp(url)
     else
         if result.status == 200 then
             local success, data = pcall(json.decode, result.body)
-            if success then
+            if success and type(data) == "table" then
                 return data
             else
                 webhookAny("Error decoding http data, status: "..success.." data: "..data)
