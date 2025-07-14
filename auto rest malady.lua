@@ -1,4 +1,4 @@
-print("VERSION: 7")
+print("VERSION: 8")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -991,6 +991,12 @@ function webhookAny(cont)
     end
 end
 
+function webhookMalady(cont)
+    wh = Webhook.new(webhook_malady)
+    wh.content = cont 
+    wh:send() 
+end
+
 function cpuStopper() 
     if cpu_stopper then 
         local mycpu = get_cpu_usage()
@@ -1594,6 +1600,7 @@ function cekMalady()
         if turn_on_rotation then 
             getBot().rotation.enabled = false 
         end
+        webhookMalady("kena malady 1/2/0, name: "..getBot().name)
         local randomStr = generateWorld(8)
         warp(randomStr, "")
         malady_world_now = randomStr
