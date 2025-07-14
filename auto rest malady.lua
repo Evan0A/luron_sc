@@ -1,4 +1,4 @@
-print("VERSION: 8")
+print("VERSION: 9")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1567,12 +1567,16 @@ malady_world_now = ""
 
 function removeSickness()
     if getBot().malady == 1 or getBot().malady == 2 then 
+        if turn_on_rotation then 
+            getBot().rotation.enabled = false
+        end
         math.randomseed(os.time())
         local randomStr = generateWorld(8)
         warp(randomStr, "")
         if malady_world_now == "" then 
             malady_world_now = randomStr
         end
+        webhookMalady(getBot().name.." Got gems cut/torn punching, removing it now")
         while getBot().malady == 1 and getBot().malady == 2 do 
             restAll()
             listenEvents(1000)
@@ -1600,19 +1604,20 @@ function cekMalady()
         if turn_on_rotation then 
             getBot().rotation.enabled = false 
         end
-        webhookMalady("kena malady 1/2/0, name: "..getBot().name)
+        webhookMalady("Bot trying to get grumbleteeth/chicken feet, bot: "..getBot().name..")
         local randomStr = generateWorld(8)
         warp(randomStr, "")
         malady_world_now = randomStr
         while getBot().malady ~= 4 and getBot().malady ~= 3 or getBot().malady == 0 do 
             restAll()
             listenEvents(100)
-            if getBot():getWorld().name ~= malady_world_now then 
+            if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
                 warp(malady_world_now)
             end
         end
-        turnOnRotation()
+        webhookMalady("Bot finally got grumbleteeth/chicken feet, bot: "..getBot().name..", Continue working...")
     end
+    turnOnRotation()
     malady_world_now = ""
     return true
 end
@@ -1646,6 +1651,7 @@ function startThisSoGoodScriptAnjayy()
         while true do
             if custom_mode then 
                 cekMalady()
+                turnOnRotation()
             end
             restAll()
             print("cpu check: " ..get_cpu_usage())
