@@ -1,4 +1,4 @@
-print("VERSION: 6")
+print("VERSION: 7")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1554,7 +1554,6 @@ function takePickaxe()
         getBot().wear_storage = world_pickaxe
         getBot().auto_wear = true 
         sleep(3000)
-        end 
     end
 end
 
