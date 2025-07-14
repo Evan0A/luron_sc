@@ -1,4 +1,4 @@
-print("VERSION: 9")
+print("VERSION: 10")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1460,11 +1460,7 @@ function sare(varlist, netid)
     unlistenEvents()
 end 
 
-function delayCheck()
-    addEvent(Event.varianlist, sare)
-    listenEvents(100)
-end
-
+addEvent(Event.varianlist, sare)
 
 local nuked, stuck = 0, false
 function warp(world, id)
@@ -1475,7 +1471,7 @@ function warp(world, id)
     if not getBot():isInWorld(world) then
         getBot():leaveWorld()
         sleep(2000)
-        while not getBot():isInWorld(world) and not nuked do
+        while not getBot():isInWorld(world) do
             while getBot().status ~= BotStatus.online do
                 getBot().auto_reconnect = true
                 sleep(5000)
