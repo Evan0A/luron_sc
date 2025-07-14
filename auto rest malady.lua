@@ -1459,10 +1459,14 @@ function sare(varlist, netid)
     sleep(check_delay * 60 * 1000)
     unlistenEvents()
 end 
-addEvent(Event.varianlist, sare)
+
+function delayCheck()
+    addEvent(Event.varianlist, sare)
+    listenEvents(100)
+end
 
 
-local nuked, stuck
+local nuked, stuck = 0, false
 function warp(world, id)
     world = world:upper()
     id = id or ''
@@ -1471,22 +1475,17 @@ function warp(world, id)
     if not getBot():isInWorld(world) then
         getBot():leaveWorld()
         sleep(2000)
-        addEvent(Event.variantlist, function(var, netid)
-            if var:get(0):getString() == 'OnConsoleMessage' then
-                if var:get(1):getString() == 'That world is inaccessible.' then
-                    nuked = true
-                    unlistenEvents()
-                end
-            end
-        end)
         while not getBot():isInWorld(world) and not nuked do
             while getBot().status ~= BotStatus.online do
                 getBot().auto_reconnect = true
                 sleep(5000)
             end
             getBot():warp(world, id)
-            listenEvents(math.floor(delayWarp / 1000))
             sleep(delay_warp)
+            nuked = nuked + 1
+            if nuked == 5 then 
+                return false
+            end
         end
         removeEvent(Event.variantlist)
     end
@@ -1501,6 +1500,7 @@ function warp(world, id)
             end
         end
     end
+    return true
 end
 
 local function generateWorld(length)
