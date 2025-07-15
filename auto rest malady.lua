@@ -764,6 +764,7 @@ banrate = 0.0
 last_banrate = 0.0 
 last_player = 0
 captainStatus = {"Online", "ManyMod", "SpecificMod", "Banrate", "Schedule", "Player"}
+maladySafe = {3,4}
 
 --http catch -- 
 total_521 = 0
@@ -1022,9 +1023,12 @@ function haveSame(arr1, arr2)
 end
 
 function isIn(arr, val)
+    val = tostring(val)
     for _, key in pairs(arr) do 
-        if key:upper() == val:upper() then 
-            return true 
+        if type(val) == "string" then 
+            if key:upper() == val:upper() then 
+                return true 
+            end 
         end 
     end 
     return false 
@@ -1574,7 +1578,7 @@ end
 function cekMalady() 
     removeSickness()
     math.randomseed(os.time()) 
-    if tonumber(getBot().malady) ~= 3 and tonumber(getBot().malady) ~= 4 then 
+    if not isIn(maladySafe, getBot().malady) then 
         if turn_on_rotation then 
             getBot().rotation.enabled = false 
         end
@@ -1583,7 +1587,7 @@ function cekMalady()
         warp(randomStr, "")
         malady_world_now = randomStr
         getBot().auto_malady.enabled = true
-        while tonumber(getBot().malady) ~= 4 and tonumber(getBot().malady) ~= 3 do 
+        while not isIn(maladySafe, getBot().malady) do 
             restAll()
             listenEvents(100)
             if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
@@ -1593,9 +1597,6 @@ function cekMalady()
                 break 
             end
         end 
-        if getBot().malady == 3 or getBot().malady == 4 then 
-            break 
-        end
         webhookMalady("Bot finally got grumbleteeth/chicken feet, bot: "..getBot().name..", Continue working...")
     end
     turnOnRotation()
