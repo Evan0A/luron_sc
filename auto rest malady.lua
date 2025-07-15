@@ -1,4 +1,4 @@
-print("VERSION: 4")
+print("VERSION: 6")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -52,9 +52,6 @@ spam_messages = {
 }
 
 webhook_malady = "https://discord.com/api/webhooks/1114483559114215476/HO4ARS2PrtmvRPO1_T2pvKAdJocqcx9u_K_4ZNMl4nR-H6a5Tl_yIdfk8TGcV6TOR0C3"
-
-auto_take_vial = false
-world_vial = "world|door"
 
 auto_take_pickaxe = false
 world_pickaxe = "world|door"
@@ -1479,19 +1476,8 @@ function warp(world, id)
             getBot():warp(world, id)
             sleep(delay_warp)
             nuked = nuked + 1
-            if nuked == 5 then 
+            if nuked >= 5 then 
                 return false
-            end
-        end
-    end
-    if getBot():isInWorld(world) and id ~= '' and getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 then
-        local count = 0
-        while getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 and not stuck do
-            getBot():warp(world, id)
-            sleep(delay_warp)
-            count = count + 1
-            if count == 3 then
-                stuck = true
             end
         end
     end
@@ -1527,11 +1513,6 @@ local function FirstWork()
     malady.auto_grumbleteeth = true
     malady.auto_refresh = true
     malady.auto_chicken_feet = true
-
-    if auto_take_vial then 
-        getBot().auto_malady.auto_vial = true
-        getBot().auto_malady.storage = world_vial
-    end
 
     local spam = getBot().auto_spam
     spam.random_interval = true
@@ -1570,7 +1551,7 @@ function removeSickness()
         warp(randomStr, "")
         malady_world_now = randomStr
         webhookMalady(getBot().name.." Got gems cut/torn punching, removing it now")
-        while getBot().malady == 1 and getBot().malady == 2 do 
+        while getBot().malady == 1 or getBot().malady == 2 do 
             restAll()
             listenEvents(1000)
             if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
@@ -1593,7 +1574,7 @@ end
 function cekMalady() 
     removeSickness()
     math.randomseed(os.time())
-    if getBot().malady ~= 3 and getBot().malady ~= 4 then 
+    if getBot().malady ~= 3 or getBot().malady ~= 4 then 
         if turn_on_rotation then 
             getBot().rotation.enabled = false 
         end
@@ -1602,7 +1583,7 @@ function cekMalady()
         warp(randomStr, "")
         malady_world_now = randomStr
         getBot().auto_malady.enabled = true
-        while getBot().malady ~= 4 and getBot().malady ~= 3 do 
+        while getBot().malady ~= 4 or getBot().malady ~= 3 do 
             restAll()
             listenEvents(100)
             if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
