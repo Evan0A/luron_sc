@@ -1,4 +1,4 @@
-print("VERSION: 11")
+print("VERSION: 12")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1550,7 +1550,7 @@ function removeSickness()
         if turn_on_rotation then 
             getBot().rotation.enabled = false
         end
-        getBot().auto_malady.enabled = false
+        getBot().auto_malady.enabled = true
         math.randomseed(os.time())
         local randomStr = generateWorld(8)
         warp(randomStr, "")
@@ -1587,7 +1587,6 @@ function cekMalady()
         local randomStr = generateWorld(8)
         warp(randomStr, "")
         malady_world_now = randomStr
-        getBot().auto_malady.enabled = true
         while not isIn(maladySafe, getBot().malady) do 
             restAll()
             listenEvents(100)
@@ -1602,7 +1601,7 @@ function cekMalady()
     end
     turnOnRotation()
     malady_world_now = ""
-    getBot().auto_malady.enabled = false
+    getBot().auto_malady.enabled = true
     return true
 end
 
@@ -1626,7 +1625,7 @@ function startThisSoGoodScriptAnjayy()
             getBot():stopScript()
         end 
     end 
-    
+    getBot().auto_malady.enabled = true
     if enable then 
         sleep(execute_delay * getBot().index)
         if auto_take_pickaxe then 
