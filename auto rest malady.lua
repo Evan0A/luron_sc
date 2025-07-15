@@ -1,4 +1,4 @@
-print("VERSION: 8")
+print("VERSION: 9")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1573,8 +1573,8 @@ end
 
 function cekMalady() 
     removeSickness()
-    math.randomseed(os.time())
-    if getBot().malady ~= 3 and getBot().malady ~= 4 then 
+    math.randomseed(os.time()) 
+    if tonumber(getBot().malady) ~= 3 and tonumber(getBot().malady) ~= 4 then 
         if turn_on_rotation then 
             getBot().rotation.enabled = false 
         end
@@ -1583,7 +1583,7 @@ function cekMalady()
         warp(randomStr, "")
         malady_world_now = randomStr
         getBot().auto_malady.enabled = true
-        while getBot().malady ~= 4 and getBot().malady ~= 3 do 
+        while tonumber(getBot().malady) ~= 4 and tonumber(getBot().malady) ~= 3 do 
             restAll()
             listenEvents(100)
             if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
