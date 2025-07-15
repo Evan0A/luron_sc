@@ -1600,7 +1600,7 @@ function cekMalady()
         if turn_on_rotation then 
             getBot().rotation.enabled = false 
         end
-        webhookMalady("Bot trying to get grumbleteeth/chicken feet, bot: "..getBot().name..")
+        webhookMalady("Bot trying to get grumbleteeth/chicken feet, bot: "..getBot().name)
         local randomStr = generateWorld(8)
         warp(randomStr, "")
         malady_world_now = randomStr
