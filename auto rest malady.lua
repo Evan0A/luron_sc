@@ -1552,6 +1552,7 @@ function removeSickness()
         end
         getBot().auto_malady.enabled = true
         math.randomseed(os.time())
+        getBot().auto_reconnect = true
         local randomStr = generateWorld(8)
         warp(randomStr, "")
         malady_world_now = randomStr
