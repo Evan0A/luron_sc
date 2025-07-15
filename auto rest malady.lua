@@ -1,4 +1,4 @@
-print("VERSION: 7")
+print("VERSION: 8")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1551,7 +1551,7 @@ function removeSickness()
         warp(randomStr, "")
         malady_world_now = randomStr
         webhookMalady(getBot().name.." Got gems cut/torn punching, removing it now")
-        while getBot().malady == 1 or getBot().malady == 2 do 
+        while getBot().malady == 1 or getBot().malady == 2 and getBot().malady ~= 0 do 
             restAll()
             listenEvents(1000)
             if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
@@ -1589,6 +1589,12 @@ function cekMalady()
             if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
                 warp(malady_world_now)
             end
+            if getBot().malady == 3 or getBot().malady == 4 then 
+                break 
+            end
+        end 
+        if getBot().malady == 3 or getBot().malady == 4 then 
+            break 
         end
         webhookMalady("Bot finally got grumbleteeth/chicken feet, bot: "..getBot().name..", Continue working...")
     end
