@@ -1,4 +1,4 @@
-print("VERSION: 2")
+print("VERSION: 3")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1525,7 +1525,6 @@ local function FirstWork()
 
 
     local malady = getBot().auto_malady
-    malady.enabled = true
     malady.auto_grumbleteeth = true
     malady.auto_refresh = true
     malady.auto_chicken_feet = true
@@ -1566,12 +1565,11 @@ function removeSickness()
         if turn_on_rotation then 
             getBot().rotation.enabled = false
         end
+        getBot().auto_malady.enabled = false
         math.randomseed(os.time())
         local randomStr = generateWorld(8)
         warp(randomStr, "")
-        if malady_world_now == "" then 
-            malady_world_now = randomStr
-        end
+        malady_world_now = randomStr
         webhookMalady(getBot().name.." Got gems cut/torn punching, removing it now")
         while getBot().malady == 1 and getBot().malady == 2 do 
             restAll()
@@ -1604,6 +1602,7 @@ function cekMalady()
         local randomStr = generateWorld(8)
         warp(randomStr, "")
         malady_world_now = randomStr
+        getBot().auto_malady.enabled = true
         while getBot().malady ~= 4 and getBot().malady ~= 3 do 
             restAll()
             listenEvents(100)
@@ -1615,6 +1614,7 @@ function cekMalady()
     end
     turnOnRotation()
     malady_world_now = ""
+    getBot().auto_malady.enabled = false
     return true
 end
 
