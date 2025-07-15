@@ -1,4 +1,4 @@
-print("VERSION: 10")
+print("VERSION: 11")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1023,8 +1023,9 @@ function haveSame(arr1, arr2)
 end
 
 function isIn(arr, val)
-    val = tostring(val)
+    local val = tostring(val)
     for _, key in pairs(arr) do 
+        local key = tostring(key)
         if type(val) == "string" then 
             if key:upper() == val:upper() then 
                 return true 
