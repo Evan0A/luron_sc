@@ -1,4 +1,4 @@
-print("VERSION: 3")
+print("VERSION: 4")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1466,12 +1466,12 @@ local nuked, stuck = 0, false
 function warp(world, id)
     world = world:upper()
     id = id or ''
-    nuked = false
+    nuked = 0
     stuck = false
     if not getBot():isInWorld(world) then
         getBot():leaveWorld()
         sleep(2000)
-        while not getBot():isInWorld(world) do
+        while not getBot():isInWorld(world) and nuked < 5 do
             while getBot().status ~= BotStatus.online do
                 getBot().auto_reconnect = true
                 sleep(5000)
@@ -1483,7 +1483,6 @@ function warp(world, id)
                 return false
             end
         end
-        removeEvent(Event.variantlist)
     end
     if getBot():isInWorld(world) and id ~= '' and getBot():getWorld():getTile(getBot().x, getBot().y).fg == 6 then
         local count = 0
