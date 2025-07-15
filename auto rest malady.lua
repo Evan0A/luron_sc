@@ -1586,7 +1586,9 @@ function cekMalady()
         webhookMalady("Bot trying to get grumbleteeth/chicken feet, bot: "..getBot().name)
         local randomStr = generateWorld(8)
         warp(randomStr, "")
+        getBot().auto_malady = true
         malady_world_now = randomStr
+        getBot().auto_reconnect = true
         while not isIn(maladySafe, getBot().malady) do 
             restAll()
             listenEvents(100)
