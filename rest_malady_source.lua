@@ -1,4 +1,4 @@
-print("VERSION: 12")
+print("VERSION: 13")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -58,7 +58,6 @@ world_pickaxe = "world|door"
 
 auto_complete_tutorial = true
 
-delay_cek_malady = 2 --menit
 delay_warp = 10000
 
 
@@ -1456,7 +1455,6 @@ function restAll()
     if restManyMods() and restSpecificMod() and restSchedule() and restBanrate() and restPlayer() then 
         reconnect()
     end
-    listenEvents(1000)
 end
 
 local function FirstWork()
@@ -1514,7 +1512,7 @@ malady_world_now = ""
  -- 1, 2 = torn, gems / sick
  -- 3, 4 = grumble, chicken / safe
 
-function cekMalady(delaycheck, webhook, turn_on_rotation) 
+function cekMalady(webhook, turn_on_rotation) 
     local nuked, stuck = 0, false
     function turnOnRotation()
         if turn_on_rotation then 
@@ -1578,18 +1576,16 @@ function cekMalady(delaycheck, webhook, turn_on_rotation)
             math.randomseed(os.time())
             local randomStr = generateWorld(8)
             warp(randomStr, "")
-            malady_world_now = randomStr
-            print("wolrd remove sick".. malady_world_now)
+            print("wolrd remove sick: "..randomStr)
             webhookMalady(getBot().name.." Got gems cut/torn punching, removing it now")
             while getBot().malady == 1 or getBot().malady == 2 do 
                 restAll()
                 listenEvents(1000)
-                if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
-                    warp(malady_world_now, "")
+                if getBot():getWorld().name ~= randomStr and getBot().status == 1 then 
+                    warp(randomStr, "")
                 end 
             end
         end
-        world_malady_now = ""
         return true
     end
     local maladySafe = {3, 4}
@@ -1605,12 +1601,11 @@ function cekMalady(delaycheck, webhook, turn_on_rotation)
         local randomStr = generateWorld(8)
         warp(randomStr, "")
         getBot().auto_malady = true
-        malady_world_now = randomStr
         getBot().auto_reconnect = true
-        print("wolrd mal"..malady_wolrd_now)
+        print("wolrd mal: "..randomStr)
         while not isInSafe(maladySafe, getBot().malady) do
-            if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
-                warp(malady_world_now)
+            if getBot():getWorld().name ~= randomStr and getBot().status == 1 then 
+                warp(randomStr)
             end
             if getBot().malady == 3 or getBot().malady == 4 then 
                 break 
@@ -1619,7 +1614,6 @@ function cekMalady(delaycheck, webhook, turn_on_rotation)
         webhookMalady("Bot finally got grumbleteeth/chicken feet, bot: "..getBot().name..", Continue working...")
     end
     turnOnRotation()
-    malady_world_now = ""
     getBot().auto_malady.enabled = true
 end
 
@@ -1651,7 +1645,8 @@ function startThisSoGoodScriptAnjayy()
         end
         while true do
             restAll() 
-            cekMalady((delay_cek_malady * 60 * 1000), webhook_malady, turn_on_rotation)
+            cekMalady(webhook_malady, turn_on_rotation)
+            listenEvents(1000)
         end
     end
 end
