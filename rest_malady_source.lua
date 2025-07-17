@@ -1,4 +1,4 @@
-print("VERSION: 5")
+print("VERSION: 6")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -73,8 +73,8 @@ local register_global_module_table = false
 local global_module_name = 'json'
 
 -- global dependencies:
-local pairs, type, tonumber, getmetatable, setmetatable, rawset =
-      pairs, type, tonumber, getmetatable, setmetatable, rawset
+local type, tonumber, getmetatable, setmetatable, rawset =
+      type, tonumber, getmetatable, setmetatable, rawset
 local error, require, pcall, select = error, require, pcall, select
 local floor, huge = math.floor, math.huge
 local strrep, gsub, strsub, strbyte, strchar, strfind, strlen, strformat =
