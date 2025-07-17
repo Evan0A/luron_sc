@@ -1,4 +1,4 @@
-print("VERSION: 21")
+print("VERSION: 23")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = false
 minimum_many_mods = 5
@@ -58,7 +58,7 @@ world_pickaxe = "world|door"
 
 auto_complete_tutorial = true
 
-delay_malady = 1 -- menit
+delay_malady = 2 -- menit
 delay_warp = 10000
 
 
@@ -1586,21 +1586,25 @@ function cekMalady(webhook, turn_on_rotation)
             math.randomseed(os.time())
             local randomStr = generateWorld(8)   
             warp(randomStr, "")
-            print("wolrd remove sick: "..randomStr)
+            print("world remove sick: "..randomStr)
             getBot().auto_malady.enabled = true
             webhookMalady(getBot().name.." Got gems cut/torn punching, removing it now")
             while getBot().malady == 1 or getBot().malady == 2 do
+                while getBot().status ~= 1 do 
+                    sleep(10000)
+                end
                 if getBot():getWorld().name ~= randomStr and getBot().status == 1 then 
                     getBot().auto_malady.enabled = false
                     warp(randomStr, "")
                     getBot().auto_malady.enabled = true
                 end 
-                if countPlayers() >= 1 then
+                if countPlayers() >= 1 and getBot().status == 1  then
                     getBot().auto_malady.enabled = false
                     randomStr = generateWorld(8)
                     warp(randomStr)
                     getBot().auto_malady.enabled = true
                 end
+                restAll()
                 sleep(delay_malady * 60 * 1000)
             end
         end
@@ -1622,14 +1626,17 @@ function cekMalady(webhook, turn_on_rotation)
         warp(randomStr, "")
         getBot().auto_malady.enabled = true
         getBot().auto_reconnect = true
-        print("wolrd mal: "..randomStr)
+        print("world mal: "..randomStr)
         while not isInSafe(maladySafe, getBot().malady) do
+            while getBot().status ~= 1 do 
+                sleep(10000)
+            end
             if getBot():getWorld().name ~= randomStr and getBot().status == 1 then 
                 getBot().auto_malady.enabled = false 
                 warp(randomStr)
                 getBot().auto_malady.enabled = true
             end
-            if countPlayers() >= 1 then 
+            if countPlayers() >= 1 and getBot().status == 1 then 
                 getBot().auto_malady.enabled = false
                 randomStr = generateWorld(8)
                 getBot().auto_malady.enabled = true
@@ -1638,6 +1645,7 @@ function cekMalady(webhook, turn_on_rotation)
             if getBot().malady == 3 or getBot().malady == 4 then 
                 break 
             end
+            restAll()
             sleep(delay_malady * 60 * 1000)
         end 
         webhookMalady("Bot finally got grumbleteeth/chicken feet, bot: "..getBot().name..", Continue working...")
