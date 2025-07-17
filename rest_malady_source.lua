@@ -1,4 +1,4 @@
-print("VERSION: 10")
+print("VERSION: 11")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1513,7 +1513,7 @@ malady_world_now = ""
  -- 1, 2 = torn, gems / sick
  -- 3, 4 = grumble, chicken / safe
 
-function cekMalady(delaycheck, webhook) 
+function cekMalady(delaycheck, webhook, turn_on_rotation) 
     local nuked, stuck = 0, false
     function turnOnRotation()
         if turn_on_rotation then 
@@ -1651,7 +1651,7 @@ function startThisSoGoodScriptAnjayy()
         if auto_take_pickaxe then 
             takePickaxe()
         end
-        runThread(cekMalady, (delay_cek_malady * 60 * 1000), webhook_malady)
+        runThread(cekMalady, (delay_cek_malady * 60 * 1000), webhook_malady, turn_on_rotation)
         while true do
             restAll()
         end
