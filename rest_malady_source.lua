@@ -1,4 +1,4 @@
-print("VERSION: 16")
+print("VERSION: 18")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = false
 minimum_many_mods = 5
@@ -58,6 +58,7 @@ world_pickaxe = "world|door"
 
 auto_complete_tutorial = true
 
+delay_malady = 1 -- menit
 delay_warp = 10000
 
 
@@ -1582,6 +1583,7 @@ function cekMalady(webhook, turn_on_rotation)
                 if getBot():getWorld().name ~= randomStr and getBot().status == 1 then 
                     warp(randomStr, "")
                 end 
+                sleep(delay_malady * 60 * 1000)
             end
         end
         return true
@@ -1606,9 +1608,11 @@ function cekMalady(webhook, turn_on_rotation)
             if getBot():getWorld().name ~= randomStr and getBot().status == 1 then 
                 warp(randomStr)
             end
+            print("in loop cekmalady, bot: "..getBot().name)
             if getBot().malady == 3 or getBot().malady == 4 then 
                 break 
             end
+            sleep(delay_malady * 60 * 1000)
         end 
         webhookMalady("Bot finally got grumbleteeth/chicken feet, bot: "..getBot().name..", Continue working...")
     end
