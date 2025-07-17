@@ -1,4 +1,4 @@
-print("VERSION: 4")
+print("VERSION: 5")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -73,8 +73,8 @@ local register_global_module_table = false
 local global_module_name = 'json'
 
 -- global dependencies:
-local pairs, type, tostring, tonumber, getmetatable, setmetatable, rawset =
-      pairs, type, tostring, tonumber, getmetatable, setmetatable, rawset
+local pairs, type, tonumber, getmetatable, setmetatable, rawset =
+      pairs, type, tonumber, getmetatable, setmetatable, rawset
 local error, require, pcall, select = error, require, pcall, select
 local floor, huge = math.floor, math.huge
 local strrep, gsub, strsub, strbyte, strchar, strfind, strlen, strformat =
@@ -1561,9 +1561,9 @@ function cekMalady(delaycheck)
         wh:send() 
     end
     local function isInSafe(arr, val)
-        val = safe_tostring(val)
+        val = tostring(val)
         for _, key in pairs(arr) do 
-            if safe_tostring(key):upper() == val:upper() then 
+            if tostring(key):upper() == val:upper() then 
                 return true 
             end 
         end
