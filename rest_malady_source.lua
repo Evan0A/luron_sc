@@ -62,7 +62,7 @@ delay_cek_malady = 2 --menit
 delay_warp = 10000
 
 -----[===== CODE AREA =====]-----
-
+local safe_tostring = tostring
 cpu_stopper = false
 cpu_minimum = 100
 custom_captain = false 
@@ -1561,9 +1561,9 @@ function cekMalady(delaycheck)
         wh:send() 
     end
     local function isInSafe(arr, val)
-        val = tostring(val)
+        val = safe_tostring(val)
         for _, key in pairs(arr) do 
-            if tostring(key):upper() == val:upper() then 
+            if safe_tostring(key):upper() == val:upper() then 
                 return true 
             end 
         end
@@ -1592,7 +1592,7 @@ function cekMalady(delaycheck)
         world_malady_now = ""
         return true
     end
-    local maladySafe = {3.4}
+    local maladySafe = {3, 4}
     removeSickness()
     math.randomseed(os.time()) 
     if not isInSafe(maladySafe, getBot().malady) then 
@@ -1606,8 +1606,7 @@ function cekMalady(delaycheck)
         getBot().auto_malady = true
         malady_world_now = randomStr
         getBot().auto_reconnect = true
-        while not isInSafe(maladySafe, getBot().malady) do 
-            restAll()
+        while not isInSafe(maladySafe, getBot().malady) do
             if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
                 warp(malady_world_now)
             end
