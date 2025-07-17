@@ -1,4 +1,4 @@
-print("VERSION: 14")
+print("VERSION: 15")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1578,9 +1578,7 @@ function cekMalady(webhook, turn_on_rotation)
             warp(randomStr, "")
             print("wolrd remove sick: "..randomStr)
             webhookMalady(getBot().name.." Got gems cut/torn punching, removing it now")
-            while getBot().malady == 1 or getBot().malady == 2 do 
-                restAll()
-                listenEvents(1000)
+            while getBot().malady == 1 or getBot().malady == 2 do
                 if getBot():getWorld().name ~= randomStr and getBot().status == 1 then 
                     warp(randomStr, "")
                 end 
@@ -1596,11 +1594,12 @@ function cekMalady(webhook, turn_on_rotation)
         if turn_on_rotation then 
             getBot().rotation.enabled = false 
         end
+        print("cek malady inside, bot: "..getBot().name)
         getBot().rotation.enabled = false
         webhookMalady("Bot trying to get grumbleteeth/chicken feet, bot: "..getBot().name)
         local randomStr = generateWorld(8)
         warp(randomStr, "")
-        getBot().auto_malady = true
+        getBot().auto_malady.enabled = true
         getBot().auto_reconnect = true
         print("wolrd mal: "..randomStr)
         while not isInSafe(maladySafe, getBot().malady) do
