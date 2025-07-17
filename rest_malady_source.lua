@@ -1458,41 +1458,6 @@ function restAll()
     listenEvents(1000)
 end
 
-local nuked, stuck = 0, false
-function warp(world, id)
-    world = world:upper()
-    id = id or ''
-    nuked = 0
-    stuck = false
-    if not getBot():isInWorld(world) then
-        getBot():leaveWorld()
-        sleep(2000)
-        while not getBot():isInWorld(world) and nuked < 5 do
-            while getBot().status ~= BotStatus.online do
-                getBot().auto_reconnect = true
-                sleep(5000)
-            end
-            getBot():warp(world, id)
-            sleep(delay_warp)
-            nuked = nuked + 1
-            if nuked >= 5 then 
-                return false
-            end
-        end
-    end
-    return true
-end
-
-local function generateWorld(length)
-    local chars = "abcdefghijklmnopqrstuvwxyz"
-    local result = ""
-    for i = 1, length do
-        local randIndex = math.random(#chars)
-        result = result .. chars:sub(randIndex, randIndex)
-    end
-    return result
-end
-
 local function FirstWork()
     if auto_complete_tutorial then 
         local tutorial = getBot().auto_tutorial
@@ -1555,6 +1520,39 @@ end
  -- 3, 4 = grumble, chicken / safe
 
 function cekMalady(delaycheck) 
+    local nuked, stuck = 0, false
+    function warp(world, id)
+         world = world:upper()
+        id = id or ''
+        nuked = 0
+        stuck = false
+        if not getBot():isInWorld(world) then
+            getBot():leaveWorld()
+            sleep(2000)
+            while not getBot():isInWorld(world) and nuked < 5 do
+                while getBot().status ~= BotStatus.online do
+                    getBot().auto_reconnect = true
+                    sleep(5000)
+                end
+                getBot():warp(world, id)
+                sleep(delay_warp)
+                nuked = nuked + 1
+                if nuked >= 5 then 
+                    return false
+                end
+            end
+        end
+        return true
+    end
+    local function generateWorld(length)
+        local chars = "abcdefghijklmnopqrstuvwxyz"
+         local result = ""
+         for i = 1, length do
+            local randIndex = math.random(#chars)
+            result = result .. chars:sub(randIndex, randIndex)
+        end
+        return result
+    end
     local function webhookMalady(cont)
         wh = Webhook.new(webhook_malady)
         wh.content = cont 
