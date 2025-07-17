@@ -1,4 +1,4 @@
-print("VERSION: 2")
+print("VERSION: 3")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1560,7 +1560,7 @@ function cekMalady(delaycheck)
         wh.content = cont 
         wh:send() 
     end
-    local function isIn(arr, val)
+    local function isInSafe(arr, val)
         val = tostring(val)
         for _, key in pairs(arr) do 
             if tostring(key):upper() == val:upper() then 
@@ -1595,7 +1595,7 @@ function cekMalady(delaycheck)
     local maladySafe = {3.4}
     removeSickness()
     math.randomseed(os.time()) 
-    if not isIn(maladySafe, getBot().malady) then 
+    if not isInSafe(maladySafe, getBot().malady) then 
         if turn_on_rotation then 
             getBot().rotation.enabled = false 
         end
@@ -1606,7 +1606,7 @@ function cekMalady(delaycheck)
         getBot().auto_malady = true
         malady_world_now = randomStr
         getBot().auto_reconnect = true
-        while not isIn(maladySafe, getBot().malady) do 
+        while not isInSafe(maladySafe, getBot().malady) do 
             restAll()
             if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
                 warp(malady_world_now)
