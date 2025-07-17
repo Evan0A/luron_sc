@@ -1510,17 +1510,16 @@ function takePickaxe()
 end
 
 malady_world_now = ""
-
-function turnOnRotation()
-    if turn_on_rotation then 
-        getBot().rotation.enabled = true
-    end
-end
  -- 1, 2 = torn, gems / sick
  -- 3, 4 = grumble, chicken / safe
 
-function cekMalady(delaycheck) 
+function cekMalady(delaycheck, webhook) 
     local nuked, stuck = 0, false
+    function turnOnRotation()
+        if turn_on_rotation then 
+            getBot().rotation.enabled = true
+        end
+    end
     function warp(world, id)
          world = world:upper()
         id = id or ''
@@ -1554,7 +1553,7 @@ function cekMalady(delaycheck)
         return result
     end
     local function webhookMalady(cont)
-        wh = Webhook.new(webhook_malady)
+        wh = Webhook.new(webhook)
         wh.content = cont 
         wh:send() 
     end
@@ -1646,7 +1645,7 @@ function startThisSoGoodScriptAnjayy()
         if auto_take_pickaxe then 
             takePickaxe()
         end
-        runThread(cekMalady, (delay_cek_malady * 60 * 1000))
+        runThread(cekMalady, (delay_cek_malady * 60 * 1000), webhook_malady)
         while true do
             restAll()
         end
