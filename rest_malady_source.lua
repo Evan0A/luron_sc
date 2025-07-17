@@ -1,4 +1,4 @@
-print("VERSION: 20")
+print("VERSION: 21")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = false
 minimum_many_mods = 5
@@ -1568,7 +1568,7 @@ function cekMalady(webhook, turn_on_rotation)
     end
     local function countPlayers()
         local count = 0
-        for _, plr in pairs(getBot():getWorld():getPlayer()) do 
+        for _, plr in pairs(getBot():getWorld():getPlayers()) do 
             if plr.name ~= getBot().name then 
                 count = count + 1 
             end 
