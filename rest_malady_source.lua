@@ -1,4 +1,4 @@
-print("VERSION: 8")
+print("VERSION: 10")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1566,6 +1566,12 @@ function cekMalady(delaycheck, webhook)
         end
         return false
     end
+    function Nsleep(varlist, netid)
+        sleep(delaycheck * 60 * 1000)
+        unlistenEvents()
+    end
+    addEvent(Event.varianlist, Nsleep)
+    
     local function removeSickness()
         if getBot().malady == 1 or getBot().malady == 2 then 
             if turn_on_rotation then 
@@ -1616,7 +1622,7 @@ function cekMalady(delaycheck, webhook)
     turnOnRotation()
     malady_world_now = ""
     getBot().auto_malady.enabled = true
-    sleep(delaycheck)
+    listenEvents(11000)
 end
 
 function startThisSoGoodScriptAnjayy()
