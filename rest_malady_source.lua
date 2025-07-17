@@ -1,4 +1,4 @@
-print("VERSION: 7")
+print("VERSION: 8")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
