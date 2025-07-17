@@ -1,4 +1,4 @@
-print("VERSION: 11")
+print("VERSION: 12")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1622,6 +1622,7 @@ function cekMalady(delaycheck, webhook, turn_on_rotation)
     turnOnRotation()
     malady_world_now = ""
     getBot().auto_malady.enabled = true
+    print("malady check")
     listenEvents(11000)
 end
 
@@ -1654,6 +1655,7 @@ function startThisSoGoodScriptAnjayy()
         runThread(cekMalady, (delay_cek_malady * 60 * 1000), webhook_malady, turn_on_rotation)
         while true do
             restAll()
+            print("rest check")
         end
     end
 end
