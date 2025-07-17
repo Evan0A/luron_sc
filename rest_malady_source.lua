@@ -1,4 +1,4 @@
-print("VERSION: 12")
+print("VERSION: 13")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1573,7 +1573,7 @@ function cekMalady(delaycheck, webhook, turn_on_rotation)
     addEvent(Event.varianlist, Nsleep)
     
     local function removeSickness()
-        if getBot().malady == 1 or getBot().malady == 2 then 
+        if getBot().malady == 1 or getBot().malady == 2 and getBot().status == 1 then 
             if turn_on_rotation then 
                 getBot().rotation.enabled = false
             end
@@ -1598,7 +1598,7 @@ function cekMalady(delaycheck, webhook, turn_on_rotation)
     local maladySafe = {3, 4}
     removeSickness()
     math.randomseed(os.time()) 
-    if not isInSafe(maladySafe, getBot().malady) then 
+    if not isInSafe(maladySafe, getBot().malady) and getBot().status == 1 then 
         if turn_on_rotation then 
             getBot().rotation.enabled = false 
         end
