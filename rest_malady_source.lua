@@ -1,4 +1,4 @@
-print("VERSION: 1")
+print("VERSION: 2")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -58,6 +58,7 @@ world_pickaxe = "world|door"
 
 auto_complete_tutorial = true
 
+delay_cek_malady = 2 --menit
 delay_warp = 10000
 
 -----[===== CODE AREA =====]-----
@@ -990,12 +991,6 @@ function webhookAny(cont)
     end
 end
 
-function webhookMalady(cont)
-    wh = Webhook.new(webhook_malady)
-    wh.content = cont 
-    wh:send() 
-end
-
 function cpuStopper() 
     if cpu_stopper then 
         local mycpu = get_cpu_usage()
@@ -1559,7 +1554,21 @@ end
  -- 1, 2 = torn, gems / sick
  -- 3, 4 = grumble, chicken / safe
 
-function cekMalady() 
+function cekMalady(delaycheck) 
+    local function webhookMalady(cont)
+        wh = Webhook.new(webhook_malady)
+        wh.content = cont 
+        wh:send() 
+    end
+    local function isIn(arr, val)
+        val = tostring(val)
+        for _, key in pairs(arr) do 
+            if tostring(key):upper() == val:upper() then 
+                return true 
+            end 
+        end
+        return false
+    end
     local function removeSickness()
         if getBot().malady == 1 or getBot().malady == 2 then 
             if turn_on_rotation then 
@@ -1583,6 +1592,7 @@ function cekMalady()
         world_malady_now = ""
         return true
     end
+    local maladySafe = {3.4}
     removeSickness()
     math.randomseed(os.time()) 
     if not isIn(maladySafe, getBot().malady) then 
@@ -1598,7 +1608,6 @@ function cekMalady()
         getBot().auto_reconnect = true
         while not isIn(maladySafe, getBot().malady) do 
             restAll()
-            listenEvents(100)
             if getBot():getWorld().name ~= malady_world_now and getBot().status == 1 then 
                 warp(malady_world_now)
             end
@@ -1611,7 +1620,7 @@ function cekMalady()
     turnOnRotation()
     malady_world_now = ""
     getBot().auto_malady.enabled = true
-    return true
+    sleep(delaycheck)
 end
 
 function startThisSoGoodScriptAnjayy()
@@ -1640,7 +1649,7 @@ function startThisSoGoodScriptAnjayy()
         if auto_take_pickaxe then 
             takePickaxe()
         end
-        runThread(cekMalady)
+        runThread(cekMalady, (delay_cek_malady * 60 * 1000))
         while true do
             restAll()
         end
