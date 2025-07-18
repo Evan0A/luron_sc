@@ -1,12 +1,12 @@
-print("VERSION: 24")
+print("VERSION: 25")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
 
-auto_rest_specific_mod = true
+auto_rest_specific_mod = false
 specific_mod_list = {"kailyx", "misthios", "windyplay", "ubiops"} -- uppercase is not nessesary
 
-auto_rest_schedule = false
+auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
     "14:00 - 15:00",
