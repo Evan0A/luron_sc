@@ -1,4 +1,4 @@
-print("VERSION: 1")
+print("VERSION: 2")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -44,9 +44,6 @@ delay_connect = 20000 -- milisecond
 
 webhook_player = "https://discord.com/api/webhooks/1114483559114215476/HO4ARS2PrtmvRPO1_T2pvKAdJocqcx9u_K_4ZNMl4nR-H6a5Tl_yIdfk8TGcV6TOR0C3"
 -- akan kirim webhook jika world bot ada player dan akan disconnect
-
-turn_on_rotation = true
-
 
 
 
