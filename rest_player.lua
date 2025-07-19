@@ -1159,7 +1159,7 @@ function cekStop()
 end
 
 function getModList()
-    if getBot().index == captain then 
+    if getBot().index == captain and auto_rest_many_mods or auto_rest_specific_mod or auto_rest_player or auto_rest_banrate then 
         local data = getHttp(api)
         if data then 
             player_count = data.playerData.online_user
@@ -1512,6 +1512,9 @@ function startThisSoGoodScriptAnjayy()
     end 
     if enable then 
         sleep(execute_delay * getBot().index)
+        if getBot().index ~= captain then 
+            sleep(5000)
+        end
         while true do
             restAll() 
             cekPlayer()
