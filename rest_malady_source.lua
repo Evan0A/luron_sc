@@ -4,7 +4,7 @@ auto_rest_many_mods = true
 minimum_many_mods = 5
 
 auto_rest_specific_mod = false
-specific_mod_list = {"kailyx", "misthios", "windyplay", "ubiops"} -- uppercase is not nessesary
+specific_mod_list = {"kailyx", "misthios", "ubiops"} -- uppercase is not nessesary
 
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
@@ -39,27 +39,14 @@ delay_player = 5
 
 -----[===== CUSTOM AREA =====]-----
 
-custom_mode = true
+minimum_player_in_world = 2 -- set 999 kalo gamau pake
+delay_connect = 20000 -- milisecond
+
+webhook_player = "https://discord.com/api/webhooks/1114483559114215476/HO4ARS2PrtmvRPO1_T2pvKAdJocqcx9u_K_4ZNMl4nR-H6a5Tl_yIdfk8TGcV6TOR0C3"
+-- akan kirim webhook jika world bot ada player dan akan disconnect
+
 turn_on_rotation = true
 
-spam_messages = {
-    "ghugasdjads",
-    "asdkshjdknm", 
-    "czbxmnbmzcx", 
-    "xzbmmio", 
-    "buhgasa", 
-    "nbahuia"
-}
-
-webhook_malady = "https://discord.com/api/webhooks/1114483559114215476/HO4ARS2PrtmvRPO1_T2pvKAdJocqcx9u_K_4ZNMl4nR-H6a5Tl_yIdfk8TGcV6TOR0C3"
-
-auto_take_pickaxe = false
-world_pickaxe = "world|door"
-
-auto_complete_tutorial = true
-
-delay_malady = 2 -- menit
-delay_warp = 10000
 
 
 
@@ -766,7 +753,8 @@ player_count = 0
 banrate = 0.0
 last_banrate = 0.0 
 last_player = 0
-captainStatus = {"Online", "ManyMod", "SpecificMod", "Banrate", "Schedule", "Player"}
+end_schedule
+captainStatus = {"ManyMod", "SpecificMod", "Banrate", "Schedule", "Player"}
 maladySafe = {3,4}
 
 --http catch -- 
@@ -1458,114 +1446,14 @@ function restAll()
     end
 end
 
-local function FirstWork()
-    if auto_complete_tutorial then 
-        local tutorial = getBot().auto_tutorial
-        tutorial.enabled = true
-        tutorial.auto_quest = true
-        tutorial.set_as_home = true
-        tutorial.set_high_level = true
-        tutorial.detect_tutorial = true
-        tutorial.set_random_skin = false
-        tutorial.set_random_profile = false
-    
-        while getBot().level < 6 do 
-            sleep(2500)
-        end
-    end 
-
-
-    local malady = getBot().auto_malady
-    malady.auto_grumbleteeth = true
-    malady.auto_refresh = true
-    malady.auto_chicken_feet = true
-
-    local spam = getBot().auto_spam
-    spam.random_interval = true
-    spam.show_emote = false
-    spam.randomizer = true
-    spam.interval = 3.1
-    spam.use_color = false
-
-    local messages = spam.messages
-    for _, msg in pairs(spam_messages) do
-        messages:add(msg)
-        sleep(50)
-    end
+function webhookCustom(cont)
+    wh = Webhook.new(webhook_player)
+    wh.content = cont 
+    wh:send()
 end
 
-FirstWork()
-function takePickaxe()
-    while getBot():getInventory():getItemCount(98) == 0 and auto_take_pickaxe do
-        getBot().wear_storage = world_pickaxe
-        getBot().auto_wear = true 
-        if getBot():getInventory():getItemCount(98) ~= 0 then 
-            sleep(1000)
-            getBot():wear(98)
-            sleep(2000)
-            break
-        end
-    end
-    return true
-end
-
-malady_world_now = ""
- -- 1, 2 = torn, gems / sick
- -- 3, 4 = grumble, chicken / safe
-
-function cekMalady(webhook, turn_on_rotation) 
-    local nuked, stuck = 0, false
-    function turnOnRotation()
-        if turn_on_rotation then 
-            getBot().rotation.enabled = true
-        end
-    end
-    function warp(world, id)
-         world = world:upper()
-        id = id or ''
-        nuked = 0
-        stuck = false
-        if not getBot():isInWorld(world) then
-            getBot():leaveWorld()
-            sleep(2000)
-            while not getBot():isInWorld(world) and nuked < 5 do
-                while getBot().status ~= BotStatus.online do
-                    getBot().auto_reconnect = true
-                    sleep(5000)
-                end
-                getBot():warp(world, id)
-                sleep(delay_warp)
-                nuked = nuked + 1
-                if nuked >= 5 then 
-                    return false
-                end
-            end
-        end
-        return true
-    end
-    local function generateWorld(length)
-        local chars = "abcdefghijklmnopqrstuvwxyz"
-         local result = ""
-         for i = 1, length do
-            local randIndex = math.random(#chars)
-            result = result .. chars:sub(randIndex, randIndex)
-        end
-        return result
-    end
-    local function webhookMalady(cont)
-        wh = Webhook.new(webhook)
-        wh.content = cont 
-        wh:send() 
-    end
-    local function isInSafe(arr, val)
-        val = tostring(val)
-        for _, key in pairs(arr) do 
-            if tostring(key):upper() == val:upper() then 
-                return true 
-            end 
-        end
-        return false
-    end
+donecustomplayer = false
+function cekPlayer() 
     local function countPlayers()
         local count = 0
         for _, plr in pairs(getBot():getWorld():getPlayers()) do 
@@ -1575,83 +1463,33 @@ function cekMalady(webhook, turn_on_rotation)
         end
         return count
     end 
-    local function removeSickness()
-        if getBot().malady == 1 or getBot().malady == 2 and getBot().status == 1 then 
-            print("removeSicness called")
-            if turn_on_rotation then 
-                getBot().rotation.enabled = false
-            end
-            getBot().auto_malady.enabled = false
+    local worldname = ""
+    local cplayer = countPlayers()
+    while cplayer >= minimum_player_in_world do
+        local worldname = getBot():getWorld().name 
+        getBot().auto_reconnect = false
+        if not donecustomplayer then 
+            donecustomplayer = true
+            webhookCustom("Too much poeple in world!\n Bot: "..getBot().name.."\n World: "..worldname)
+        end
+        getBot():disconnect()
+        sleep(delay_connect)
+        while getBot().status ~= 1 do 
+            getBot():connect()
             getBot().auto_reconnect = true
-            math.randomseed(os.time())
-            local randomStr = generateWorld(8)   
-            warp(randomStr, "")
-            print("world remove sick: "..randomStr)
-            getBot().auto_malady.enabled = true
-            webhookMalady(getBot().name.." Got gems cut/torn punching, removing it now")
-            while getBot().malady == 1 or getBot().malady == 2 do
-                while getBot().status ~= 1 do 
-                    sleep(10000)
-                end
-                if getBot():getWorld().name ~= randomStr and getBot().status == 1 then 
-                    getBot().auto_malady.enabled = false
-                    warp(randomStr, "")
-                    getBot().auto_malady.enabled = true
-                end 
-                if countPlayers() >= 1 and getBot().status == 1  then
-                    getBot().auto_malady.enabled = false
-                    randomStr = generateWorld(8)
-                    warp(randomStr)
-                    getBot().auto_malady.enabled = true
-                end
-                restAll()
-                sleep(delay_malady * 60 * 1000)
-            end
-        end
-        return true
-    end
-    local maladySafe = {3, 4}
-    removeSickness()
-    print("Cek malady called")
-    math.randomseed(os.time()) 
-    if not isInSafe(maladySafe, getBot().malady) and getBot().status == 1 then 
-        if turn_on_rotation then 
-            getBot().rotation.enabled = false 
-        end
-        print("cek malady inside, bot: "..getBot().name)
-        getBot().rotation.enabled = false
-        getBot().auto_malady.enabled = false
-        webhookMalady("Bot trying to get grumbleteeth/chicken feet, bot: "..getBot().name)
-        local randomStr = generateWorld(8)
-        warp(randomStr, "")
-        getBot().auto_malady.enabled = true
-        getBot().auto_reconnect = true
-        print("world mal: "..randomStr)
-        while not isInSafe(maladySafe, getBot().malady) do
-            while getBot().status ~= 1 do 
-                sleep(10000)
-            end
-            if getBot():getWorld().name ~= randomStr and getBot().status == 1 then 
-                getBot().auto_malady.enabled = false 
-                warp(randomStr)
-                getBot().auto_malady.enabled = true
-            end
-            if countPlayers() >= 1 and getBot().status == 1 then 
-                getBot().auto_malady.enabled = false
-                randomStr = generateWorld(8)
-                getBot().auto_malady.enabled = true
-            end
-            print("in loop cekmalady, bot: "..getBot().name)
-            if getBot().malady == 3 or getBot().malady == 4 then 
-                break 
-            end
-            restAll()
-            sleep(delay_malady * 60 * 1000)
+            sleep(2000)
         end 
-        webhookMalady("Bot finally got grumbleteeth/chicken feet, bot: "..getBot().name..", Continue working...")
-    end
-    turnOnRotation()
-    getBot().auto_malady.enabled = true
+        if getBot().status == 1 then 
+            if getBot():getWorld().name ~= worldname then 
+                getBot():warp(worldname)
+                sleep(10000)
+            end 
+            if getBot():isInWorld(worldname) then 
+                cplayer = countPlayers()
+            end 
+        end 
+    end     
+    donecustomplayer = false
 end
 
 function startThisSoGoodScriptAnjayy()
@@ -1674,15 +1512,11 @@ function startThisSoGoodScriptAnjayy()
             getBot():stopScript()
         end 
     end 
-    getBot().auto_malady.enabled = true
     if enable then 
         sleep(execute_delay * getBot().index)
-        if auto_take_pickaxe then 
-            takePickaxe()
-        end
         while true do
             restAll() 
-            cekMalady(webhook_malady, turn_on_rotation)
+            cekPlayer()
             listenEvents(1000)
         end
     end
