@@ -1,4 +1,4 @@
-print("VERSION: 1")
+print("VERSION: 2")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1474,7 +1474,6 @@ function cekPlayer()
         getBot():disconnect()
         sleep(delay_connect)
         while getBot().status ~= 1 do 
-            getBot():connect()
             getBot().auto_reconnect = true
             sleep(2000)
         end 
