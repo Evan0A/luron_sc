@@ -1,4 +1,4 @@
-print("VERSION: 4")
+print("VERSION: 1")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -39,7 +39,7 @@ delay_player = 5
 
 -----[===== CUSTOM AREA =====]-----
 
-minimum_player_in_world = 2 -- set 999 kalo gamau pake
+minimum_player_in_world = 1 -- set 999 kalo gamau pake
 delay_connect = 20000 -- milisecond
 
 webhook_player = "https://discord.com/api/webhooks/1114483559114215476/HO4ARS2PrtmvRPO1_T2pvKAdJocqcx9u_K_4ZNMl4nR-H6a5Tl_yIdfk8TGcV6TOR0C3"
