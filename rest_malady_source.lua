@@ -1,4 +1,4 @@
-print("VERSION: 3")
+print("VERSION: 4")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -750,7 +750,7 @@ player_count = 0
 banrate = 0.0
 last_banrate = 0.0 
 last_player = 0
-end_schedule
+end_schedule = ""
 captainStatus = {"ManyMod", "SpecificMod", "Banrate", "Schedule", "Player"}
 maladySafe = {3,4}
 
