@@ -1,4 +1,4 @@
-print("VERSION: 2")
+print("VERSION: 3")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -1031,6 +1031,8 @@ end
 function getCaptain(bool)
     bool = bool or false
     local botCount = #getBots()
+    getBot().custom_status = ""
+    sleep(1000)
     local function cekRunning()
         for i = 1, botCount do
             local Cstatus = tostring(getBot(i).custom_status)
