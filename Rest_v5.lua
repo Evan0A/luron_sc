@@ -1,4 +1,4 @@
-print("VERSION 5")
+print("VERSION 1")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -22,17 +22,13 @@ auto_rest_banrate = true
 minimum_banrate = 1.0
 
 ---[=== SETTINGS ===]---
-file_name = "Rest_v5.lua" -- this script file name
-
-blacklist_bot = {} 
--- bots index that doesn't want to execute this script(bot that already execute some script will automatically included)
 
 use_webhook = true
 webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
 edit_message_reconnect = false -- true if edit message rest to reconnect/false if send new message
 
-hide_bot_identity = false
-reconnect_after_rest = true
+hide_bot_identity = true
+reconnect_after_rest = false
 check_delay = 2
 execute_delay = 1000 -- milisecond
 delay_many_mods = 5 --minutes 
