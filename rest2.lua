@@ -1,4 +1,4 @@
-print("VERSION 18")
+print("VERSION 19")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = false
 minimum_many_mods = 5
@@ -725,6 +725,7 @@ end
 
 function restAll()
     if getBot().index == captain then 
+        print("restAll")
         getModList()
         restManyMods()
         restSpecificMod()
@@ -738,6 +739,7 @@ function restAll()
 end
 
 function sare(varlist, netid)
+    print("sare")
     sleep(check_delay * 60 * 1000)
     unlistenEvents()
 end 
