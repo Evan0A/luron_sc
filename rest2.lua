@@ -1,4 +1,4 @@
-print("VERSION 3")
+print("VERSION 4")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -668,9 +668,6 @@ local function convert_schedule_to_utc(schedule, zone)
         local start_minutes = time_to_minutes(start_time)
         local end_minutes = time_to_minutes(end_time)
 
-        -- Simpan versi end_schedule (lokal)
-        end_schedule = end_time
-
         local start_utc = minutes_to_time(start_minutes - offset * 60)
         local end_utc = minutes_to_time(end_minutes - offset * 60)
 
@@ -692,6 +689,7 @@ local function is_rest_now(utc_schedule)
     for _, period in ipairs(utc_schedule) do
         local start_minutes = time_to_minutes(period.start_utc)
         local end_minutes = time_to_minutes(period.end_utc)
+        end_schedule = period.end_schedule
 
         -- Di sini kamu masih bisa akses period.end_schedule (versi lokal)
         if start_minutes <= end_minutes then
