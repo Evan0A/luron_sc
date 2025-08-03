@@ -1,4 +1,4 @@
-print("VERSION 6")
+print("VERSION 7")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -637,7 +637,6 @@ function restBanrate()
 end
 
 -- Helper function: parse UTC offset
-local function parse_utc_offset(zone)
 local function parse_utc_offset(zone)
     local sign = zone:sub(4,4)
     local hours = tonumber(zone:sub(5,6))
