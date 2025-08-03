@@ -1,4 +1,4 @@
-print("VERSION 10")
+print("VERSION 11")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -252,7 +252,7 @@ function webhookRest(nameBot, from)
             elseif whrestdone and from == lastrestid and lastrestid == 2 and wh_mod_detected ~= mod_detected then 
                 wh:edit(midrest)
                 wh_mod_detected = mod_detected
-            elseif whrestdone and from == lastrestid and lastrestid == 5 and selisih(wh_player, player_count, 2000) then wh:edit(midrest)
+            elseif whrestdone and from == lastrestid and lastrestid == 5 then wh:edit(midrest)
                 wh_player = player_count
             elseif whrestdone and from == lastrestid and lastrestid == 6 and last_diff ~= wh_diff then
                 wh:edit(midrest)
