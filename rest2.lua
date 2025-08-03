@@ -1,4 +1,4 @@
-print("VERSION 6")
+print("VERSION 7")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -752,6 +752,8 @@ function startThisSoGoodScriptAnjayy()
             enable = true 
             getBot().custom_status = "CAPTAIN"
         end
+    else 
+        getBot():stopScript()
     end
     
     if enable and getBot().index == captain then 
@@ -763,7 +765,7 @@ function startThisSoGoodScriptAnjayy()
 end
 
 function wow()
-    print("hi ")
+    print("hi "..getBot().name)
 end
 
 getCaptain()
