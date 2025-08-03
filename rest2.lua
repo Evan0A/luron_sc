@@ -1,4 +1,4 @@
-print("VERSION 4")
+print("VERSION 5")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -18,7 +18,7 @@ schedule_list = {
 auto_rest_player = true 
 minimum_player = 30000
 maximum_player = 130000
-minimum_diffrence = 1000 -- minimum diffrence from last count player to new player count (only minus player counted)
+minimum_diffrence = -1000 -- minimum diffrence from last count player to new player count (only minus player counted)
 
 auto_rest_banrate = true 
 minimum_banrate = 1.0
@@ -600,6 +600,7 @@ function restPlayer()
             while diff <= minimum_diffrence do 
                 webhookRest(getBot().name, 6)
                 last_diff = diff
+                last_player = player_count
                 disconnectBot()
                 sleep(delay_player * 60 * 1000)
                 getModList()
