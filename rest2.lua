@@ -1,4 +1,4 @@
-print("VERSION 1")
+print("VERSION 2")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -39,12 +39,12 @@ reconnect_after_rest = true
 check_delay = 1 -- minutes
 execute_delay = 1000 -- milisecond
 delay_connect_disconnect = 1000 -- milisecond
-delay_many_mods = 5 --minutes 
-delay_specific_mod = 5 -- minutes
-delay_schedule = 2 -- minutes
-delay_banrate = 5
-delay_player = 5
 
+delay_many_mods = 1 --minutes 
+delay_specific_mod = 1 -- minutes
+delay_schedule = 1 -- minutes
+delay_banrate = 1
+delay_player = 1
 
 -----[===== CODE AREA =====]-----
 cpu_stopper = false
