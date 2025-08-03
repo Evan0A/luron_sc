@@ -1,4 +1,4 @@
-print("VERSION 4")
+print("VERSION 6")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -9,7 +9,8 @@ specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not ness
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
-    "14:00 - 15:00",
+    "14:00 - 15:10",
+    "15:11 - 15:20",
     "23:00 - 02:00",
     "10:00 - 11:00"
 }
@@ -637,6 +638,7 @@ end
 
 -- Helper function: parse UTC offset
 local function parse_utc_offset(zone)
+local function parse_utc_offset(zone)
     local sign = zone:sub(4,4)
     local hours = tonumber(zone:sub(5,6))
     return (sign == "-" and -hours) or hours
@@ -653,15 +655,14 @@ local function time_to_minutes(time_str)
     return tonumber(hour) * 60 + tonumber(min)
 end
 
--- Helper function: convert minutes to time string
 local function minutes_to_time(minutes)
-    minutes = (minutes + 1440) % 1440 -- biar tetap di 0-1439 menit
+    minutes = (minutes + 1440) % 1440
     local hour = math.floor(minutes / 60)
     local min = minutes % 60
     return string.format("%02d:%02d", hour, min)
 end
 
--- Convert schedule ke UTC
+-- Konversi jadwal ke UTC
 local function convert_schedule_to_utc(schedule, zone)
     local offset = parse_utc_offset(zone)
     local utc_schedule = {}
@@ -670,49 +671,54 @@ local function convert_schedule_to_utc(schedule, zone)
         local start_time, end_time = period:match("([^%-]+)%s*%-%s*([^%-]+)")
         local start_minutes = time_to_minutes(start_time)
         local end_minutes = time_to_minutes(end_time)
-        end_schedule = end_time
+
+        -- Simpan versi end_schedule (lokal)
+        period._end_schedule = end_time
 
         local start_utc = minutes_to_time(start_minutes - offset * 60)
         local end_utc = minutes_to_time(end_minutes - offset * 60)
 
-        table.insert(utc_schedule, start_utc .. " - " .. end_utc)
+        table.insert(utc_schedule, {
+            original = period,  -- Simpan referensi ke original jika mau
+            start_utc = start_utc,
+            end_utc = end_utc,
+            end_schedule = end_time, -- Simpan versi lokal di sini
+        })
     end
 
     return utc_schedule
 end
 
--- Check apakah sekarang waktu rest
 local function is_rest_now(utc_schedule)
-    local now = os.date("!*t") -- waktu UTC
+    local now = os.date("!*t") -- UTC time
     local current_minutes = now.hour * 60 + now.min
 
     for _, period in ipairs(utc_schedule) do
-        local start_time, end_time = period:match("([^%-]+)%s*%-%s*([^%-]+)")
-        local start_minutes = time_to_minutes(start_time)
-        local end_minutes = time_to_minutes(end_time)
-        end_schedule = end_time
+        local start_minutes = time_to_minutes(period.start_utc)
+        local end_minutes = time_to_minutes(period.end_utc)
 
+        -- Di sini kamu masih bisa akses period.end_schedule (versi lokal)
         if start_minutes <= end_minutes then
-            -- normal case
-            if start_minutes <= current_minutes and current_minutes <= end_minutes then
-                return true
+            if current_minutes >= start_minutes and current_minutes <= end_minutes then
+                return true, period.end_schedule
             end
         else
-            -- nyebrang hari
             if current_minutes >= start_minutes or current_minutes <= end_minutes then
-                return true
+                return true, period.end_schedule
             end
         end
     end
-    return false
+    return false, nil
 end
 
 function restSchedule()
     if auto_rest_schedule then
         local utc_schedule = convert_schedule_to_utc(schedule_list, schedule_zone)
         
-        -- Cek apakah sekarang waktu rest
-        while is_rest_now(utc_schedule) do
+        while true do
+            local is_rest, end_schedule = is_rest_now(utc_schedule)
+            if not is_rest then break end
+
             if getBot().index == captain then 
                 webhookRest(getBot().name, 3)
                 disconnectBot()
