@@ -1,4 +1,4 @@
-print("VERSION 12")
+print("VERSION 13")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -10,7 +10,7 @@ auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
     "18:00 - 16:50",
-    "18:50 - 19:00"
+    "18:55 - 19:00"
 }
 
 auto_rest_player = true 
