@@ -1,4 +1,4 @@
-print("VERSION 5")
+print("VERSION 6")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -18,7 +18,7 @@ schedule_list = {
 auto_rest_player = true 
 minimum_player = 30000
 maximum_player = 130000
-minimum_diffrence = -1000 -- minimum diffrence from last count player to new player count (only minus player counted)
+minimum_difference = -1000 -- minimum diffrence from last count player to new player count (only minus player counted)
 
 auto_rest_banrate = true 
 minimum_banrate = 1.0
@@ -187,7 +187,7 @@ function webhookRest(nameBot, from)
             ["3"] = "SCHEDULE REST DETECTED",
             ["4"] = "BAN-RATE DETECTED",
             ["5"] = "PLAYER ONLINE DETECTED",
-            ["6"] = "PLAYER DIFFRENCE"
+            ["6"] = "PLAYER DIFFERENCE"
         }
         if hide_bot_identity then 
             nameBot = "HIDDEN("..tostring(getBot(nameBot).index)..")"
@@ -225,7 +225,7 @@ function webhookRest(nameBot, from)
             lastrestid = 5
         elseif from == 6 then 
             extra_info = string.format(
-                "Player count diffrence detected: %s/%s\nPlayer count: %s", tostring(last_diff), tostring(minimum_diffrence), tostring(player_count))
+                "Player difference: %s/%s\nPlayer count     : %s", tostring(last_diff), tostring(minimum_diffrence), tostring(player_count))
             wh_diff = last_diff
             lastrestid = 6
         end
@@ -279,7 +279,7 @@ function webhookRecon(nameBot, from)
             ["3"] = "SCHEDULE REST ENDED",
             ["4"] = "BANRATE DROPPED",
             ["5"] = "PLAYER ACTIVE",
-            ["6"] = "PLAYER COUNT DIFFRENCE"
+            ["6"] = "PLAYER COUNT DIFFERENCE"
         }
         if hide_bot_identity then 
             nameBot = "HIDDEN("..tostring(getBot(nameBot).index)..")"
@@ -302,7 +302,7 @@ function webhookRecon(nameBot, from)
         elseif from == 5 then 
             extra_info = string.format("Last player online: "..last_player)
         elseif from == 6 then 
-            extra_info = string.format("Last player diffrence: "..last_diff)
+            extra_info = string.format("Last player difference: "..last_diff)
         end
 
         wh.embed1.use = true
@@ -597,7 +597,7 @@ function restPlayer()
                 last_player = player_count 
             end
             local diff = player_count - last_player
-            while diff <= minimum_diffrence do 
+            while diff <= minimum_difference do 
                 webhookRest(getBot().name, 6)
                 last_diff = diff
                 last_player = player_count
