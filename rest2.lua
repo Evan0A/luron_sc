@@ -1,4 +1,4 @@
-print("VERSION 7")
+print("VERSION 8")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -9,10 +9,8 @@ specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not ness
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
-    "15:00 - 15:50",
-    "16:11 - 16:20",
-    "23:00 - 02:00",
-    "10:00 - 11:00"
+    "16:00 - 16:35",
+    "16:40 - 16:50"
 }
 
 auto_rest_player = true 
@@ -92,6 +90,7 @@ wh_many_mod = -1
 wh_player = -1 
 wh_banrate = -1
 wh_diff = -1
+wh_schedule = ""
 
 function getJson()
     print("entering getJson")
@@ -210,6 +209,7 @@ function webhookRest(nameBot, from)
         elseif from  == 3 then 
             extra_info = string.format("Rest until: %s (%s)", end_schedule, schedule_zone)
             lastrestid = 3
+            wh_schedule = end_schedule
         elseif from  == 4 then 
             extra_info = string.format("Rest until Ban-rate lower, ban-rate: %f", banrate)
             wh_banrate = banrate
@@ -296,7 +296,7 @@ function webhookRecon(nameBot, from)
         elseif from == 2 then
             extra_info = "Previous mod: **" .. mod_detected .. "**"
         elseif from == 3 then 
-            extra_info = string.format("Schedule ended at: %s (%s)", end_schedule, schedule_zone)
+            extra_info = string.format("Schedule ended at: %s (%s)", wh_schedule, schedule_zone)
         elseif from == 4 then 
             extra_info = string.format("Last ban-rate: "..last_banrate)
         elseif from == 5 then 
