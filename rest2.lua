@@ -1,4 +1,4 @@
-print("VERSION 1")
+print("VERSION 3")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -9,8 +9,8 @@ specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not ness
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
-    "14:00 - 15:10",
-    "15:11 - 15:20",
+    "15:00 - 15:50",
+    "16:11 - 16:20",
     "23:00 - 02:00",
     "10:00 - 11:00"
 }
@@ -596,9 +596,6 @@ function restPlayer()
             if last_player == -1 then 
                 last_player = player_count 
             end
-            if last_diff == -1 then
-                last_diff = player_count - last_player 
-            end 
             local diff = player_count - last_player
             while diff <= minimum_diffrence do 
                 webhookRest(getBot().name, 6)
