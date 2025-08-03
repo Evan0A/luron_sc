@@ -1,4 +1,4 @@
-print("VERSION 3")
+print("VERSION 2")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -30,7 +30,7 @@ use_webhook = true
 webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
 edit_message_reconnect = false -- true if edit message rest to reconnect/false if send new message
 
-custom_captain = true 
+custom_captain = false
 custom_captain_index = 1
 
 hide_bot_identity = true
