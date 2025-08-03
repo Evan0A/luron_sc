@@ -1,4 +1,4 @@
-print("VERSION 7")
+print("VERSION 1")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -80,7 +80,7 @@ banrateApi = 0.0
 last_banrate = 0.0 
 last_player = -1
 last_diff = 0
-end_schedule = ""
+end_schedule = nil
 bot_indexs = {}
 
 --http catch -- 
@@ -672,7 +672,7 @@ local function convert_schedule_to_utc(schedule, zone)
         local end_minutes = time_to_minutes(end_time)
 
         -- Simpan versi end_schedule (lokal)
-        period._end_schedule = end_time
+        end_schedule = end_time
 
         local start_utc = minutes_to_time(start_minutes - offset * 60)
         local end_utc = minutes_to_time(end_minutes - offset * 60)
