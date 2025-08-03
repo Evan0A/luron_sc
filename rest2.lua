@@ -1,4 +1,4 @@
-print("VERSION 8")
+print("VERSION 9")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -727,6 +727,11 @@ end
 function restAll()
     if getBot().index == captain then 
         getModList()
+        restManyMods()
+        restSpecificMod()
+        restSchedule()
+        restBanrate() 
+        restPlayer()
         if restManyMods() and restSpecificMod() and restSchedule() and restBanrate() and restPlayer() then 
             reconnect()
         end
