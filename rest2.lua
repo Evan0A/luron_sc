@@ -1,4 +1,4 @@
-print("VERSION 16")
+print("VERSION 17")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = false
 minimum_many_mods = 5
@@ -9,8 +9,8 @@ specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not ness
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
-    "19:10 - 19:25",
-    "19:30 - 19:40"
+    "19:10 - 19:30",
+    "19:35 - 19:40"
 }
 
 auto_rest_player = true 
@@ -761,7 +761,9 @@ function startThisSoGoodScriptAnjayy()
     end
     
     if enable and getBot().index == captain then 
+        print("BOT START")
         while true do 
+            print("STARTTTT")
             restAll()
             listenEvents(1000)
         end
