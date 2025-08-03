@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 4")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -537,12 +537,12 @@ end
 
 function disconnectBot()
     getBot().auto_reconnect = false
-    if getBot().status == 1 then 
+    if getBot().index == captain then 
         for _, ib in ipairs(bot_indexs) do 
             getBot(ib).auto_reconnect = false 
-            sleep(delay_connect_disconnect)
             getBot(ib):disconnect()
-        end 
+            sleep(delay_connect_disconnect)
+        end
     end 
 end
     
@@ -550,7 +550,6 @@ function reconnect()
     if reconnect_after_rest then 
         if getBot().index == captain then 
             webhookRecon(getBot().name, lastrestid)
-            getBot().custom_status = "CAPTAIN"
             for _, ib in ipairs(bot_indexs) do 
                 getBot(ib).auto_reconnect = true
                 sleep(delay_connect_disconnect)
@@ -691,6 +690,7 @@ local function is_rest_now(utc_schedule)
         local start_time, end_time = period:match("([^%-]+)%s*%-%s*([^%-]+)")
         local start_minutes = time_to_minutes(start_time)
         local end_minutes = time_to_minutes(end_time)
+        end_schedule = end_time
 
         if start_minutes <= end_minutes then
             -- normal case
