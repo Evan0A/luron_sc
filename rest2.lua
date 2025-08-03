@@ -1,4 +1,4 @@
-print("VERSION 17")
+print("VERSION 18")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = false
 minimum_many_mods = 5
@@ -9,8 +9,8 @@ specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not ness
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
-    "19:10 - 19:30",
-    "19:35 - 19:40"
+    "19:30 - 19:55",
+    "20:00 - 20:20"
 }
 
 auto_rest_player = true 
@@ -742,8 +742,6 @@ function sare(varlist, netid)
     unlistenEvents()
 end 
 
-addEvent(Event.varianlist, sare)
-
 function startThisSoGoodScriptAnjayy()
     if getBot().index == captain then 
         getJson()
@@ -762,10 +760,11 @@ function startThisSoGoodScriptAnjayy()
     
     if enable and getBot().index == captain then 
         print("BOT START")
+        addEvent(Event.varianlist, sare)
         while true do 
             print("STARTTTT")
             restAll()
-            listenEvents(1000)
+            listenEvents(1)
         end
     end
 end
