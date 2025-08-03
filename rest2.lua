@@ -1,4 +1,4 @@
-print("VERSION 13")
+print("VERSION 14")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -9,7 +9,7 @@ specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not ness
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
-    "18:00 - 16:50",
+    "18:00 - 18:50",
     "18:55 - 19:00"
 }
 
