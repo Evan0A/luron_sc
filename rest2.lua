@@ -1,4 +1,4 @@
-print("VERSION 4")
+print("VERSION 3")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -425,9 +425,11 @@ function getCaptain()
     sleep(5000)
     captain = bot_indexs[math.ceil(#bot_indexs / 2)]
     if getBot().index == captain then 
-        print(
-            string.format("CAPTAIN REST: %s (%s)", getBot(captain).name, tostring(getBot(captaim).index))
-            )
+        print("captain: "..getBot().name)
+        print
+        for _, i in pairs(bot_indexs) do 
+            print(getBot(i).name)
+        end
     else 
         getBot().custom_status = string.format("Following captain(%s)", getBot(captain).name)
         getBot():stopScript()
