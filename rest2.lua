@@ -1,4 +1,4 @@
-print("VERSION 20")
+print("VERSION 21")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -11,8 +11,9 @@ schedule_zone = "UTC+7"
 schedule_list = {
     "19:30 - 19:55",
     "20:00 - 20:20",
-    "22:00 - 23:00",
-    "02:00 - 02:30"
+    "22:00 - 22:30",
+    "02:00 - 02:30", 
+    "23:00 - 01:00"
 }
 
 auto_rest_player = true 
@@ -767,7 +768,7 @@ function startThisSoGoodScriptAnjayy()
         addEvent(Event.varianlist, sare)
         local num = 0
         while true do 
-            print("STARTTTT"..tostring(num)
+            print("STARTTTT"..tostring(num))
             num = num + 1
             restAll()
             listenEvents(1)
