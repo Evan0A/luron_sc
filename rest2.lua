@@ -1,4 +1,4 @@
-print("VERSION 5")
+print("VERSION 4")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -236,8 +236,8 @@ function webhookRest(nameBot, from)
         wh.embed1:addField(" <:animated_clock:1389671974552469524> | TIME (UTC): ", utc_time, true)
         wh.embed1:addField("<:emojigg_CPU:1390949692317106196> | CPU USAGE: ", (get_cpu_usage()), true)
         wh.embed1:addField("<:star:1389672145839329360> | EXTRA INFO: ", (string.format("%s", extra_info)), true)
-        wh.embed1.footer.text = "<:emoji_22:1401425845872234496> | Made with love by NEXORA"
-        wh.embed1.footer.icon_url = image_url
+        wh.embed1.footer.text = "Made with love by NEXORA"
+        wh.embed1.footer.icon_url = "https://ibb.co/rGt7PN07"
         if getBot().index == captain then 
             if not whrestdone then 
                 wh:send()
@@ -278,7 +278,7 @@ function webhookRecon(nameBot, from)
             ["3"] = "SCHEDULE REST ENDED",
             ["4"] = "BANRATE DROPPED",
             ["5"] = "PLAYER ACTIVE",
-            ["5"] = "PLAYER COUNT DIFFRENCE"
+            ["6"] = "PLAYER COUNT DIFFRENCE"
         }
         if hide_bot_identity then 
             nameBot = "HIDDEN("..tostring(getBot(nameBot).index)..")"
@@ -312,8 +312,8 @@ function webhookRecon(nameBot, from)
         wh.embed1:addField("<:animated_clock:1389671974552469524> | TIME (UTC): ", utc_time, true)
         wh.embed1:addField("<:emojigg_CPU:1390949692317106196> | CPU USAGE: ", (get_cpu_usage()), true)
         wh.embed1:addField("🔍 | EXTRA INFO: ", (string.format("%s", extra_info)), true)
-        wh.embed1.footer.text = "<:emoji_22:1401425845872234496> | Made with love by NEXORA"
-        wh.embed1.footer.icon_url = image_url
+        wh.embed1.footer.text = "Made with love by NEXORA"
+        wh.embed1.footer.icon_url = "https://ibb.co/rGt7PN07"
         if getBot().index == captain then 
             if edit_message_reconnect then 
                 wh:edit(midrest)
