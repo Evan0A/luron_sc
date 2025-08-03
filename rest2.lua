@@ -1,16 +1,18 @@
-print("VERSION 19")
+print("VERSION 20")
 ---[=== CONFIG ===]---
-auto_rest_many_mods = false
+auto_rest_many_mods = true
 minimum_many_mods = 5
 
-auto_rest_specific_mod = false
+auto_rest_specific_mod = true
 specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not nessesary
 
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
     "19:30 - 19:55",
-    "20:00 - 20:20"
+    "20:00 - 20:20",
+    "22:00 - 23:00",
+    "02:00 - 02:30"
 }
 
 auto_rest_player = true 
@@ -253,7 +255,7 @@ function webhookRest(nameBot, from)
                 wh_mod_detected = mod_detected
             elseif whrestdone and from == lastrestid and lastrestid == 5 then wh:edit(midrest)
                 wh_player = player_count
-            elseif whrestdone and from == lastrestid and lastrestid == 6 and last_diff ~= wh_diff then
+            elseif whrestdone and from == lastrestid and lastrestid == 6 then
                 wh:edit(midrest)
                 wh_player = player_count
             end
@@ -763,8 +765,10 @@ function startThisSoGoodScriptAnjayy()
     if enable and getBot().index == captain then 
         print("BOT START")
         addEvent(Event.varianlist, sare)
+        local num = 0
         while true do 
-            print("STARTTTT")
+            print("STARTTTT"..tostring(num)
+            num = num + 1
             restAll()
             listenEvents(1)
         end
