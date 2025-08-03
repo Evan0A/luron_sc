@@ -1,4 +1,4 @@
-print("VERSION 14")
+print("VERSION 15")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -9,8 +9,8 @@ specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not ness
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
-    "18:00 - 18:50",
-    "18:55 - 19:00"
+    "19:00 - 19:15",
+    "19:20 - 19:30"
 }
 
 auto_rest_player = true 
@@ -36,7 +36,6 @@ hide_bot_identity = true
 reconnect_after_rest = true
 
 check_delay = 1 -- minutes
-execute_delay = 1000 -- milisecond
 delay_connect_disconnect = 1000 -- milisecond
 
 delay_many_mods = 1 --minutes 
