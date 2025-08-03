@@ -1,4 +1,4 @@
-print("VERSION 9")
+print("VERSION 10")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -76,7 +76,7 @@ mods_list = {}
 player_count = 0
 banrateApi = 0.0
 last_banrate = 0.0 
-last_player = -1
+last_player = 1
 last_diff = 0
 end_schedule = nil
 bot_indexs = {}
@@ -225,7 +225,7 @@ function webhookRest(nameBot, from)
             lastrestid = 5
         elseif from == 6 then 
             extra_info = string.format(
-                "Player difference: %s/%s\nPlayer count     : %s", tostring(last_diff), tostring(minimum_diffrence), tostring(player_count))
+                "Player difference: %s/%s\nPlayer count     : %s", tostring(last_diff), tostring(minimum_difference), tostring(player_count))
             wh_diff = last_diff
             lastrestid = 6
         end
@@ -593,8 +593,8 @@ end
 function restPlayer() 
     if auto_rest_player then 
         if getBot().index == captain then
-            if last_player == -1 then 
-                last_player = player_count 
+            if last_player == 1 then 
+                last_player = player_count
             end
             local diff = player_count - last_player
             while diff <= minimum_difference do 
