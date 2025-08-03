@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 1")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -426,7 +426,6 @@ function getCaptain()
     captain = bot_indexs[math.ceil(#bot_indexs / 2)]
     if getBot().index == captain then 
         print("captain: "..getBot().name)
-        print
         for _, i in pairs(bot_indexs) do 
             print(getBot(i).name)
         end
