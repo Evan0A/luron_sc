@@ -1,4 +1,4 @@
-print("VERSION 11")
+print("VERSION 12")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -9,8 +9,8 @@ specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not ness
 auto_rest_schedule = true
 schedule_zone = "UTC+7"
 schedule_list = {
-    "16:00 - 16:35",
-    "16:40 - 16:50"
+    "18:00 - 16:50",
+    "18:50 - 19:00"
 }
 
 auto_rest_player = true 
