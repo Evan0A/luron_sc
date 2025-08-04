@@ -240,7 +240,7 @@ function webhookRest(nameBot, from)
         wh.embed1:addField("<:emojigg_CPU:1390949692317106196> | CPU USAGE: ", (get_cpu_usage()), true)
         wh.embed1:addField("<:star:1389672145839329360> | EXTRA INFO: ", (string.format("%s", extra_info)), true)
         wh.embed1.footer.text = "Made with love by NEXORA"
-        wh.embed1.footer.icon_url = "https://ibb.co/rGt7PN07"
+        wh.embed1.footer.icon_url = "https://cdn.discordapp.com/attachments/1365639857241718867/1401710544871751724/file_000000000c0461f8ac3c5a2bc4f38329.png?ex=6891442c&is=688ff2ac&hm=0e6b517ae8547eeedb45e6147b97d1eda7b02e6fe5221b00f17d3103ecf2813c&"
         if getBot().index == captain then 
             if not whrestdone then 
                 wh:send()
@@ -316,7 +316,7 @@ function webhookRecon(nameBot, from)
         wh.embed1:addField("<:emojigg_CPU:1390949692317106196> | CPU USAGE: ", (get_cpu_usage()), true)
         wh.embed1:addField("🔍 | EXTRA INFO: ", (string.format("%s", extra_info)), true)
         wh.embed1.footer.text = "Made with love by NEXORA"
-        wh.embed1.footer.icon_url = "https://ibb.co/rGt7PN07"
+        wh.embed1.footer.icon_url = "https://cdn.discordapp.com/attachments/1365639857241718867/1401710544871751724/file_000000000c0461f8ac3c5a2bc4f38329.png?ex=6891442c&is=688ff2ac&hm=0e6b517ae8547eeedb45e6147b97d1eda7b02e6fe5221b00f17d3103ecf2813c&"
         if getBot().index == captain then 
             if edit_message_reconnect then 
                 wh:edit(midrest)
