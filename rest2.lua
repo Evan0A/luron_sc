@@ -599,7 +599,7 @@ function restPlayer()
                 last_player = player_count
             end
             local diff = player_count - last_player
-            while diff <= minimum_difference do 
+            while diff <= minimum_difference and diff ~= 0 do 
                 webhookRest(getBot().name, 6)
                 last_diff = diff
                 last_player = player_count
