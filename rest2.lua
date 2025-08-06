@@ -1,4 +1,4 @@
-print("VERSION 21")
+print("VERSION 1")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -246,19 +246,8 @@ function webhookRest(nameBot, from)
                 wh:send()
                 whrestdone = true 
                 midrest = wh.message_id
-            elseif whrestdone and from ~= lastrestid then 
+            elseif whrestdone then 
                 wh:edit(midrest)
-            elseif whrestdone and from == lastrestid and lastrestid == 1 and wh_many_mod ~= #mods_list then 
-                wh:edit(midrest)
-                wh_many_mod = #mods_list
-            elseif whrestdone and from == lastrestid and lastrestid == 2 and wh_mod_detected ~= mod_detected then 
-                wh:edit(midrest)
-                wh_mod_detected = mod_detected
-            elseif whrestdone and from == lastrestid and lastrestid == 5 then wh:edit(midrest)
-                wh_player = player_count
-            elseif whrestdone and from == lastrestid and lastrestid == 6 then
-                wh:edit(midrest)
-                wh_player = player_count
             end
         end 
     end 
@@ -419,7 +408,7 @@ function getCaptain()
     end
     sleep(5000)
     getBot().custom_status = "REST VERIFICATION 1"
-    sleep(7000)
+    sleep(5000)
     for i = 1, botCount do 
         if getBot(i).custom_status == "REST VERIFICATION 1" and getBot(i):isRunningScript() then 
             cekDouble(bot_indexs, tonumber(getBot(i).index))
@@ -727,8 +716,7 @@ function restSchedule()
 end
 
 function restAll()
-    if getBot().index == captain then 
-        print("restAll")
+    if getBot().index == captain then
         getModList()
         restManyMods()
         restSpecificMod()
@@ -764,12 +752,9 @@ function startThisSoGoodScriptAnjayy()
     end
     
     if enable and getBot().index == captain then 
-        print("BOT START")
         addEvent(Event.varianlist, sare)
         local num = 0
         while true do 
-            print("STARTTTT"..tostring(num))
-            num = num + 1
             restAll()
             listenEvents(1)
         end
@@ -783,5 +768,4 @@ end
 getCaptain()
 startThisSoGoodScriptAnjayy()
 
-wow()
 ------------------------------
