@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 3")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -552,7 +552,8 @@ end
     
 function reconnect() 
     if reconnect_after_rest then 
-        if getBot().index == captain then 
+        if getBot().index == captain then
+            webhookrecon(getBot().name, lastrestid)
             if run_setting:upper() == "SELECTED" then
                 for _, ib in ipairs(bot_indexs) do 
                     getBot(ib).auto_reconnect = true
