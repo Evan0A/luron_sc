@@ -553,7 +553,7 @@ end
 function reconnect() 
     if reconnect_after_rest then 
         if getBot().index == captain then
-            webhookrecon(getBot().name, lastrestid)
+            webhookRecon(getBot().name, lastrestid)
             if run_setting:upper() == "SELECTED" then
                 for _, ib in ipairs(bot_indexs) do 
                     getBot(ib).auto_reconnect = true
