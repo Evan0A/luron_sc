@@ -1,4 +1,4 @@
-print("VERSION 1")
+print("VERSION 2")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -28,7 +28,9 @@ minimum_banrate = 1.0
 ---[=== SETTINGS ===]---
 run_setting = "ALL" -- support "SELECTED" or "ALL" bots to run script 
 
-auto_switch_api = true -- auto switch API to another API
+custom_api = false
+custom_api_number = 1 -- 1 OR 2
+auto_switch_api = true -- auto switch API if API is down, make sure your custom_api is false
 
 use_webhook = true
 webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
@@ -510,6 +512,7 @@ end
 function reconnect() 
     if reconnect_after_rest then 
         if getBot().index == captain then 
+            webhookRecon(getBot().name, lastrestid)
             if run_setting:upper() == "SELECTED" then
                 for _, ib in ipairs(bot_indexs) do 
                     getBot(ib).auto_reconnect = true
