@@ -122,17 +122,17 @@ end
 
 function getHttp(url)
     if not auto_rest_many_mods and  not auto_rest_specific_mod and not auto_rest_player and not url.find(access_url) then 
-        return false 
+        return nil
     end 
     local client = HttpClient.new()
     client.url = url
     local result = client:request()
     if result.error ~= 0 then
-        return true
+        webhookAny("error http: "..tostring(result.error))
     else
         if result.status == 200 then
             local success, data = pcall(json.decode, result.body)
-            if success and type(data) == "table" then
+            if success and type(data) == "table" and data.playerData then
                 errorApi = false
                 return data
             else
