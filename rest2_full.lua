@@ -132,7 +132,7 @@ function getHttp(url)
     else
         if result.status == 200 then
             local success, data = pcall(json.decode, result.body)
-            if success and type(data) == "table" and data.playerData then
+            if success and type(data) == "table" then
                 errorApi = false
                 return data
             else
