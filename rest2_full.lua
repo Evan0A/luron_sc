@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 3")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -136,7 +136,7 @@ function getHttp(url)
                 errorApi = false
                 return data
             else
-                webhookAny("Error decoding http data, status: "..success.." data: "..data)
+                webhookAny("Error decoding http data, status: "..tostring(success).." data: "..tostring(data))
                 getBot().custom_status = "stopped"
                 getBot():stopScript()
             end
