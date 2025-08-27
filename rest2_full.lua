@@ -1,4 +1,4 @@
-print("VERSION 1")
+print("VERSION 2")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -489,7 +489,6 @@ function getModList()
         local data = getHttp(apis[api_index])
         if type(data) ~= "number" then 
             player_count = data.playerData.online_user
-            image_url = data.image_url
             local tempmod = {}
             for _, datas in pairs(data.modData.mods) do 
                 table.insert(tempmod, datas.name)
