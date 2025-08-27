@@ -1,4 +1,4 @@
-print("VERSION 4")
+print("VERSION 1")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -28,10 +28,6 @@ minimum_banrate = 1.0
 ---[=== SETTINGS ===]---
 run_setting = "ALL" -- support "SELECTED" or "ALL" bots to run script 
 
-custom_api = false
-custom_api_number = 1 -- 1 OR 2
-auto_switch_api = true -- auto switch API if API is down, make sure your custom_api is false
-
 use_webhook = true
 webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
 edit_message_reconnect = false -- true if edit message rest to reconnect/false if send new message
@@ -51,6 +47,10 @@ delay_banrate = 1
 delay_player = 1
 
 -----[===== CODE AREA =====]-----
+custom_api = false
+custom_api_number = 1 -- 1 OR 2
+auto_switch_api = false -- auto switch API if API is down, make sure your custom_api is false
+
 apis = {
     "https://api.noire.my.id/api", 
     "https://gtid.dev/api"
@@ -86,6 +86,7 @@ last_player = 1
 last_diff = 0
 end_schedule = nil
 bot_indexs = {}
+api_down = false
 api_index = 1 
 --http catch -- 
 
@@ -133,10 +134,12 @@ function getHttp(url)
         if result.status == 200 then
             local success, data = pcall(json.decode, result.body)
             if success and type(data) == "table" then
-                errorApi = false
+                if api_down then 
+                    webhookAny("API is back, script continue...")
+                end
                 return data
             else
-                webhookAny("Error decoding http data, status: "..tostring(success).." data: "..json.encode(data))
+                webhookAny("Error decoding http data, status: "..tostring(success).." this script might be broken")
                 getBot().custom_status = "stopped"
                 getBot():stopScript()
             end
@@ -150,10 +153,12 @@ function getHttp(url)
                 else 
                     api_index = 1 
                 end 
-            else
-                message = "API "..tostring(api_index).." IS CURRENTLY DOWN, code : "..result.status.."\nscript stopped"
+            elseif not api_down then 
+                message = "API IS CURRENTLY DOWN, code : "..result.status.."\nRetrying to access the API(bots online)"
                 webhookAny(message)
-                getBot():stopScript()
+                api_down = true 
+            else 
+                return tonumber(result.status)
             end
         end
     end
@@ -426,6 +431,10 @@ function getUserData(bool)
     bool = bool or false
     local data = getHttp(access_url)
     local found = false
+    if type(data) == "number" then 
+        webhookAny("Verifiying username error, code: "..tostring(data))
+        getBot():stopScript()
+    end 
     for _, users in pairs(data.access_list) do
         if users.name == myUsername then
             found = true
@@ -478,7 +487,7 @@ end
 function getModList()
     if getBot().index == captain then 
         local data = getHttp(apis[api_index])
-        if data then 
+        if type(data) ~= "number" then 
             player_count = data.playerData.online_user
             image_url = data.image_url
             local tempmod = {}
@@ -486,6 +495,9 @@ function getModList()
                 table.insert(tempmod, datas.name)
             end 
             mods_list = tempmod
+        elseif type(data) == "number" then 
+            webhookAny("Getting mods list error, code: "..tostring(data))
+            getBot():stopScript()
         end
     end 
 end 
@@ -723,7 +735,7 @@ function startThisSoGoodScriptAnjayy()
             getBot():stopScript()
         else 
             enable = true 
-            getBot().custom_status = "CAPTAIN"
+            getBot().custom_status = "CAPTAIN REST"
         end
     else 
         getBot():stopScript()
