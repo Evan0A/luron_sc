@@ -1,4 +1,4 @@
-print("VERSION 3")
+print("VERSION 4")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -158,9 +158,8 @@ function getHttp(url)
                 message = "API IS CURRENTLY DOWN, code : "..result.status.."\nRetrying to access the API(bots online)"
                 webhookAny(message)
                 api_down = true 
-            else 
-                return tonumber(result.status)
             end
+            return tonumber(result.status)
         end
     end
 end
