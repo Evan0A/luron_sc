@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 3")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -130,6 +130,7 @@ function getHttp(url)
     local result = client:request()
     if result.error ~= 0 then
         webhookAny("error http: "..tostring(result.error))
+        return tonumber(result.error)
     else
         if result.status == 200 then
             local success, data = pcall(json.decode, result.body)
