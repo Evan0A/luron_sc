@@ -1,4 +1,4 @@
-print("VERSION 4")
+print("VERSION 5")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -39,7 +39,7 @@ custom_captain = false
 custom_captain_index = 1
 
 check_delay = 1 -- minutes
-delay_connect_disconnect = 10 -- milisecond
+delay_connect_disconnect = 100 -- milisecond
 delay_many_mods = 1 --minutes 
 delay_specific_mod = 1 -- minutes
 delay_schedule = 1 -- minutes
