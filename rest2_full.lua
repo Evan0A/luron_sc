@@ -1,4 +1,4 @@
-print("VERSION 6")
+print("VERSION 7")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -137,6 +137,7 @@ function getHttp(url)
             if success and type(data) == "table" then
                 if api_down then 
                     webhookAny("API is back, script continue...")
+                    api_down = false
                 end
                 return data
             else
