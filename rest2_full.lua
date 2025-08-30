@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 1")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -208,8 +208,7 @@ function webhookRest(nameBot, from)
             nameBot = nameBot.."("..tostring(getBot(nameBot).index)..")"
         end
         local emoji = reason_emoji[tostring(from)] or "❓"
-        local utc_time = os.time(os.date("!*t"))
-        utc_time = utc_time + (tonumber(schedule_zone) * 3600)
+        local utc_time = (os.time(os.date("!*t"))) + (tonumber(schedule_zone) * 3600)
         -- Info tambahan
         local extra_info = ""
         if from == 1 then
