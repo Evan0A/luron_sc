@@ -1,4 +1,4 @@
-print("VERSION 5")
+print("VERSION 6")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -494,9 +494,10 @@ function getModList()
                 table.insert(tempmod, datas.name)
             end 
             mods_list = tempmod
-        elseif type(data) == "number" then 
-            webhookAny("Getting mods list error, code: "..tostring(data))
-            getBot():stopScript()
+        elseif type(data) == "number" then
+            player_count = minimum_player + 1 
+            mods_list = {}
+            return false
         end
     end 
 end 
