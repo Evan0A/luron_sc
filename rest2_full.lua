@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 1")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -209,8 +209,8 @@ function webhookRest(nameBot, from)
         end
         local emoji = reason_emoji[tostring(from)] or "❓"
         local offset = tonumber(schedule_zone:gsub("%D", ""))
-        local utc_time = (os.time(os.date("!*t"))) + (offset * 3600)
-        -- Info tambahan
+        local utc_time = os.date("!%Y-%m-%d %H:%M UTC")
+        
         local extra_info = ""
         if from == 1 then
             extra_info = string.format("👥 Mods Online: %d / %d", #mods_list, minimum_many_mods)
@@ -290,9 +290,8 @@ function webhookRecon(nameBot, from)
             nameBot = nameBot.."("..tostring(getBot(nameBot).index)..")"
         end
         local emoji = "✅"
-        local utc_time = os.time(os.date("*!*t"))
-        utc_time = now_utc + (tonumber(schedule_zone) * 3600)
-
+        local utc_time = os.date("!%Y-%m-%d %H:%M UTC")
+        
         -- Info tambahan
         local extra_info = ""
         if from == 1 then
