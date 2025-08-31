@@ -1,4 +1,4 @@
-print("VERSION 1")
+print("VERSION 2")
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
 minimum_many_mods = 5
@@ -129,7 +129,6 @@ function getHttp(url)
     client.url = url
     local result = client:request()
     if result.error ~= 0 then
-        webhookAny("error http: "..tostring(result.error))
         return tonumber(result.error)
     else
         if result.status == 200 then
@@ -496,9 +495,11 @@ function getModList()
                 table.insert(tempmod, datas.name)
             end 
             mods_list = tempmod
+            banrate = getBanRate()
         elseif type(data) == "number" then
             if auto_rest_player then canRestPlayer = false end
             mods_list = {}
+            banrate = getBanRate()
         end
     end 
 end 
@@ -606,7 +607,7 @@ end
 function restBanrate()
     if auto_rest_banrate then 
         if getBot().index == captain then
-            local banrate = getBanRate()
+            banrate = getBanRate()
             while banrate >= minimum_banrate do
                 webhookRest(getBot().name, 4)
                 last_banrate = banrate
