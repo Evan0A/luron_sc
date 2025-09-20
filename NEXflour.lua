@@ -1,4 +1,4 @@
-print("v2")
+print("v5")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -178,9 +178,10 @@ function callWebhook(flour, pack)
     end
     wh.embed1.footer.text = os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 7 * 60 * 60)
     if getBot().index == bot_webhook and mid ~= 0 then
-        wh:edit(messageID)
+        wh:edit(mid)
     elseif getBot().index == bot_webhook then
         wh:send()
+		mid = wh.message_id
     end
 end
 
@@ -466,7 +467,7 @@ function harvestPlant()
             if itemCount(blockID) < 196 then
                 for _, tile in pairs(getTiles()) do
                     reconnect(pabrikWorld, door_farm)
-                    if tile.fg == seedID and tile:canHarvest() and hasAccess(tile.x, tile.y) > 0 and #bot:getPath(tile.x, tile.y) > 0 and tile.y == ye then
+                    while tile.fg == seedID and tile:canHarvest() and hasAccess(tile.x, tile.y) > 0 and #bot:getPath(tile.x, tile.y) > 0 and tile.y == ye do
                         bot:findPath(tile.x, tile.y)
                         if bot:isInTile(tile.x, tile.y) then
                             bot:hit(bot.x, bot.y)
@@ -981,7 +982,7 @@ function plant()
     for _, ye in pairs(pnbY) do
         for _, tile in pairs(getTiles()) do
             reconnect(pabrikWorld, door_farm)
-            if tile.fg == 0 and isPlantable(tile.x, tile.y) and itemCount(seedID) > 0 and hasAccess(tile.x, tile.y) > 0 and #bot:getPath(tile.x, tile.y) > 0 and tile.y == ye and bot:isInWorld(pabrikWorld:upper()) then
+            while tile.fg == 0 and isPlantable(tile.x, tile.y) and itemCount(seedID) > 0 and hasAccess(tile.x, tile.y) > 0 and tile.y == ye and bot:isInWorld(pabrikWorld:upper()) do
                 bot:findPath(tile.x, tile.y)
                 if bot:isInTile(tile.x, tile.y) then
                     bot:place(bot.x, bot.y, seedID)
@@ -1336,6 +1337,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
