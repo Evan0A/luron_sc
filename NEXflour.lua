@@ -1,3 +1,4 @@
+print("v1")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -1321,5 +1322,6 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
