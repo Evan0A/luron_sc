@@ -467,7 +467,7 @@ function harvestPlant()
             if itemCount(blockID) < 196 then
                 for _, tile in pairs(getTiles()) do
                     reconnect(pabrikWorld, door_farm)
-                    while tile.fg == seedID and tile:canHarvest() and hasAccess(tile.x, tile.y) > 0 and #bot:getPath(tile.x, tile.y) > 0 and tile.y == ye do
+                    while tile.fg == seedID and tile:canHarvest() and hasAccess(tile.x, tile.y) > 0 and #bot:getPath(tile.x, tile.y) > 0 and tile.y == ye and itemCount(blockID) < 200 do
                         bot:findPath(tile.x, tile.y)
                         if bot:isInTile(tile.x, tile.y) then
                             bot:hit(bot.x, bot.y)
@@ -1337,6 +1337,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
