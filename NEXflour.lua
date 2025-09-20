@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -111,6 +111,7 @@ multiRow = 1 -- 1-27
 multiRowDistance = 2 -- The tile distance between each row | Default 2
 readyGrind = false
 mid = 0
+collectRange = 3
 
 function delay(second)
     if type(second) == "number" and dynamic_delay then 
@@ -1322,6 +1323,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
