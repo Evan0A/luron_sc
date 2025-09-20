@@ -1,4 +1,4 @@
-print("v3")
+print("v4")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -228,7 +228,7 @@ end
 
 function trashJunk()
     for _, trsh in pairs(trash) do
-        if itemCount(trsg) > 100 then
+        if itemCount(trsh) > 100 then
             reconnect(world_storage, door_storage)
             bot:trash(trsh, itemCount(trsh))
             sleep(1000)
@@ -1336,6 +1336,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
