@@ -1,0 +1,1325 @@
+--== WORLD ==--
+world_farm = {"VAIIIII1140"}
+world_farm_row = 5 -- max row in each world
+door_farm = "PTVVL1140"
+
+world_storage = {"SOILWARE"} 
+door_storage = "PTVVL1140"
+
+world_grinder = "BUYGRINDER"
+door_grinder = ""
+
+--== PACK ==-- 
+take_gems = false
+pack_name = "world_lock"
+pack_price = 2000
+pack_item = {242}
+world_pack = ""
+door_pack = ""
+
+--== MALADY ==-- 
+auto_vial = true 
+world_vial = ""
+door_vial = ""
+auto_grumbleteeth = true 
+
+--== WEBHOOK ==--
+global_webhook = "https://discord.com/api/webhooks/1114483839444729936/yQzzCt22cCIF3Wz9XdhGMSmD78yCx3UxyzZNGThl01kbmM34Z2ern42Sy3slDjPI3xto"
+event_webhook = "https://discord.com/api/webhooks/1114483559114215476/HO4ARS2PrtmvRPO1_T2pvKAdJocqcx9u_K_4ZNMl4nR-H6a5Tl_yIdfk8TGcV6TOR0C3"
+bot_webhook = 1 --bot index to send webhook
+
+--== SETTING ==--
+seed_id = 0 
+row_id = 4584 
+save_flour = 8
+save_vend = false
+pnb_tutorial = true 
+auto_take_pickaxe = false 
+world_pickace = "WORLD|DOOR"
+
+auto_rotation = false -- auto start rotation if reach X level
+level_rotation = 12
+
+auto_offline = false -- auto offline when reach X level 
+level_offline = 12
+remove_bot = true
+
+auto_reconnect = true
+
+delay_hit = 180 
+delay_place = 160 
+delay_warp = 10000
+delay_execute = 1000 
+delay_plant = 180 
+delay_harvest = 100
+dynamic_delay = true -- delay will adapting to bot's ping and random number
+
+goodies = {5030, 12498} -- Example Wind Essence
+trash = {5038, 5034, 5044, 5032, 5040, 5042}
+
+bot = getBot()
+bot.move_range = 3
+bot:setInterval(Action.move, 0.235)
+pabrikWorld = ""
+position = 0
+whiteListOwner = "yourGrowID"
+
+
+
+for i, botz in pairs(getBots()) do
+    if botz.name:upper() == bot.name:upper() then
+        botIndex = i
+    end
+end
+
+math.randomseed(os.time())
+tileBreak = {}
+breakTile = 1
+Poss = {}
+world_storage = world_storage[math.random(1, #world_storage)]
+position = 0
+world_pack = string.upper(world_pack)
+startTime = os.time()
+itemInVend = 0
+wrenchP = false
+noTutorWorld = false
+emptyItem = false
+json = nil 
+Sversion = 1
+randomWorld = {"2309SJKS67O87", "HKJSSS98KS7896", "PS76SJ88SESIS", "NELELI99", "NELELI100", "NELELI98", "NELELI80", "NELELI18"}
+randomWorldEx = {"STARTBAHAS", "RUBOTASU", "JEMBOESOI"}
+namaBot = bot.name
+worldTutor = ""
+seedIcon = "<:seeds:1169922333369172048>"
+blockIcon = "<:dirt:1172389549666729994>"
+vendIcon = "<:vending:1187331638296846346>"
+totalSeed = 0
+totalPack = 0
+tutorNuked = false
+
+world_grinder = string.upper(world_grinder)
+flourIcon = "<:flour:1169544889445388319>"
+totalFlour = 0
+totalPack = 0
+
+blockID = 880 -- Block ID, not Seed ID
+seedID = 881
+flourID = 4562
+pabrikWorld = ""
+multiRow = 1 -- 1-27
+multiRowDistance = 2 -- The tile distance between each row | Default 2
+readyGrind = false
+mid = 0
+
+function delay(second)
+    if type(second) == "number" and dynamic_delay then 
+        local nama = tipe:lower()
+        local ping = tostring(getBot().ping) 
+        local off = 0 
+        local rand = math.random(-15, 10)
+        if #ping >= 3 then 
+            off = ping:sub(1,2)
+        elseif #ping == 2 then 
+            off = ping:sub(1,1)
+        else 
+            off = ping
+        end 
+        off = tonumber(off)
+        sleep(second + rand + off)
+    elseif not dynamic_delay then 
+        sleep(second)
+    else 
+        sleep(delay_plant)
+    end 
+end
+
+function getUptime()
+    local currentTime = os.time()
+    
+    local elapsedTime = currentTime - startTime
+    
+    local days = math.floor(elapsedTime / 86400)
+    local hours = math.floor((elapsedTime % 86400) / 3600)
+    local minutes = math.floor((elapsedTime % 3600) / 60)
+    
+    return string.format("%dd %02dh %02dm", days, hours, minutes)
+end
+
+function callWebhook(flour, pack)
+    local wh = Webhook.new(mainWebhookUrl)
+    wh.username = "Rubot"
+    wh.avatar_url = "https://cdn.discordapp.com/attachments/1146148490867650601/1148295389586395147/78xb5ptpGXtCJZtEMYKRsJjFdgUECLiju4tZegiL-Cv0Uqn3TTG4LFJPo2W4FTL393JUr_jlxJNu91seRFanRRtBT5P9dFK4d8mytB0.gif"
+    wh.embed1.use = true
+    wh.embed1.author.name = "RUBOT | Flour Factory V3.7"
+    wh.embed1.author.url = "https://discord.gg/YYWCDpVNes"
+    wh.embed1.color = 65280
+    local desc = ""
+    for _, botak in pairs(getBots()) do
+        if botak.selected == true then
+            desc = desc .. ":farmer: **".. string.upper(botak.name).. "** [".. botak.level .. "]\nStatus: ".. getStatus(botak.status).."\nCurrent World: ||".. botak:getWorld().name .. "||\n\n"
+        end
+    end
+    wh.embed1.description = desc
+
+    if flour then
+        totalFlour = flour
+    end
+
+    if pack then
+        totalPack = pack
+    end
+    
+    if save_vend == true then
+        wh.embed1:addField("Information",vendIcon .. " Stored Flour: ".. totalFlour.. "\n:package: Dropped Pack: ".. totalPack.. "\n:rock: Fossil: "..gscanBlock(3918).."\n\nUptime: ".. getUptime(), true)
+    else
+        wh.embed1:addField("Information",flourIcon .. " Dropped Flour: ".. totalFlour.. "\n:package: Dropped Pack: ".. totalPack.. "\n:rock: Fossil: "..gscanBlock(3918).."\n\nUptime: ".. getUptime(), true)
+    end
+    wh.embed1.footer.text = os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 7 * 60 * 60)
+    if getBot().index == bot_webhook and mid ~= 0 then
+        wh:edit(messageID)
+    elseif getBot().index == bot_webhook then
+        wh:send()
+    end
+end
+
+function callAlert(msg)
+    local wh = Webhook.new(eventWebhookUrl)
+    wh.username = "Rubot"
+    wh.avatar_url = "https://cdn.discordapp.com/attachments/1146148490867650601/1148295389586395147/78xb5ptpGXtCJZtEMYKRsJjFdgUECLiju4tZegiL-Cv0Uqn3TTG4LFJPo2W4FTL393JUr_jlxJNu91seRFanRRtBT5P9dFK4d8mytB0.gif"
+    wh.content = "||@everyone||"
+    wh.embed1.use = true
+    wh.embed1.color = 16711680
+    wh.embed1.description = "<a:offlinegif:1179100927345561620> ".. msg
+	wh:send()
+end
+
+function callEvent(msg)
+    local wh = Webhook.new(eventWebhookUrl)
+    wh.username = "Rubot"
+    wh.avatar_url = "https://cdn.discordapp.com/attachments/1146148490867650601/1148295389586395147/78xb5ptpGXtCJZtEMYKRsJjFdgUECLiju4tZegiL-Cv0Uqn3TTG4LFJPo2W4FTL393JUr_jlxJNu91seRFanRRtBT5P9dFK4d8mytB0.gif"
+    wh.embed1.use = true
+    wh.embed1.color = 16776960 
+    wh.embed1.description = "<a:alerts:1186548719324250132> ".. msg
+    wh:send()
+end
+
+function getStatus(stat)
+    local online = "<a:onlinegif:1179100715747131474>"
+    local offline = "<a:offlinegif:1179100927345561620>"
+    if stat == 1 then
+        return "Online "..online
+    else
+        return "Offline "..offline
+    end
+end
+
+function dropGoods()
+    warps(world_storage, door_storage)
+    for _, goodz in pairs(goodies) do
+        while itemCount(goodz) > 0 do 
+            getBot():findOutput()
+            bot:drop(goodz, itemCount(goodz))
+            sleep(1000)
+        end
+    end
+end
+
+function trashJunk()
+    for _, trsh in pairs(trash) do
+        if itemCount(trsg) > 100 then
+            reconnect(world_storage, door_storage)
+            bot:trash(trsh, itemCount(trsh))
+            sleep(1000)
+        end
+    end
+end
+
+function round(n)
+    return n % 1 > 0.5 and math.ceil(n) or math.floor(n)
+end
+
+function itemCount(id)
+    return bot:getInventory():getItemCount(id)
+end
+
+function findItem(id)
+    return bot:getInventory():findItem(id)
+end
+
+for i = math.floor(breakTile/2),1,-1 do
+    i = i * -1
+    table.insert(tileBreak,i)
+end
+
+for i = 0, math.ceil(breakTile/2) - 1 do
+    table.insert(tileBreak,i)
+end
+
+function gscanFloat(id)
+    return bot:getWorld().growscan:getObjects()[id] or 0
+end
+
+function gscanBlock(id)
+    return bot:getWorld().growscan:getTiles()[id] or 0
+end
+
+function isPlantable(x,y)
+    local tempTile = getTile(x,y + 1)
+    if not tempTile.fg then return false end
+    local collision = getInfo(tempTile.fg).collision_type
+    return tempTile and ( collision == 1 or collision == 2)
+end
+
+function checkNuked(variant, netid)
+    if variant:get(0):getString() == "OnConsoleMessage" then
+        if variant:get(1):getString():find("That world is inaccessible") then
+            worldNuked = true
+        end
+    end
+end
+
+function warps(worldName, doorID)
+    worldNuked = false
+    warpAttempt = 0
+    addEvent(Event.variantlist, checkNuked)
+    while not bot:isInWorld(worldName:upper()) and not worldNuked do
+        print("Warping to "..worldName)
+        if bot.status == BotStatus.online and bot:getPing() == 0 then
+            bot:disconnect()
+            sleep(2000)
+        end
+
+        while bot.status ~= BotStatus.online do
+            sleep(1000)
+            while bot.status == BotStatus.account_banned do
+                sleep(8000)
+            end
+        end
+
+        if doorID ~= "" then
+            bot:warp(worldName, doorID)
+        else
+            bot:warp(worldName)
+        end
+
+        listenEvents(6)
+
+        if warpAttempt == 5 then
+            callAlert("Hard Warping to "..worldName.." "..bot.name:upper().." Resting.")
+            print(worldName, " Hard Warp")
+            sleep(3 * 60000)
+            bot:disconnect()
+            sleep(1000)
+            while bot.status ~= BotStatus.online do
+                sleep(1000)
+            end
+            warpAttempt = 0
+        else
+            warpAttempt = warpAttempt + 1
+        end
+    end
+
+    if worldNuked then
+        callAlert(worldName.." is Nuked!")
+        print(worldName, "Nuked")
+    end
+    
+    if doorID ~= "" and getTile(bot.x, bot.y).fg == 6 then
+        while bot.status ~= BotStatus.online or bot:getPing() == 0 do
+            sleep(1000)
+            while bot.status == BotStatus.account_banned do
+                callAlert(bot.name:upper() .. " got Banned!")
+                bot.auto_reconnect = false
+                bot:stopScript()
+            end
+        end
+        for i = 1,3 do
+            if getTile(bot.x,bot.y).fg == 6 then
+                bot:warp(worldName, doorID)
+                sleep(2000)
+            end
+        end
+        if getTile(bot.x,bot.y).fg == 6 then
+            print("Cant go to Door ID at ".. worldName)
+            callAlert("Cant go to Door ID at ".. worldName)
+            sleep(100)
+            worldNuked = true
+        end
+    end
+    sleep(100)
+    removeEvent(Event.variantlist)
+end
+
+function reconnect(worldName, doorID, posX, posY)
+    while getBot().status ~= 1 and not auto_reconnect do 
+        sleep(10000)
+    end
+    if pnb_tutorial and bot.name:upper() ~= namaBot:upper() then
+        
+        namaBot = bot.name
+        warps(worldTutor,"")
+        checkTutorial()
+        for i = 1,3 do
+            if worldTutor == "" then
+                checkTutorial()
+                sleep(500)
+            end
+        end
+
+        if worldTutor ~= "" then
+            if itemCount(seedID) == 0 then
+                takeItem(seedID, 50)
+            end
+            warps(worldTutor,"")
+            if worldNuked then
+                print(worldName.." is Nuked!, Bot Stopping Script")
+                callAlert(worldName.." is Nuked!, Bot Stopping Script")
+                bot:stopScript()
+            end
+        else
+            print(bot.name:upper().." Doesn't Have Tutorial World!")
+            callAlert(bot.name:upper().." Doesn't Have Tutorial World!, Will PNB in Pabrik")
+            bot:stopScript()
+        end
+
+        if posX and posY and not bot:isInTile(posX, posY) then
+            sleep(300)
+            bot:findPath(posX, posY)
+            sleep(200)
+        end
+    end
+    
+
+    if bot.status ~= BotStatus.online then
+        print(bot.name:upper().." | Reconnecting")
+        callWebhook(nil, nil)
+
+        while bot.status ~= BotStatus.online do
+            sleep(1000)
+            if bot.status == BotStatus.account_banned then
+                print(bot.name:upper() .. " got Banned")
+                callAlert(bot.name:upper().." got Banned")
+                bot.auto_reconnect = false
+                bot:stopScript()
+            end
+        end
+
+        warpingBackAttempt = 0
+        while not bot:isInWorld(worldName:upper()) do
+            
+            print(bot.name:upper().." | Warping Back to "..worldName)
+            bot:warp(worldName)
+            delay(delay_warp)
+            
+            if warpingBackAttempt == 5 then
+
+                print(bot.name:upper().." | Failed to Join Back to "..worldName.." Hard Warp Called!, Bot Resting.")
+
+                warpingBackAttempt = 0
+                sleep(3 * 60000)
+
+                if bot:getWorld().name ~= worldName:upper() then
+                    bot.auto_reconnect = false
+                    bot:disconnect()
+                    sleep(math.random(5000, 30000))
+                    bot.auto_reconnect = true
+                    sleep(1000)
+                    while bot.status ~= BotStatus.online do
+                        sleep(1000)
+                    end
+                end
+            else
+                warpingBackAttempt = warpingBackAttempt + 1
+            end
+        end
+
+        if doorID ~= "" and getTile(bot.x, bot.y).fg == 6 then
+            sleep(3000)
+            while getTile(bot.x, bot.y).fg == 6 and bot.status == BotStatus.online do
+                print(bot.name:upper().." | Warping to Door ID")
+                bot:warp(worldName, doorID)
+                sleep(delay_warp)
+            end
+        end
+
+        if posX and posY and not bot:isInTile(posX, posY) then
+            sleep(300)
+            bot:findPath(posX, posY)
+            sleep(200)
+        end
+    end
+end
+
+function harvestPlant()
+    warps(pabrikWorld, door_farm)
+    
+    bot.ignore_gems = not take_gems
+    bot.auto_collect = true
+    bot.object_collect_delay = 100
+    bot.collect_range = collectRange
+    
+    if bot:isInWorld(pabrikWorld:upper()) then
+        callWebhook(nil, nil)
+        for _, ye in pairs(pnbY) do
+            if itemCount(blockID) < 196 then
+                for _, tile in pairs(getTiles()) do
+                    reconnect(pabrikWorld, door_farm)
+                    if tile.fg == seedID and tile:canHarvest() and hasAccess(tile.x, tile.y) > 0 and #bot:getPath(tile.x, tile.y) > 0 and tile.y == ye then
+                        bot:findPath(tile.x, tile.y)
+                        if bot:isInTile(tile.x, tile.y) then
+                            bot:hit(bot.x, bot.y)
+                            delay(delay_harvest)
+                            reconnect(pabrikWorld, door_farm, tile.x, tile.y)
+                        end
+                        if itemCount(blockID) == 200 then
+                            break
+                        end
+                    end
+                end
+            end
+
+            sleep(300)
+            
+            if itemCount(seedID) > 0 and getTile(bot.x, bot.y).fg == 0 then
+                bot:place(bot.x, bot.y, seedID)
+                delay(delay_plant)
+                reconnect(pabrikWorld, door_farm)
+            end
+
+            for ex = 99, 0, -1 do
+                reconnect(pabrikWorld, door_farm)
+                if ex <= bot.x and getTile(ex, bot.y).fg == 0 and isPlantable(ex, bot.y) and itemCount(seedID) > 0 and hasAccess(ex, bot.y) > 0 and #bot:getPath(ex, bot.y) > 0 then
+                    bot:findPath(ex, bot.y)
+                    if itemCount(seedID) > 0 then
+                        bot:place(bot.x, bot.y, seedID)
+                        delay(delay_plant)
+                        reconnect(pabrikWorld, door_farm)
+                    end
+                end
+            end
+            
+            sleep(300)
+
+            if itemCount(seedID) > 0 then
+                for _, tile in pairs(getTiles()) do
+                    reconnect(pabrikWorld, door_farm)
+                    if tile.fg == 0 and isPlantable(tile.x, tile.y) and itemCount(seedID) > 0 and hasAccess(tile.x, tile.y) > 0 and #bot:getPath(tile.x, tile.y) > 0 and tile.y == ye then
+                        bot:findPath(tile.x, tile.y)
+                        if bot:isInTile(tile.x, tile.y) then
+                            bot:place(bot.x, bot.y, seedID)
+                            delay(delay_plant)
+                            reconnect(pabrikWorld, door_farm, tile.x, tile.y)
+                        end
+                    end
+                end
+            end
+
+        end
+    end
+end
+
+function pnb()
+    warps(pabrikWorld, door_farm)
+    callWebhook(nil, nil)
+    if bot:isInWorld(pabrikWorld:upper()) then
+        bot:findPath(pnbX, pnbY[1])
+        sleep(100)
+
+        bot.auto_collect = true
+        bot.object_collect_delay = 100
+        bot.ignore_gems = false
+        bot.collect_range = collectRange
+
+        if bot:isInTile(pnbX, pnbY[1]) then
+            while itemCount(blockID) > 0 and bot:isInWorld(pabrikWorld:upper()) and getTile(bot.x, bot.y).fg ~= 6 do
+    
+                if bot:isInWorld(pabrikWorld:upper()) and not bot:isInTile(pnbX, pnbY[1]) then
+                    bot:warp(pabrikWorld, door_farm)
+                    sleep(2000)
+                    bot:findPath(pnbX, pnbY[1])
+                    sleep(100)
+                end
+                
+                for _,i in pairs(tileBreak) do
+                    if getTile(pnbX - 1,pnbY[1] + i).fg == 0 and getTile(pnbX - 1,pnbY[1] + i).bg == 0 then
+                        bot:place(bot.x-1, bot.y+i, blockID)
+                        delay(delay_place)
+                        reconnect(pabrikWorld, door_farm, pnbX, pnbY[1])
+                    end
+                end
+                
+                for _,i in pairs(tileBreak) do
+                    while getTile(pnbX - 1,pnbY[1] + i).fg ~= 0 or getTile(pnbX - 1,pnbY[1] + i).bg ~= 0 do
+                        bot:hit(bot.x-1, bot.y+i)
+                        delay(delay_hit)
+                        reconnect(pabrikWorld, door_farm, pnbX, pnbY[1])
+                    end
+                end
+    
+            end
+        end
+    end
+end
+
+function vendCheck(v, netid)
+    if v:get(0):getString() == "OnDialogRequest" then
+        if v:get(1):getString():find("This machine is empty.") then
+            vendStatus = 1
+            unlistenEvents()
+        elseif v:get(1):getString():find("addstock") then
+            itemInVend = v:get(1):getString():match("The machine contains a total of (%d+)")
+            vendStatus = 2
+            unlistenEvents()
+        else
+            vendStatus = 3
+            unlistenEvents()
+        end
+    end
+end
+
+function putVend(itemid)
+    bot.auto_collect = false
+    warps(world_storage, door_storage)
+    if bot:isInWorld(world_storage:upper()) then
+        for _, tile in pairs(getTiles()) do
+            reconnect(world_storage, door_storage)
+            if tile.fg == 2978 or tile.fg == 9268 and hasAccess(tile.x, tile.y) > 0 then
+                if getTile(tile.x, tile.y):getExtra().id == itemid or getTile(tile.x, tile.y):getExtra().id == 0 then
+                    reconnect(world_storage, door_storage)
+                    bot:findPath(tile.x, tile.y)
+                    sleep(200)
+                    if bot:isInTile(tile.x, tile.y) then
+                        addEvent(Event.variantlist, vendCheck)
+                        runThread(function()
+                            getBot():wrench(getBot().x, getBot().y)
+                        end)
+                        listenEvents(5)
+                        itemInVend = itemInVend + itemCount(itemid)
+                        if vendStatus == 1 then
+                            sleep(300)
+                            bot:sendPacket(2,"action|dialog_return\ndialog_name|vending\ntilex|".. bot.x .."|\ntiley|".. bot.y .."|\nstockitem|"..itemid)
+                            sleep(1000)
+                            bot:sendPacket(2,"action|dialog_return\ndialog_name|vending\ntilex|".. bot.x .."|\ntiley|".. bot.y .."|\nsetprice|0\nchk_peritem|0\nchk_perlock|1")
+                            sleep(1000)
+                        elseif vendStatus == 2 then
+                            sleep(300)
+                            bot:sendPacket(2,"action|dialog_return\ndialog_name|vending\ntilex|".. bot.x .."|\ntiley|".. bot.y .."|\nbuttonClicked|addstock\n\nsetprice|0\nchk_peritem|0\nchk_perlock|1")
+                            sleep(1000)
+                        end
+                    end
+                    callWebhook(itemInVend, nil)
+                    if itemCount(itemid) == 0 then
+                        break
+                    end
+                end
+            end
+        end
+    end
+end
+
+function tileDrop(x,y,num)
+    local count = 0
+    local stack = 0
+    for _,obj in pairs(bot:getWorld():getObjects()) do
+        if round(obj.x / 32) == x and math.floor(obj.y / 32) == y then
+            count = count + obj.count
+            stack = stack + 1
+        end
+    end
+    if stack < 20 and count <= (4000 - num) then
+        return true
+    end
+    return false
+end
+
+function dropItem(itemID)
+    bot.auto_collect = false
+    bot.object_collect_delay = 60000
+    
+    warps(world_storage, door_storage)
+
+    if bot:isInWorld(world_storage:upper()) then
+        ye = bot.y
+        for _, tile in pairs(getTiles()) do
+            reconnect(world_storage, door_storage)
+            if tile.y == ye and tile.x > bot.x and tile.x <= 99 then
+                if tileDrop(tile.x, tile.y, itemCount(itemID)) then
+                    bot:findPath(tile.x-1, tile.y)
+                    bot:setDirection(false)
+                    sleep(100)
+                    bot:drop(itemID, itemCount(itemID))
+                    sleep(500)
+                    while itemCount(itemID) > 0 and getTile(bot.x+1, bot.y).fg == 0 do
+                        bot:moveRight()
+                        sleep(100)
+                        bot:drop(itemID, itemCount(itemID))
+                        sleep(500)
+                        reconnect(world_storage, door_storage)
+                    end
+                    if itemCount(itemID) == 0 then
+                        break
+                    end
+                end
+            end
+        end
+        
+        callWebhook(gscanFloat(flourID), nil)
+
+    end
+end
+
+function autoWear(itemID)
+    bot.auto_collect = false
+    bot.object_collect_delay = 100
+    if getBot():isInWorld() and getBot():getInventory():findItem(98) > 0 then
+        getBot().wear_storage = world_pickaxe 
+        getBot().auto_wear = true 
+        while getBot():isInWorld() and getBot():getInventory():findItem(98) ~= 1 do 
+            sleep(500)
+        end 
+    end
+end
+
+function takeItem(itemID, amount)
+    emptyItem = false
+    bot.auto_collect = false
+    bot.object_collect_delay = 100
+
+    warps(world_storage, door_storage)
+    if bot:isInWorld(world_storage:upper()) then
+        if gscanFloat(itemID) > 0 then
+            for _, obj in pairs(getObjects()) do
+                reconnect(world_storage, door_storage)
+                if obj.id == itemID then
+                    if #bot:getPath(math.floor(obj.x / 32),math.floor(obj.y / 32)) > 0 then
+                        bot:findPath(math.floor(obj.x / 32),math.floor(obj.y / 32))
+                        sleep(100)
+                    end
+                    bot:collectObject(obj.oid, 3)
+                    sleep(500)
+                    while itemCount(itemID) > amount do
+                        bot:moveRight()
+                        bot:setDirection(false)
+                        sleep(100)
+                        bot:drop(itemID, itemCount(itemID)-amount)
+                        sleep(500)
+                        reconnect(world_storage, door_storage)
+                    end
+                    if itemCount(itemID) == amount then
+                        break
+                    end
+                end
+            end
+            if itemCount(itemID) == 0 then
+                print("Bot Looking for Item with ID: "..itemID..", Drop it in Storage World!")
+                callAlert(bot.name:upper().." Looking for Item with ID: "..itemID..", Drop it in Storage World!")
+                sleep(3000)
+                takeItem(itemID, amount)
+            end
+            bot.object_collect_delay = 60000
+        else
+            emptyItem = true
+        end
+    end
+    
+end
+
+function checkWrench(varlist, netid)
+    if varlist:get(0):getString() == "OnDialogRequest" and varlist:get(1):getString():find("my_worlds") then
+        wrenchP = true
+        unlistenEvents()
+    end
+end
+
+function checkMyWorld(varlist, netid)
+    if varlist:get(0):getString() == "OnDialogRequest" and varlist:get(1):getString():find("add_button") then
+        teks = varlist:get(1):getString()
+        worldTutor = string.match(teks, "add_button|([^|]+)|")
+        print(bot.name:upper().." Tutor World: "..worldTutor)
+        callEvent(bot.name:upper().." Tutorial World: "..worldTutor)
+        unlistenEvents()
+    end
+end
+
+function findHomeWorld(variant, netid)
+    if variant:get(0):getString() == "OnRequestWorldSelectMenu" and variant:get(1):getString():find("Your Worlds") then
+        local text = variant:get(1):getString()
+        local lines = {}
+        for line in text:gmatch("[^\r\n]+") do
+            table.insert(lines, line)
+        end
+        for i, value in ipairs(lines) do
+            if i == 3 then
+                kalimat = lines[3]
+                local nilai = kalimat:match("|([a-zA-Z0-9%s]+)|"):gsub("|", ""):gsub("%s", "")
+                worldTutor = nilai
+                print("[R] "..bot.name:upper().." > Tutorial World: "..worldTutor)
+            end
+        end
+    end
+end
+
+function checkTutorial()
+    while bot:isInWorld() do
+        bot:leaveWorld()
+        sleep(3000)
+    end
+
+    worldTutor = ""
+    noHomeWorld = false
+    print("[R] "..bot.name:upper().." > Checking Tutorial/Home World")
+
+    addEvent(Event.variantlist, findHomeWorld)
+    for i = 1, 3 do
+        if worldTutor == "" and bot:getWorld().name:upper() == "EXIT" then
+            bot:sendPacket(3,"action|world_button\nname|_16")
+            listenEvents(5)
+        end
+    end
+
+    if worldTutor == "" then
+        print("[CRITICAL] "..bot.name:upper().." > Doesn't Have Tutorial/Home World!")
+        noHomeWorld = true
+    end
+    
+    sleep(100)
+    removeEvent(Event.variantlist)
+end
+
+function pnbTutorial()
+    warps(worldTutor,"")
+    if not worldNuked then
+        callWebhook(nil, nil)
+        if bot:isInWorld(worldTutor:upper()) and hasAccess(bot.x-1, bot.y) > 0 then
+            bot.auto_collect = true
+            bot.object_collect_delay = 100
+            bot.ignore_gems = false
+            pnbTX, pnbTY = 50, 23
+
+            if #bot:getPath(pnbTX, pnbTY) > 0 then
+                bot:findPath(pnbTX, pnbTY)
+                sleep(100)
+            end
+
+            if bot:isInTile(pnbTX, pnbTY) then
+                while itemCount(blockID) > breakTile and bot:isInWorld(worldTutor:upper()) and getTile(bot.x, bot.y).fg ~= 6 do
+
+                    if bot:isInWorld(worldTutor:upper()) and not bot:isInTile(pnbTX, pnbTY) then
+                        bot:findPath(pnbTX, pnbTY)
+                        sleep(200)
+                    end
+                    
+                    for i,player in pairs(getPlayers()) do
+                        if player.netid ~= getLocal().netid and player.name:upper() ~= whiteListOwner:upper() then
+                            bot:say("/ban " .. player.name)
+                            sleep(1000)
+                        end
+                    end
+        
+                    for _,i in pairs(tileBreak) do
+                        if getTile(pnbTX + i,pnbTY - 1).fg == 0 and getTile(pnbTX + i,pnbTY - 1).bg == 0 then
+                            bot:place(bot.x + i,bot.y - 1, blockID)
+                            delay(delay_place)
+                            reconnect(worldTutor,"", pnbTX, pnbTY)
+                        end
+                    end
+                    
+                    for _,i in pairs(tileBreak) do
+                        while getTile(pnbTX + i,pnbTY - 1).fg ~= 0 or getTile(pnbTX + i,pnbTY - 1).bg ~= 0 and getTile(pnbTX+i, pnbTY-1).fg ~= 9640 do
+                            bot:hit(bot.x+i, bot.y-1)
+                                delay(delay_hit)
+                            reconnect(worldTutor,"", pnbTX, pnbTY)
+                        end
+                    end
+                end
+            end
+        else
+            pnb()
+        end
+    end
+    if worldNuked then
+        tutorNuked = true
+        pnb()
+    end
+end
+
+function scanMarker()
+    warps(pabrikWorld, door_farm)
+
+    if bot:isInWorld(pabrikWorld:upper()) then
+        for _, tile in pairs(getTiles()) do
+            reconnect(pabrikWorld, door_farm)
+            if tile.fg == row_id or tile.bg == row_id then
+                table.insert(Poss, {x = tile.x, y = tile.y})
+            end
+        end
+
+        pnbX = Poss[position].x
+        posY = Poss[position].y
+        pnbY = {}
+
+        for i = 0, multiRow-1 do
+            table.insert(pnbY, posY)
+            posY = posY + multiRowDistance
+        end
+        
+    end
+end
+
+function buyPacks()
+    bot.auto_collect = false
+    bot.object_collect_delay = 60000
+
+    warps(world_pack, door_pack)
+
+    if bot:isInWorld(world_pack:upper()) then
+        availSlot = getBot():getInventory().slotcount - getBot():getInventory().itemcount
+        while bot.gem_count >= pack_price and availSlot > 0 do
+            bot:buy(pack_name)
+            sleep(2000)
+            reconnect(world_pack, door_pack)
+            for _, itemz in pairs(pack_item) do
+                if itemCount(itemz) > 190 then
+                    dropPack()
+                end
+            end
+        end
+        dropPack()
+    end
+end
+
+function dropPack()
+    warps(world_pack, door_pack)
+    for _, pack in pairs(pack_item) do
+        if itemCount(pack) > 0 then
+            reconnect(world_pack, door_pack)
+            if getBot():findOutput() then 
+                while itemCount(pack) do
+                    bot:moveRight()
+                    sleep(100)
+                    bot:drop(pack, itemCount(pack))
+                    sleep(500)
+                    reconnect(world_pack, door_pack)
+                end
+            end
+        end
+    end
+    callWebhook(nil, scanPack())
+end
+
+function scanPack()
+    local totalPack = 0
+    for _, obj in pairs(getObjects()) do
+        for _, pid in ipairs(pack_item) do
+            if obj.id == pid then
+                totalPack = totalPack + obj.count
+            end
+        end
+    end
+    return totalPack
+end
+
+function scanSeed()
+    local scanTotal = 0
+    for _, ye in pairs(pnbY) do
+        for _, tile in pairs(getTiles()) do
+            if tile.fg == seedID and tile.y == ye then
+                scanTotal = scanTotal + 1
+            end
+        end
+    end
+    return scanTotal
+end
+
+function scanEmptyTiles()
+    local emptyTiles = 0
+    for _, ye in pairs(pnbY) do
+        for _, tile in pairs(getTiles()) do
+            if tile.fg == 0 and isPlantable(tile.x, tile.y) and tile.y == ye then
+                emptyTiles = emptyTiles + 1
+            end
+        end
+    end
+    return emptyTiles
+end
+
+function readyTreeScan()
+    local readyTree = 0
+    for _, ye in pairs(pnbY) do
+        for _, tile in pairs(getTiles()) do
+            if tile.fg == seedID and tile:canHarvest() and tile.y == ye then
+                readyTree = readyTree + 1
+            end
+        end
+    end
+    return readyTree
+end
+
+function plant()
+    for _, ye in pairs(pnbY) do
+        for _, tile in pairs(getTiles()) do
+            reconnect(pabrikWorld, door_farm)
+            if tile.fg == 0 and isPlantable(tile.x, tile.y) and itemCount(seedID) > 0 and hasAccess(tile.x, tile.y) > 0 and #bot:getPath(tile.x, tile.y) > 0 and tile.y == ye and bot:isInWorld(pabrikWorld:upper()) then
+                bot:findPath(tile.x, tile.y)
+                if bot:isInTile(tile.x, tile.y) then
+                    bot:place(bot.x, bot.y, seedID)
+                    delay(delay_plant)
+                    reconnect(pabrikWorld, door_farm)
+                end
+            end
+        end
+    end
+end
+
+function autoRemove()
+    if bot.level >= level_rotation and auto_rotation then
+        if itemCount(seedID) > 0 then
+            dropItem(seedID)
+        end
+        if itemCount(blockID) > 0 then
+            dropItem(blockID)
+        end
+        bot.rotation.enabled = true
+        callAlert(bot.name:upper().." has reached a certain level, Starting rotation..")
+        getBot():stopScript()
+    end 
+    if bot.level >= level_offline and auto_offline then
+        if itemCount(seedID) > 0 then
+            dropItem(seedID)
+        end
+        if itemCount(blockID) > 0 then
+            dropItem(blockID)
+        end
+        bot.rotation.enabled = true
+        callAlert(bot.name:upper().." has reached a certain level, bot offline")
+        getBot().auto_reconnect = false 
+        if remove_bot then 
+            removeBot(bot.name)
+        else 
+            getBot():disconnect()
+            getBot():stopScript()
+        end 
+    end 
+end
+
+function isReadyGrind(variant, netid)
+    if variant:get(0):getString() == "OnDialogRequest" then
+        if variant:get(1):getString():lower():find("grind wheat") then
+            readyGrind = true
+            unlistenEvents()
+        end
+    end
+end
+
+function grindWheat(worldName, doorID)
+    if bot:isInWorld(worldName:upper()) then
+        readyGrind = false
+        for _, tile in pairs(getTiles()) do
+            reconnect(worldName, doorID)
+            if tile.fg == 4582 and hasAccess(tile.x, tile.y) > 0 then
+                if #bot:getPath(tile.x, tile.y-1) > 0 then
+                    bot:findPath(tile.x, tile.y-1)
+                    sleep(100)
+                elseif #bot:getPath(tile.x, tile.y+1) > 0 then
+                    bot:findPath(tile.x, tile.y+1)
+                    sleep(100)
+                elseif #bot:getPath(tile.x-1, tile.y) > 0 then
+                    bot:findPath(tile.x-1, tile.y)
+                    sleep(100)
+                elseif #bot:getPath(tile.x+1, tile.y) > 0 then
+                    bot:findPath(tile.x+1, tile.y)
+                    sleep(100)
+                end
+                ex, ye = bot.x, bot.y
+                addEvent(Event.variantlist, isReadyGrind)
+                while itemCount(blockID) == 200 do
+                    reconnect(worldName, doorID, ex, ye)
+                    bot:place(tile.x, tile.y, blockID)
+                    listenEvents(2)
+                    if readyGrind then
+                        bot:sendPacket(2, "action|dialog_return\ndialog_name|grinder\ntilex|".. tile.x .."|\ntiley|".. tile.y .."|\nitemID|880|\ncount|4")
+                        sleep(800)
+                    end
+                end
+                removeEvent(Event.variantlist)
+            end
+            if itemCount(blockID) == 0 then
+                break
+            end
+        end
+    end
+end
+
+function autoGrind()
+    bot.auto_collect = false
+    if pabrikWorld ~= world_grinder then 
+        warps(world_grinder, door_grinder)
+    else 
+        if getTile(getBot().x, getBot().y).fg == 6 then 
+            warps(world_grinder, door_grinder)
+        end 
+    end 
+    if not worldNuked then
+        if bot:isInWorld(world_grinder:upper()) then
+            grindWheat(world_grinder, door_grinder)
+        end
+    else
+        print("Public World got Nuked")
+        callAlert("Grinder not Found!")
+        bot:stopScript()
+    end
+    if true then
+        warps(pabrikWorld, door_farm)
+        if bot:isInWorld(pabrikWorld:upper()) then
+            if gscanBlock(4582) > 0 then
+                grindWheat(pabrikWorld, door_farm)
+            else
+                warps(world_storage, door_storage)
+                if bot:isInWorld(world_storage:upper()) then
+                    if gscanBlock(4582) > 0 then
+                        grindWheat(world_storage, door_storage)
+                    else
+                        print("Grinder Not Found!")
+                        callAlert("Grinder not Found!")
+                        bot:stopScript()
+                    end
+                end
+            end
+        end
+    end
+end
+
+
+
+function main()
+    if pnb_tutorial then
+        checkTutorial()
+        for i=1,3 do
+            if worldTutor == "" then
+                checkTutorial()
+                sleep(500)
+            end
+        end
+        if worldTutor == "" then
+            print(bot.name:upper().." Doesn't Have Tutorial World!")
+            callAlert(bot.name:upper().." Doesn't Have Tutorial World!, Will PNB in Pabrik")
+            noTutorWorld = true
+        end
+    end
+    
+    if pabrikWorld then
+        pabrikWorld = pabrikWorld:upper()
+
+        while bot:isInWorld() do
+            bot:leaveWorld()
+            sleep(1000)
+        end
+        
+        warps(pabrikWorld, door_farm)
+
+        if not worldNuked then
+            getBot().custom_status = "Getting row data"
+            
+            scanMarker()
+            sleep(200)
+
+            if bot:isInWorld(pabrikWorld:upper()) then
+                while scanEmptyTiles() > 0 and not emptyItem do
+
+                    if scanEmptyTiles() >= 200 then
+                        if itemCount(seedID) < scanEmptyTiles() then
+                            takeItem(seedID, 200)
+                            sleep(200)
+                        end
+                    else
+                        if itemCount(seedID) < scanEmptyTiles() then
+                            takeItem(seedID, scanEmptyTiles())
+                            sleep(200)
+                        end
+                    end
+                    
+                    warps(pabrikWorld, door_farm)
+                    if bot:isInWorld(pabrikWorld:upper()) then
+                        plant()
+                        sleep(200)
+                    end
+
+                end
+                
+                if gscanBlock(778) > 0 then
+                    bot.anti_toxic = true
+                    while gscanBlock(778) > 0 do
+                        sleep(1000)
+                    end
+                    bot.anti_toxic = false
+                end
+
+            end
+        end
+
+        while not worldNuked do
+            if auto_rotation and bot.level >= level_rotation then
+                autoRemove()
+            end
+            if auto_take_pickaxe and itemCount(pickaxeID) == 0 then
+                print(bot.name:upper().." Taking Pickaxe")
+                autoWear(pickaxeID)
+                sleep(200)
+            end
+            
+            warps(pabrikWorld, door_farm)
+            if bot:isInWorld(pabrikWorld:upper()) then
+                if readyTreeScan() > 0 then
+                    print(bot.name:upper().." Harvesting")
+                    harvestPlant()
+                    sleep(200)
+                    if itemCount(seedID) >= 50 and itemCount(blockID) == 200 then
+                        for i = 1,3 do
+                            if itemCount(blockID) == 200 then
+                                autoGrind()
+                                sleep(200)
+                            end
+                        end
+                        if itemCount(blockID) == 200 then
+                            callAlert("Grind Fail!")
+                        end
+                    end
+
+                    if itemCount(flourID) >= save_flour then
+                        if save_vend then
+                            for i = 1,3 do
+                                if itemCount(flourID) >= save_flour then
+                                    putVend(flourID)
+                                    sleep(200)
+                                end
+                            end
+                            if itemCount(flourID) > 0 then
+                                callAlert("Vending are FULL!, Stopping Script")
+                                bot:stopScript()
+                            end
+                        else
+                            dropItem(flourID)
+                            sleep(200)
+                        end
+                        
+                        trashJunk()
+                        dropGoods()
+
+                        if autoBuyPack == true then
+                            buyPacks()
+                            sleep(200)
+                        end
+
+                        warps(pabrikWorld, door_farm)
+                    end
+                    
+                    if itemCount(blockID) > 0 then
+                        print(bot.name:upper().." PNB")
+                        if pnb_tutorial then
+                            if noTutorWorld or tutorNuked then
+                                pnb()
+                            else
+                                pnbTutorial()
+                            end
+                        else
+                            pnb()
+                        end
+                        sleep(200)
+                    end
+                else
+                    print(bot.name:upper().." Waiting for Tree")
+                    bot:say("/sleep")
+                    sleep(30000)
+                end
+                warps(pabrikWorld, door_farm)
+            end
+        end
+    end
+end
+
+function getJson()
+    print("entering getJson")
+    local client = HttpClient.new()
+    client.url = "https://raw.githubusercontent.com/LuaDist/dkjson/refs/heads/master/dkjson.lua"
+
+    local code = client:request()  -- Dapatkan isi file Lua sebagai string
+    local chunk, err = load(tostring(code.body))
+
+    if not chunk then
+        print("Error load code:", err)
+        return
+    end
+
+    local success, result = pcall(chunk)  -- Jalankan chunk dengan aman
+    if success then
+        print("success getting json")
+        client.url = nil 
+        json = result
+    else
+        print("Error executing bot kode:", result)
+    end
+end
+
+function verify() 
+    local url = "https://gist.github.com/Evan0A/9b0209b1d2aa9edb44185e01332ca70b/raw"
+    local client = HttpClient.new()
+    client.url = url 
+    local respond = client:request().body
+    getJson() 
+    if respond and json then 
+        local succes, data = pcall(json.decode, respond)
+        if succes and data then 
+            local newver = data.current_version
+            local found = false
+            for _, datas in ipairs(data.accessList) do 
+                if datas.lucifer == getUsername() then
+                    found = true
+                    if datas.version >= Sversion then
+                        print("Username valid, welcome "..getUsername())
+                        --webhook valid 
+                        return true
+                    elseif datas.version < Sversion then 
+                        print("You can't use this script, script version: "..Sversion.."your version: "..datas.version)
+                        return false
+                    end 
+                end 
+            end 
+            if not found then
+                --webhook not found user 
+                return false 
+            end 
+        else 
+            --webhook error json 
+            print("error at json, status: "..tostring(status)..", data: "..tostring(data))
+            getBot():stopScript()
+        end 
+    else 
+        print("error at json, respond: "..tostring(respond))
+        getBot():stopScript()
+    end 
+end 
+
+function getData()
+    local mrow = #world_farm * world_farm_row
+    local cbot = #getBots()
+    local index = getBot().index - 1
+    if cbot > mrow then 
+        error("Needing more world farm, total bot: "..cbot..", Total row: "..mrow)
+    end 
+    local duniaIndex = (index % #world_farm) + 1
+    local barisIndex = math.floor(index / #world_farm) + 1
+
+    local worldName = world_farm[duniaIndex]
+    pabrikWorld = worldName 
+    position = barisIndex
+    return worldName, barisIndex
+end
+
+sleep(delay_execute*botIndex-1)
+if verify() then 
+    getData()
+    main() 
+else 
+    print("user not found")
+end
+
