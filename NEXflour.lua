@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -640,7 +640,7 @@ function dropItem(itemID)
     warps(world_storage, door_storage)
 
     if bot:isInWorld(world_storage:upper()) then
-        while itemCount > 0 do 
+        while itemCount(itemID) > 0 do 
             getBot():findOutput()
             sleep(500)
             bot:drop(itemID, itemCount(itemID))
@@ -1336,6 +1336,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
