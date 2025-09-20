@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -114,7 +114,7 @@ mid = 0
 
 function delay(second)
     if type(second) == "number" and dynamic_delay then 
-        local ping = tostring(getBot().ping) 
+        local ping = tostring(getBot():getPing()) 
         local off = 0 
         local rand = math.random(-15, 10)
         if #ping >= 3 then 
@@ -122,9 +122,9 @@ function delay(second)
         elseif #ping == 2 then 
             off = ping:sub(1,1)
         else 
-            off = 0
+            off = "0"
         end 
-        off = tonumber(off)
+        off = tonumber(off) or 0
         sleep(second + rand + off)
     elseif not dynamic_delay then 
         sleep(second)
@@ -1322,6 +1322,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
