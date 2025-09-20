@@ -1,4 +1,4 @@
-print("v2")
+print("v3")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -241,11 +241,11 @@ function round(n)
 end
 
 function itemCount(id)
-    return bot:getInventory():getItemCount(id)
+    return getBot():getInventory():getItemCount(id)
 end
 
 function findItem(id)
-    return bot:getInventory():findItem(id)
+    return getBot():getInventory():findItem(id)
 end
 
 for i = math.floor(breakTile/2),1,-1 do
@@ -640,10 +640,10 @@ function dropItem(itemID)
     warps(world_storage, door_storage)
 
     if bot:isInWorld(world_storage:upper()) then
-        while itemCount(itemID) > 0 do 
+        while getBot():getInvetory():getItemCount(itemID) > 0 do 
             getBot():findOutput()
             sleep(500)
-            bot:drop(itemID, itemCount(itemID))
+            bot:drop(itemID, getBot():getInvetory():getItemCount(itemID))
             sleep(1000)
             reconnect(world_storage, door_storage)
         end
@@ -1336,6 +1336,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
