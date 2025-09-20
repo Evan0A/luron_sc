@@ -113,7 +113,6 @@ mid = 0
 
 function delay(second)
     if type(second) == "number" and dynamic_delay then 
-        local nama = tipe:lower()
         local ping = tostring(getBot().ping) 
         local off = 0 
         local rand = math.random(-15, 10)
@@ -122,7 +121,7 @@ function delay(second)
         elseif #ping == 2 then 
             off = ping:sub(1,1)
         else 
-            off = ping
+            off = 0
         end 
         off = tonumber(off)
         sleep(second + rand + off)
@@ -1322,4 +1321,5 @@ if verify() then
 else 
     print("user not found")
 end
+
 
