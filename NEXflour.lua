@@ -1,4 +1,4 @@
-print("v2")
+print("v3")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -155,7 +155,7 @@ function callWebhook(flour, pack)
     wh.embed1.color = 65280
     local desc = ""
     for _, botak in pairs(getBots()) do
-        if botak.selected == true then
+        if botak:isRunningScript() then
             desc = desc .. ":farmer: **".. string.upper(botak.name).. "** [".. botak.level .. "]\nStatus: ".. getStatus(botak.status).."\nCurrent World: ||".. botak:getWorld().name .. "||\n\n"
         end
     end
@@ -1322,6 +1322,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
