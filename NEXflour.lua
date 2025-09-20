@@ -1,4 +1,4 @@
-print("v3")
+print("v1")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -146,7 +146,7 @@ function getUptime()
 end
 
 function callWebhook(flour, pack)
-    local wh = Webhook.new(mainWebhookUrl)
+    local wh = Webhook.new(global_webhook)
     wh.username = "Rubot"
     wh.avatar_url = "https://cdn.discordapp.com/attachments/1146148490867650601/1148295389586395147/78xb5ptpGXtCJZtEMYKRsJjFdgUECLiju4tZegiL-Cv0Uqn3TTG4LFJPo2W4FTL393JUr_jlxJNu91seRFanRRtBT5P9dFK4d8mytB0.gif"
     wh.embed1.use = true
@@ -183,7 +183,7 @@ function callWebhook(flour, pack)
 end
 
 function callAlert(msg)
-    local wh = Webhook.new(eventWebhookUrl)
+    local wh = Webhook.new(event_webhook)
     wh.username = "Rubot"
     wh.avatar_url = "https://cdn.discordapp.com/attachments/1146148490867650601/1148295389586395147/78xb5ptpGXtCJZtEMYKRsJjFdgUECLiju4tZegiL-Cv0Uqn3TTG4LFJPo2W4FTL393JUr_jlxJNu91seRFanRRtBT5P9dFK4d8mytB0.gif"
     wh.content = "||@everyone||"
@@ -194,7 +194,7 @@ function callAlert(msg)
 end
 
 function callEvent(msg)
-    local wh = Webhook.new(eventWebhookUrl)
+    local wh = Webhook.new(event_webhook)
     wh.username = "Rubot"
     wh.avatar_url = "https://cdn.discordapp.com/attachments/1146148490867650601/1148295389586395147/78xb5ptpGXtCJZtEMYKRsJjFdgUECLiju4tZegiL-Cv0Uqn3TTG4LFJPo2W4FTL393JUr_jlxJNu91seRFanRRtBT5P9dFK4d8mytB0.gif"
     wh.embed1.use = true
@@ -1322,6 +1322,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
