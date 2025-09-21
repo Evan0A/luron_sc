@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -35,8 +35,8 @@ row_id = 4584
 save_flour = 8
 save_vend = false
 pnb_tutorial = true 
-auto_take_pickaxe = false 
-world_pickace = "WORLD|DOOR"
+auto_take_pickaxe = true 
+world_pickace = "PTVPIC|PTVPIC"
 
 auto_rotation = false -- auto start rotation if reach X level
 level_rotation = 12
@@ -1337,6 +1337,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
