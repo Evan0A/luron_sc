@@ -1,4 +1,4 @@
-print("v5")
+print("v00")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -656,8 +656,8 @@ function autoWear(itemID)
     bot.auto_collect = false
     bot.object_collect_delay = 100
     if getBot():getInventory():findItem(98) == 0 then
-        getBot().wear_storage = world_pickaxe 
-        getBot().auto_wear = true 
+		getBot().auto_wear = true
+        getBot().wear_storage = world_pickaxe  
         while getBot():getInventory():findItem(98) ~= 1 do 
             sleep(500)
         end 
@@ -1173,9 +1173,9 @@ function main()
             if auto_rotation and bot.level >= level_rotation then
                 autoRemove()
             end
-            if auto_take_pickaxe and itemCount(pickaxeID) == 0 then
+            if auto_take_pickaxe and itemCount(98) == 0 then
                 print(bot.name:upper().." Taking Pickaxe")
-                autoWear(pickaxeID)
+                autoWear(98)
                 sleep(200)
             end
             
@@ -1338,6 +1338,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
