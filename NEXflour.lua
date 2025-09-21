@@ -1,4 +1,4 @@
-print("v2")
+print("v5")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -655,7 +655,7 @@ end
 function autoWear(itemID)
     bot.auto_collect = false
     bot.object_collect_delay = 100
-    if getBot():isInWorld() and getBot():getInventory():findItem(98) > 0 then
+    if getBot():getInventory():findItem(98) == 0 then
         getBot().wear_storage = world_pickaxe 
         getBot().auto_wear = true 
         while getBot():getInventory():findItem(98) ~= 1 do 
@@ -1116,6 +1116,7 @@ function main()
             noTutorWorld = true
         end
     end
+	autoWear(98)
     
     if pabrikWorld then
         pabrikWorld = pabrikWorld:upper()
@@ -1337,6 +1338,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
