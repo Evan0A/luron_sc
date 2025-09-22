@@ -149,16 +149,16 @@ end
 
 function callWebhook(flour, pack)
     local wh = Webhook.new(global_webhook)
-    wh.username = "Rubot"
-    wh.avatar_url = "https://cdn.discordapp.com/attachments/1146148490867650601/1148295389586395147/78xb5ptpGXtCJZtEMYKRsJjFdgUECLiju4tZegiL-Cv0Uqn3TTG4LFJPo2W4FTL393JUr_jlxJNu91seRFanRRtBT5P9dFK4d8mytB0.gif"
+    wh.username = "Nexora"
+    wh.avatar_url = "https://cdn.discordapp.com/attachments/1365639857241718867/1401710544871751724/file_000000000c0461f8ac3c5a2bc4f38329.png?ex=68d1ddac&is=68d08c2c&hm=11f80575ebfdfec19a34285ea44ff27b17277ade335db1ff5dddd1aef7dd536b&"
     wh.embed1.use = true
-    wh.embed1.author.name = "RUBOT | Flour Factory V3.7"
+    wh.embed1.author.name = "Nexora / Flour Factory"
     wh.embed1.author.url = "https://discord.gg/YYWCDpVNes"
     wh.embed1.color = 65280
     local desc = ""
     for _, botak in pairs(getBots()) do
         if botak:isRunningScript() then
-            desc = desc .. ":farmer: **".. string.upper(botak.name).. "** [".. botak.level .. "]\nStatus: ".. getStatus(botak.status).."\nCurrent World: ||".. botak:getWorld().name .. "||\n\n"
+            desc = desc .. ":farmer: **".. string.upper(botak.name).. "**(".. botak.level .. ")\nStatus: ".. getStatus(botak.status).."\nCurrent World: ||".. botak:getWorld().name .. "||\n\n"
         end
     end
     wh.embed1.description = desc
@@ -187,28 +187,23 @@ end
 
 function callAlert(msg)
     local wh = Webhook.new(event_webhook)
-    wh.username = "Rubot"
-    wh.avatar_url = "https://cdn.discordapp.com/attachments/1146148490867650601/1148295389586395147/78xb5ptpGXtCJZtEMYKRsJjFdgUECLiju4tZegiL-Cv0Uqn3TTG4LFJPo2W4FTL393JUr_jlxJNu91seRFanRRtBT5P9dFK4d8mytB0.gif"
-    wh.content = "||@everyone||"
-    wh.embed1.use = true
-    wh.embed1.color = 16711680
-    wh.embed1.description = "<a:offlinegif:1179100927345561620> ".. msg
+    wh.username = "Nexora Factory"
+    wh.avatar_url = "https://cdn.discordapp.com/attachments/1365639857241718867/1401710544871751724/file_000000000c0461f8ac3c5a2bc4f38329.png?ex=68d1ddac&is=68d08c2c&hm=11f80575ebfdfec19a34285ea44ff27b17277ade335db1ff5dddd1aef7dd536b&"
+    wh.content = msg.."\n||@everyone||"
 	wh:send()
 end
 
 function callEvent(msg)
     local wh = Webhook.new(event_webhook)
-    wh.username = "Rubot"
-    wh.avatar_url = "https://cdn.discordapp.com/attachments/1146148490867650601/1148295389586395147/78xb5ptpGXtCJZtEMYKRsJjFdgUECLiju4tZegiL-Cv0Uqn3TTG4LFJPo2W4FTL393JUr_jlxJNu91seRFanRRtBT5P9dFK4d8mytB0.gif"
-    wh.embed1.use = true
-    wh.embed1.color = 16776960 
-    wh.embed1.description = "<a:alerts:1186548719324250132> ".. msg
+    wh.username = "Nexora Factory"
+    wh.avatar_url = "https://cdn.discordapp.com/attachments/1365639857241718867/1401710544871751724/file_000000000c0461f8ac3c5a2bc4f38329.png?ex=68d1ddac&is=68d08c2c&hm=11f80575ebfdfec19a34285ea44ff27b17277ade335db1ff5dddd1aef7dd536b&"
+	wh.content = msg.."\n||@everyone||"
     wh:send()
 end
 
 function getStatus(stat)
-    local online = "<a:onlinegif:1179100715747131474>"
-    local offline = "<a:offlinegif:1179100927345561620>"
+    local online = "<a:Online1:1365647772468117636>"
+    local offline = "<a:offline:1365647922330603611>"
     if stat == 1 then
         return "Online "..online
     else
@@ -1338,6 +1333,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
