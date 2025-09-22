@@ -1,4 +1,4 @@
-print("v00")
+print("v1")
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
@@ -1130,7 +1130,7 @@ function main()
             sleep(200)
 
             if bot:isInWorld(pabrikWorld:upper()) then
-                scanFloating()
+				scanFloating()
                 while scanEmptyTiles() > 0 and not emptyItem do
 
                     if scanEmptyTiles() >= 200 then
@@ -1249,7 +1249,6 @@ function main()
 end
 
 function getJson()
-    print("entering getJson")
     local client = HttpClient.new()
     client.url = "https://raw.githubusercontent.com/LuaDist/dkjson/refs/heads/master/dkjson.lua"
 
@@ -1333,6 +1332,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
