@@ -450,6 +450,7 @@ end
 
 function harvestPlant()
     warps(pabrikWorld, door_farm)
+	getBot().custom_status = "Farming"
     
     bot.ignore_gems = not take_gems
     bot.auto_collect = true
@@ -468,6 +469,7 @@ function harvestPlant()
                             bot:hit(bot.x, bot.y)
                             delay(delay_harvest)
                             reconnect(pabrikWorld, door_farm, tile.x, tile.y)
+							getBot().custom_status = "Farming"
                         end
                         if itemCount(blockID) == 200 then
                             break
@@ -765,6 +767,7 @@ end
 
 function pnbTutorial()
     warps(worldTutor,"")
+	getBot().custom_status = "Breaking"
     if not worldNuked then
         callWebhook(nil, nil)
         if bot:isInWorld(worldTutor:upper()) and hasAccess(bot.x-1, bot.y) > 0 then
@@ -804,7 +807,7 @@ function pnbTutorial()
                     for _,i in pairs(tileBreak) do
                         while getTile(pnbTX + i,pnbTY - 1).fg ~= 0 or getTile(pnbTX + i,pnbTY - 1).bg ~= 0 and getTile(pnbTX+i, pnbTY-1).fg ~= 9640 do
                             bot:hit(bot.x+i, bot.y-1)
-                                delay(delay_hit)
+                            delay(delay_hit)
                             reconnect(worldTutor,"", pnbTX, pnbTY)
                         end
                     end
@@ -977,6 +980,7 @@ function plant()
     for _, ye in pairs(pnbY) do
         for _, tile in pairs(getTiles()) do
             reconnect(pabrikWorld, door_farm)
+			getBot().custom_status = "Planting"
             while tile.fg == 0 and isPlantable(tile.x, tile.y) and itemCount(seedID) > 0 and hasAccess(tile.x, tile.y) > 0 and tile.y == ye and bot:isInWorld(pabrikWorld:upper()) do
                 bot:findPath(tile.x, tile.y)
                 if bot:isInTile(tile.x, tile.y) then
@@ -1332,6 +1336,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
