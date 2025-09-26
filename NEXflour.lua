@@ -782,7 +782,7 @@ function pnbTutorial()
             end
 
             if bot:isInTile(pnbTX, pnbTY) then
-                while itemCount(blockID) > breakTile and bot:isInWorld(worldTutor:upper()) and getTile(bot.x, bot.y).fg ~= 6 do
+                while bot:isInTile(pnbTX, pnbTY) and itemCount(blockID) > breakTile and bot:isInWorld(worldTutor:upper()) and getTile(bot.x, bot.y).fg ~= 6 and getTile(bot.x, bot.y - 1).fg ~= 9640 and getTile(bot.x, bot.y - 1).fg ~=  do
 
                     if bot:isInWorld(worldTutor:upper()) and not bot:isInTile(pnbTX, pnbTY) then
                         bot:findPath(pnbTX, pnbTY)
@@ -1318,7 +1318,7 @@ function getData()
     local cbot = #getBots()
     local index = getBot().index - 1
     if cbot > mrow then 
-        error("Needing more world farm, total bot: "..cbot..", Total row: "..mrow)
+        error("Need more farm world, total bot: "..cbot..", Total row: "..mrow)
     end 
     local duniaIndex = (index % #world_farm) + 1
     local barisIndex = math.floor(index / #world_farm) + 1
@@ -1336,6 +1336,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
