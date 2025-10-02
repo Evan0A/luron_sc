@@ -1,4 +1,4 @@
-print("v2")
+print("v1")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -318,6 +318,7 @@ function checkNuked(variant, netid)
 end
 
 function warps(worldName, doorID)
+	doorID = doorID or ""
     worldNuked = false
     warpAttempt = 0
     addEvent(Event.variantlist, checkNuked)
@@ -1207,7 +1208,7 @@ function malady()
         warps(worldRemove)
         while worldNuked do 
             worldRemove = randomW() 
-            warps(worldRemove)
+            warps(worldRemove, "")
         end
         while isIn(blacklist_malady, tostring(getBot().malady)) do
             if isPlayer() > 0 then 
@@ -1224,10 +1225,10 @@ function malady()
     removeMalady()
     if auto_gruken then
         local worldMalady = randomW() 
-        warps(worldMalady) 
+        warps(worldMalady, "") 
         while worldNuked do 
             worldMalady = randomW() 
-            warps(worldMalady)
+            warps(worldMalady, "")
         end 
         while not isIn({3,4}, tostring(getBot().malady)) do
             getBot().auto_malady.enabled = true 
@@ -1235,7 +1236,7 @@ function malady()
             if isPlayer() > 0 then 
                 getBot().auto_malady.enabled = false
                 worldMalady = randomW()
-                warps(worldMalady)
+                warps(worldMalady, "")
                 getBot().auto_malady.enabled = true 
             end
             sleep(1*1000*60)
@@ -1479,6 +1480,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
