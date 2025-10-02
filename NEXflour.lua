@@ -1205,6 +1205,7 @@ function malady()
         if not isIn(blacklist_malady, tostring(getBot().malady)) then 
             return true 
         end
+		print(bot.name.."removing malady")
         local worldRemove = randomW()
         warps(worldRemove)
         while worldNuked do 
@@ -1229,6 +1230,7 @@ function malady()
     removeMalady()
     if auto_gruken and not isIn({3,4}, tostring(getBot().malady)) then
         local worldMalady = randomW() 
+		print(bot.name.."getting malady")
         warps(worldMalady, "") 
         while worldNuked do 
             worldMalady = randomW() 
@@ -1265,7 +1267,7 @@ function main()
         end
     end
 	autoWear(98)
-    
+    malady()
     if pabrikWorld then
         pabrikWorld = pabrikWorld:upper()
 
@@ -1484,6 +1486,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
