@@ -1,4 +1,4 @@
-print("v100")
+print("v1")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -1184,7 +1184,7 @@ function malady()
     end
     local function isIn(tab, var)
         for _, vol in ipairs(tab) do 
-            if vol == var then 
+            if tostring(vol) == var then 
                 return true 
             end 
         end 
@@ -1479,6 +1479,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
