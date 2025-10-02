@@ -1,4 +1,4 @@
-print("v2")
+print("v3")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -1174,9 +1174,6 @@ function malady()
         end
     end 
 	first()
-	if isIn({3,4}, tostring(getBot().malady)) then 
-		return true 
-	end
     local function randomW()
         local length = 8
         local chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -1226,6 +1223,9 @@ function malady()
             return true 
         end
     end
+	if isIn({3,4}, tostring(getBot().malady)) then 
+		return true 
+	end
     removeMalady()
     if auto_gruken and not isIn({3,4}, tostring(getBot().malady)) then
         local worldMalady = randomW() 
@@ -1484,6 +1484,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
