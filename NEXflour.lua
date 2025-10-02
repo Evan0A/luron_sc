@@ -47,7 +47,7 @@ save_flour = 8
 save_vend = false
 pnb_tutorial = true 
 auto_take_pickaxe = true 
-world_pickace = "PTVPIC|PTVPIC"
+world_pickaxe = "PTVPIC|PTVPIC"
 auto_reconnect = true
 
 auto_rotation = false -- auto start rotation if reach X level
@@ -1479,6 +1479,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
