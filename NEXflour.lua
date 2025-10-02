@@ -41,7 +41,7 @@ world_grinders = {"BUYGRINDER"}
 door_grinder = ""
 
 --== SETTING ==--
-seed_id = 0 
+seedID = 881
 row_id = 4584 
 save_flour = 8
 save_vend = false
@@ -145,15 +145,18 @@ tutorNuked = false
 world_grinder = string.upper(world_grinders[math.random(1,#world_grinders)])
 totalFlour = 0
 totalPack = 0
-
-blockID = 880 -- Block ID, not Seed ID
-seedID = 881
+blockID = seedID - 1 -- Block ID, not Seed ID
 flourID = 4562
 pabrikWorld = ""
 multiRow = 1 -- 1-27
 multiRowDistance = 2 -- The tile distance between each row | Default 2
 readyGrind = false
 mid = 0
+
+if not auto_flour then 
+	flourID = seedID
+	save_flour = 50
+end
 
 function delay(second)
     if type(second) == "number" and dynamic_delay then 
@@ -1206,6 +1209,7 @@ function malady()
             return true 
         end
 		print(bot.name.."removing malady")
+		getBot().custom_status = customStatus.removeMalady
         local worldRemove = randomW()
         warps(worldRemove)
         while worldNuked do 
@@ -1230,6 +1234,7 @@ function malady()
     removeMalady()
     if auto_gruken and not isIn({3,4}, tostring(getBot().malady)) then
         local worldMalady = randomW() 
+		getBot().custom_status = customStatus.getMalady
 		print(bot.name.."getting malady")
         warps(worldMalady, "") 
         while worldNuked do 
@@ -1335,7 +1340,7 @@ function main()
                     print(bot.name:upper().." Harvesting")
                     harvestPlant()
                     sleep(200)
-                    if itemCount(seedID) >= 50 and itemCount(blockID) == 200 then
+                    if itemCount(seedID) >= 50 and itemCount(blockID) == 200 and auto_flour then
                         for i = 1,3 do
                             if itemCount(blockID) == 200 then
                                 autoGrind()
@@ -1486,6 +1491,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
