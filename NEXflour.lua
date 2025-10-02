@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -199,7 +199,7 @@ function callWebhook(flour, pack)
     local desc = ""
     for _, botak in pairs(getBots()) do
         if botak:isRunningScript() then
-            desc = desc + webhookEmoji.bot.. " **".. string.upper(botak.name).. "**(".. botak.level .. ")\nStatus: ".. getStatus(botak.status).."\nWorld: ||".. botak:getWorld().name .. "||\n\n"
+            desc = desc .."".. webhookEmoji.bot.. " **".. string.upper(botak.name).. "**(".. botak.level .. ")\nStatus: ".. getStatus(botak.status).."\nWorld: ||".. botak:getWorld().name .. "||\n\n"
         end
     end
     wh.embed1.description = desc
@@ -1479,6 +1479,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
