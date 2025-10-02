@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -1163,7 +1163,7 @@ function malady()
             spam.random_interval = true
             spam.show_emote = false
             spam.randomizer = true
-            spam.interval = 3.1
+            spam.interval = 3.2
             spam.use_color = false
             local messages = spam.messages
             for _, msg in pairs(spam_messages) do
@@ -1173,6 +1173,10 @@ function malady()
             firstWork = false 
         end
     end 
+	first()
+	if isIn({3,4}, tostring(getBot().malady)) then 
+		return true 
+	end
     local function randomW()
         local length = 8
         local chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -1223,7 +1227,7 @@ function malady()
         end
     end
     removeMalady()
-    if auto_gruken then
+    if auto_gruken and not isIn({3,4}, tostring(getBot().malady)) then
         local worldMalady = randomW() 
         warps(worldMalady, "") 
         while worldNuked do 
@@ -1480,6 +1484,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
