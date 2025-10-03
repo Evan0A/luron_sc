@@ -11,6 +11,7 @@ door_storage = "PTVVL1140"
 
 --== PACK ==-- 
 take_gems = false
+buy_pack = false
 pack_name = "world_lock"
 pack_price = 2000
 pack_item = {242}
@@ -36,7 +37,7 @@ bot_webhook = 1 --bot index to send webhook
 
 
 --== FLOUR ==--
-auto_flour = true
+auto_flour = true -- false if didnt use grinder 
 world_grinders = {"BUYGRINDER"}
 door_grinder = ""
 
@@ -100,8 +101,9 @@ webhookEmoji = {
     online = "<a:Online1:1365647772468117636>", 
     offline = "<a:offline:1365647922330603611>"
 }
+getBot().auto_reconnect = auto_reconnect
 
-
+--== CODE AREA ==--
 
 bot = getBot()
 bot.move_range = 3
@@ -202,7 +204,7 @@ function callWebhook(flour, pack)
     local desc = ""
     for _, botak in pairs(getBots()) do
         if botak:isRunningScript() then
-            desc = desc .."".. webhookEmoji.bot.. " **".. string.upper(botak.name).. "**(".. botak.level .. ")\nStatus: ".. getStatus(botak.status).."\nWorld: ||".. botak:getWorld().name .. "||\n\n"
+            desc = desc .. webhookEmoji.bot.. " **".. string.upper(botak.name).. "**(".. botak.level .. ")\nStatus: ".. getStatus(botak.status).."\nWorld: ||".. botak:getWorld().name .. "||\n\n"
         end
     end
     wh.embed1.description = desc
@@ -214,12 +216,20 @@ function callWebhook(flour, pack)
     if pack then
         totalPack = pack
     end
-    
-    if save_vend == true then
-        wh.embed1:addField("Information",webhookEmoji.vending .. " Stored Flour: ".. totalFlour.. "\n"..webhookEmoji.storage.." Dropped Pack: ".. totalPack.. "\n"..webhookEmoji.fossil.." Fossil: "..gscanBlock(3918).."\n\nUptime: ".. getUptime(), true)
-    else
-        wh.embed1:addField("Information",webhookEmoji.flour .. " Dropped Flour: ".. totalFlour.. "\n"..webhookEmoji.storage.." Dropped Pack: ".. totalPack.. "\n"..webhookEmoji.fossil.." Fossil: "..gscanBlock(3918).."\n\nUptime: ".. getUptime(), true)
-    end
+    if auto_flour then
+    	if save_vend then
+        	wh.embed1:addField("Information",webhookEmoji.vending .. " Stored Flour: ".. totalFlour.. "\n"..webhookEmoji.storage.." Dropped Pack: ".. totalPack.. "\n"..webhookEmoji.fossil.." Fossil: "..gscanBlock(3918).."\n\nUptime: ".. getUptime(), true)
+    	else
+        	wh.embed1:addField("Information",webhookEmoji.flour .. " Dropped Flour: ".. totalFlour.. "\n"..webhookEmoji.storage.." Dropped Pack: ".. totalPack.. "\n"..webhookEmoji.fossil.." Fossil: "..gscanBlock(3918).."\n\nUptime: ".. getUptime(), true)
+    	end
+	else
+		if save_vend then
+        	wh.embed1:addField("Information",webhookEmoji.vending .. " Stored seed: ".. totalFlour.. "\n"..webhookEmoji.storage.." Dropped Pack: ".. totalPack.. "\n"..webhookEmoji.fossil.." Fossil: "..gscanBlock(3918).."\n\nUptime: ".. getUptime(), true)
+    	else
+        	wh.embed1:addField("Information",webhookEmoji.seed .. " Dropped seed: ".. totalFlour.. "\n"..webhookEmoji.storage.." Dropped Pack: ".. totalPack.. "\n"..webhookEmoji.fossil.." Fossil: "..gscanBlock(3918).."\n\nUptime: ".. getUptime(), true)
+    	end
+	end
+	
     wh.embed1.footer.text = os.date("!%a %b %d, %Y at %I:%M %p", os.time() + 7 * 60 * 60)
     if getBot().index == bot_webhook and mid ~= 0 then
         wh:edit(mid)
@@ -539,7 +549,6 @@ function harvestPlant()
                 if ex <= bot.x and getTile(ex, bot.y).fg == 0 and isPlantable(ex, bot.y) and itemCount(seedID) > 0 and hasAccess(ex, bot.y) > 0 and #bot:getPath(ex, bot.y) > 0 then
                     bot:findPath(ex, bot.y)
                     if itemCount(seedID) > 0 then
-                        malady()
                         bot:place(bot.x, bot.y, seedID)
                         delay(delay_plant)
                         reconnect(pabrikWorld, door_farm)
@@ -555,7 +564,6 @@ function harvestPlant()
                     if tile.fg == 0 and isPlantable(tile.x, tile.y) and itemCount(seedID) > 0 and hasAccess(tile.x, tile.y) > 0 and #bot:getPath(tile.x, tile.y) > 0 and tile.y == ye then
                         bot:findPath(tile.x, tile.y)
                         if bot:isInTile(tile.x, tile.y) then
-                            malady()
                             bot:place(bot.x, bot.y, seedID)
                             delay(delay_plant)
                             reconnect(pabrikWorld, door_farm, tile.x, tile.y)
@@ -1284,8 +1292,7 @@ function main()
         warps(pabrikWorld, door_farm)
 
         if not worldNuked then
-            getBot().custom_status = "Getting row data"
-            
+			getBot().custom_status = customStatus.data
             scanMarker()
             sleep(200)
 
@@ -1372,7 +1379,7 @@ function main()
                         trashJunk()
                         dropGoods()
 
-                        if autoBuyPack == true then
+                        if buy_pack then
                             buyPacks()
                             sleep(200)
                         end
@@ -1491,6 +1498,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
