@@ -5,7 +5,7 @@ world_farm = {"VAIIIII1140"}
 world_farm_row = 5 -- max row in each world
 door_farm = "PTVVL1140"
 
-world_storage = {"SOILWARE"} 
+world_storage = {"PTV1945FARM"} 
 door_storage = "PTVVL1140"
 
 
@@ -37,16 +37,16 @@ bot_webhook = 1 --bot index to send webhook
 
 
 --== FLOUR ==--
-auto_flour = true -- false if didnt use grinder 
+auto_flour = false -- false if didnt use grinder 
 world_grinders = {"BUYGRINDER"}
 door_grinder = ""
 
 --== SETTING ==--
-seedID = 881
+seedID = 55 --881 wheat
 row_id = 4584 
 save_flour = 8
 save_vend = false
-pnb_tutorial = true 
+pnb_tutorial = false
 auto_take_pickaxe = true 
 world_pickaxe = "PTVPIC|PTVPIC"
 auto_reconnect = true
@@ -1498,6 +1498,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
