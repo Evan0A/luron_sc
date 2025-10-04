@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -20,14 +20,14 @@ door_pack = ""
 
 
 --== MALADY ==-- 
-auto_gruken = true --grumbleteeth/chicken feet
+auto_gruken = false --grumbleteeth/chicken feet
 spam_messages = {
     "How much?", 
     "Gyattt",
     "Yes bro", 
     "what the hell",
 }
-blacklist_malady = {1, 2} -- 1=torn punching, 2=cut gem
+blacklist_malady = {} -- 1=torn punching, 2=cut gem
 
 
 --== WEBHOOK ==--
@@ -1498,6 +1498,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
