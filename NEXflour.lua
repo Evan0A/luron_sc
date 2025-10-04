@@ -1,4 +1,4 @@
-print("v2")
+print("v3")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -37,12 +37,12 @@ bot_webhook = 1 --bot index to send webhook
 
 
 --== FLOUR ==--
-auto_flour = false -- false if didnt use grinder 
+auto_flour = true -- false if didnt use grinder 
 world_grinders = {"BUYGRINDER"}
 door_grinder = ""
 
 --== SETTING ==--
-seedID = 55 --881 wheat
+seedID = 881 --881 wheat
 row_id = 4584 
 save_flour = 8
 save_vend = false
@@ -1498,6 +1498,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
