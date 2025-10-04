@@ -1,4 +1,4 @@
-print("v3")
+print("v1")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -6,7 +6,7 @@ world_farm_row = 5 -- max row in each world
 door_farm = "PTVVL1140"
 
 world_storage = {"PTV1945FARM"} 
-door_storage = "PTVVL1140"
+door_storage = "PTV1140"
 
 
 --== PACK ==-- 
@@ -1498,6 +1498,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
