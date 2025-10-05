@@ -10,13 +10,13 @@ door_storage = "PTVVL1140"
 
 
 --== PACK ==-- 
-take_gems = false
-buy_pack = false
+take_gems = true
+buy_pack = true
 pack_name = "world_lock"
 pack_price = 2000
 pack_item = {242}
 world_packs = {"SOILWARE"}
-door_pack = ""
+door_pack = "ptvvl1140"
 max_drop_pack = 10000 -- max drop items each world
 
 
@@ -1537,6 +1537,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
