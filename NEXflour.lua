@@ -15,7 +15,7 @@ buy_pack = false
 pack_name = "world_lock"
 pack_price = 2000
 pack_item = {242}
-world_pack = ""
+world_packs = {"SOILWARE"} -- bot will choose a random world
 door_pack = ""
 
 
@@ -124,6 +124,7 @@ end
 collect_range = 3
 land = 0
 math.randomseed(os.time())
+world_pack = string.upper(world_packs[math.random(1, #world_packs)])
 tileBreak = {}
 breakTile = 1
 Poss = {}
@@ -137,8 +138,6 @@ noTutorWorld = false
 emptyItem = false
 json = nil 
 Sversion = 1
-randomWorld = {"2309SJKS67O87", "HKJSSS98KS7896", "PS76SJ88SESIS", "NELELI99", "NELELI100", "NELELI98", "NELELI80", "NELELI18"}
-randomWorldEx = {"STARTBAHAS", "RUBOTASU", "JEMBOESOI"}
 namaBot = bot.name
 worldTutor = ""
 totalSeed = 0
@@ -1511,6 +1510,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
