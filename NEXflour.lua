@@ -1,4 +1,4 @@
-print("v2")
+print("v1")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -127,7 +127,7 @@ end
 collect_range = 3
 land = 0
 math.randomseed(os.time())
-worldPackIndex = 0
+worldPackIndex = 1
 tileBreak = {}
 breakTile = 1
 Poss = {}
@@ -1536,6 +1536,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
