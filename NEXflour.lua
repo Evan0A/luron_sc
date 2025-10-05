@@ -40,11 +40,10 @@ bot_webhook = 1 --bot index to send webhook
 auto_flour = true -- false if didnt use grinder 
 world_grinders = {"BUYGRINDER"}
 door_grinder = ""
-
+save_flour = 8
 --== SETTING ==--
 seedID = 881 --881 wheat
 row_id = 4584 
-save_flour = 8
 save_vend = false
 pnb_tutorial = false
 auto_take_pickaxe = true 
@@ -68,7 +67,9 @@ dynamic_delay = true -- delay will adapting to bot's ping and random number
 
 goodies = {5030, 12498} -- Example Wind Essence
 trash = {5038, 5034, 5044, 5032, 5040, 5042}
-
+warp_random_world = true 
+random_world_count = 14
+random_world_delay = 8000
 
 
 --== ADVANCE SETTINGS ==-- 
@@ -1162,6 +1163,18 @@ function autoGrind()
         bot:stopScript()
     end
 end
+
+function randomW()
+    local length = 8
+    local chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    local result = ""
+    for i = 1, length do
+        local rand = math.random(1, #chars)
+        result = result .. chars:sub(rand, rand)
+    end
+    return result
+end
+
 firstWork = true
 function malady()
     local function first()
@@ -1185,16 +1198,6 @@ function malady()
         end
     end 
 	first()
-    local function randomW()
-        local length = 8
-        local chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        local result = ""
-        for i = 1, length do
-            local rand = math.random(1, #chars)
-            result = result .. chars:sub(rand, rand)
-        end
-        return result
-    end
     local function isIn(tab, var)
         for _, vol in ipairs(tab) do 
             if tostring(vol) == var then 
@@ -1262,6 +1265,15 @@ function malady()
         end 
     end
     return true
+end
+
+function joinRandom() 
+	if warp_random_world then 
+		for i = 1, random_world_count do 
+			warps(randomW())
+			sleep(random_world_delay) 
+		end 
+	end 
 end
 
 function main()
@@ -1383,6 +1395,7 @@ function main()
                             buyPacks()
                             sleep(200)
                         end
+						joinRandom()
 
                         warps(pabrikWorld, door_farm)
                     end
@@ -1498,6 +1511,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
