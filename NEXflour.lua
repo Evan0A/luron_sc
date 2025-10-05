@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -133,7 +133,6 @@ breakTile = 1
 Poss = {}
 world_storage = world_storage[math.random(1, #world_storage)]
 position = 0
-world_pack = string.upper(world_pack)
 startTime = os.time()
 itemInVend = 0
 wrenchP = false
@@ -1537,6 +1536,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
