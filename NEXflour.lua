@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -947,12 +947,12 @@ function buyPacks()
     while true do
         warps(world_packs[worldPackIndex], door_pack)
         if countPack() < max_drop_pack then 
-            if bot:isInWorld(world_pack:upper()) then
+            if bot:isInWorld(world_packs[worldPackIndex]:upper()) then
                 availSlot = getBot():getInventory().slotcount - getBot():getInventory().itemcount
                 while bot.gem_count >= pack_price and availSlot > 0 do
                     bot:buy(pack_name)
                     sleep(2000)
-                    reconnect(world_pack, door_pack)
+                    reconnect(world_packs[worldPackIndex], door_pack)
                     for _, itemz in pairs(pack_item) do
                         getBot():findOutput() 
                         getBot():drop(itemz, itemCount(itemz))
@@ -1536,6 +1536,7 @@ if verify() then
 else 
     print("user not found")
 end
+
 
 
 
