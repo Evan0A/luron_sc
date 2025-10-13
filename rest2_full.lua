@@ -1,4 +1,4 @@
-print("VERSION 1")
+print("VERSION 2")
 
 ---[=== CONFIG ===]---
 auto_rest_many_mods = false
@@ -33,7 +33,7 @@ verify_method = "GROWTOPIA" -- support "LUCIFER" or "GROWTOPIA"
 verify_world = "WZZQJ"
 
 use_webhook = true
-webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
+webhook_link = "https://discord.com/api/webhooks/1114483839444729936/yQzzCt22cCIF3Wz9XdhGMSmD78yCx3UxyzZNGThl01kbmM34Z2ern42Sy3slDjPI3xto"
 edit_message_reconnect = false -- true if edit message rest to reconnect/false if send new message
 
 hide_bot_identity = true
@@ -464,7 +464,7 @@ end
 
 function getUserData(bool)
     bool = bool or false
-    local c = HttpClient.new 
+    local c = HttpClient.new()
     c.url = access_url
     local data = load(c:request().body)() 
     local found = false
