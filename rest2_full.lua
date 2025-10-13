@@ -1,9 +1,10 @@
-print("VERSION 2")
+print("VERSION 1")
+
 ---[=== CONFIG ===]---
-auto_rest_many_mods = true
+auto_rest_many_mods = false
 minimum_many_mods = 5
 
-auto_rest_specific_mod = true
+auto_rest_specific_mod = false
 specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not nessesary
 
 auto_rest_schedule = true
@@ -16,17 +17,20 @@ schedule_list = {
     "23:00 - 01:00"
 }
 
-auto_rest_player = true 
+auto_rest_player = false
 minimum_player = 30000
 maximum_player = 130000
 minimum_difference = -1000 -- minimum diffrence from last count player to new player count (only minus player counted)
 
 auto_rest_banrate = true 
 minimum_banrate = 1.0
+banrate_delay = 1 --second
 
 
 ---[=== SETTINGS ===]---
 run_setting = "ALL" -- support "SELECTED" or "ALL" bots to run script 
+verify_method = "GROWTOPIA" -- support "LUCIFER" or "GROWTOPIA"
+verify_world = "WZZQJ"
 
 use_webhook = true
 webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
@@ -34,19 +38,16 @@ edit_message_reconnect = false -- true if edit message rest to reconnect/false i
 
 hide_bot_identity = true
 reconnect_after_rest = true
+reconnect_captain = true
 
 custom_captain = false
 custom_captain_index = 1
 
 check_delay = 1 -- minutes
 delay_connect_disconnect = 100 -- milisecond
-delay_many_mods = 1 --minutes 
-delay_specific_mod = 1 -- minutes
-delay_schedule = 1 -- minutes
-delay_banrate = 1
-delay_player = 1
 
 -----[===== CODE AREA =====]-----
+
 custom_api = false
 custom_api_number = 1 -- 1 OR 2
 auto_switch_api = false -- auto switch API if API is down, make sure your custom_api is false
@@ -62,7 +63,7 @@ api_mods = ""
 api_player = ""
 api_use = ""
 image_url = ""
-access_url = "https://raw.githubusercontent.com/Evan0A/Nuron_access/refs/heads/main/Rest_Script?t="..os.time()
+access_url = "https://gist.githubusercontent.com/NEXT0bit/11515bf4bdd553d955979731ec8e125e/raw/rest_access.lua"
 nexmodule = {"dkjson.lua"} 
 myUsername = getUsername() 
 myExpired = ""
@@ -88,6 +89,9 @@ end_schedule = nil
 bot_indexs = {}
 api_down = false
 api_index = 1 
+logo = ""
+note = ""
+userIndex = 0
 --http catch -- 
 
 --webhook 
@@ -122,9 +126,12 @@ function getJson()
 end
 
 function getHttp(url)
-    if not auto_rest_many_mods and  not auto_rest_specific_mod and not auto_rest_player and not url.find(access_url) then 
-        return nil
+    if not auto_rest_many_mods and  not auto_rest_specific_mod and not auto_rest_player and url ~= access_url then 
+        return 0
     end 
+    if url == access_url then 
+        url = access_url.."?"..tostring(os.time())
+    end
     local client = HttpClient.new()
     client.url = url
     local result = client:request()
@@ -149,6 +156,7 @@ function getHttp(url)
             if auto_switch_api then 
                 message = "API "..tostring(api_index).." IS CURRENTLY DOWN, code: "..result.status..",\n switching API.."
                 webhookAny(message)
+                api_down = true
                 if api_index == 1 then 
                     api_index = 2 
                 else 
@@ -207,7 +215,6 @@ function webhookRest(nameBot, from)
             nameBot = nameBot.."("..tostring(getBot(nameBot).index)..")"
         end
         local emoji = reason_emoji[tostring(from)] or "❓"
-        local offset = tonumber(schedule_zone:gsub("%D", ""))
         local utc_time = os.date("!%Y-%m-%d %H:%M UTC")
         
         local extra_info = ""
@@ -242,6 +249,8 @@ function webhookRest(nameBot, from)
             wh_diff = last_diff
             lastrestid = 6
         end
+        wh.username = "Nexora"
+        wh.avatar_url = logo 
         wh.embed1.use = true
         wh.embed1.title = string.format("[%s]REST DETECTED", emoji)
         wh.embed1.color = 16711680
@@ -251,7 +260,7 @@ function webhookRest(nameBot, from)
         wh.embed1:addField("<:emojigg_CPU:1390949692317106196> | CPU USAGE: ", (get_cpu_usage()), true)
         wh.embed1:addField("<:star:1389672145839329360> | EXTRA INFO: ", (string.format("%s", extra_info)), true)
         wh.embed1.footer.text = "Made with love by NEXORA"
-        wh.embed1.footer.icon_url = "https://cdn.discordapp.com/attachments/1365639857241718867/1401710544871751724/file_000000000c0461f8ac3c5a2bc4f38329.png?ex=6891442c&is=688ff2ac&hm=0e6b517ae8547eeedb45e6147b97d1eda7b02e6fe5221b00f17d3103ecf2813c&"
+        wh.embed1.footer.icon_url = logo
         if getBot().index == captain then 
             if not whrestdone then 
                 wh:send()
@@ -306,7 +315,8 @@ function webhookRecon(nameBot, from)
         elseif from == 6 then 
             extra_info = string.format("Last player difference: "..last_diff)
         end
-
+        wh.username = "Nexora"
+        wh.avatar_url = logo 
         wh.embed1.use = true
         wh.embed1.title = string.format("[%s]REST TIME DONE", emoji)
         wh.embed1.color = 3066993 -- warna hijau
@@ -427,53 +437,51 @@ function getCaptain()
     end
 end
 
+function GTverify(data) 
+    if verify_method:upper() == "GROWTOPIA" then
+        webhookAny("Waiting someone at world: "..verify_world:upper())
+        while true do 
+            getBot().auto_reconnect = true 
+            sleep(2000)
+            if not getBot():isInWorld(verify_world:upper()) then
+                getBot():warp(verify_world)
+                sleep(5000)
+            end
+            for _, plr in pairs(getPlayers()) do 
+                for _, user in pairs(data.accessList) do
+                    if removeColor(plr.name):upper() == user.growID then 
+                        getBot():say("Verified.")
+                        enable = true 
+                        return true 
+                    end 
+                end 
+            end 
+        end 
+    end 
+end
+            
+        
 
 function getUserData(bool)
     bool = bool or false
-    local data = getHttp(access_url)
+    local c = HttpClient.new 
+    c.url = access_url
+    local data = load(c:request().body)() 
     local found = false
-    if type(data) == "number" then 
-        webhookAny("Verifiying username error, code: "..tostring(data))
+    note = data.note 
+    logo = data.logo 
+    link = data.link
+    if type(data) ~= "table" then 
+        webhookAny("error at verifying")
         getBot():stopScript()
     end 
-    for _, users in pairs(data.access_list) do
-        if users.name == myUsername then
+    if verify_method:upper() == "GROWTOPIA" then 
+        return GTverify()
+    end 
+    for _, users in pairs(data.accessList) do
+        if users.lucifer == myUsername then
             found = true
-            local now_utc = os.time(os.date("!*t"))
-            if users.expired == "never" then 
-                enable = true
-                reason = "License approved, welcome "..myUsername
-                if not bool then
-                    webhookAny("Username valid, Thanks for buying NEXORA Script!<:pepeheart:1368523385755144223>")
-                    print(reason)
-                end
-                return true 
-            else
-                local year, month, day = users.expired:match("(%d+)%-(%d+)%-(%d+)")
-                local epoch_utc = os.time({
-                    year = tonumber(year),
-                    month = tonumber(month),
-                    day = tonumber(day),
-                    hour = 0,
-                    min = 0,
-                    sec = 0
-                }) 
-                if epoch_utc < now_utc then 
-                    enable = false
-                    reason = "Expired script license"
-                    print(reason)
-                    webhookAny("It seem your license has been expired, script expired from: "..users.expired..", with user: "..myUsername)
-                    return false
-                else 
-                    enable = true
-                    reason = "License approved, welcome "..myUsername
-                    if not bool then 
-                        webhookAny("Username valid, Thanks for buying NEXORA Script!<:pepeheart:1368523385755144223>")
-                        print(reason)
-                    end 
-                    return true 
-                end
-            end 
+            return true
         end
     end
     if not found then 
@@ -509,16 +517,18 @@ function disconnectBot()
     if getBot().index == captain then 
         if run_setting:upper() == "SELECTED" then 
             for _, ib in ipairs(bot_indexs) do 
-                getBot(ib).auto_reconnect = false 
+                if not reconnect_captain and ib == captain then 
+                    getBot(ib).auto_reconnect = false 
+                end
                 getBot(ib):disconnect()
                 sleep(delay_connect_disconnect)
             end
         elseif run_setting:upper() == "ALL" then 
-            for ib = 1, #getBots() do 
+            if not reconnect_captain and ib == captain then 
                 getBot(ib).auto_reconnect = false 
-                getBot(ib):disconnect()
-                sleep(delay_connect_disconnect)
             end
+            getBot(ib):disconnect()
+            sleep(delay_connect_disconnect)
         end 
     end 
 end
@@ -532,12 +542,21 @@ function reconnect()
                     if getBot(ib):isResting() then
                         sleep(1000)
                     end
+                    if not reconnect_captain and ib == captain then 
+                        getBot(ib).auto_reconnect = false
+                    end
                     getBot(ib).auto_reconnect = true
                     sleep(delay_connect_disconnect)
                 end
             elseif run_setting:upper() == "ALL" then 
-                for ib = 1, #getBots() do 
-                    getBot(ib).auto_reconnect = true 
+                for ib = 1, #getBots() do  
+                    if getBot(ib):isResting() then
+                        sleep(1000)
+                    end
+                    if not reconnect_captain and ib == captain then 
+                        getBot(ib).auto_reconnect = false
+                    end
+                    getBot(ib).auto_reconnect = true
                     sleep(delay_connect_disconnect)
                 end
             end 
@@ -551,7 +570,7 @@ function restManyMods()
             while #mods_list >= minimum_many_mods do
                 webhookRest(getBot().name, 1)
                 disconnectBot()
-                sleep(delay_many_mods * 60 * 1000)
+                sleep(check_delay * 60 * 1000)
                 getModList()
             end
         end 
@@ -567,7 +586,7 @@ function restSpecificMod()
                 mod_detected = value
                 webhookRest(getBot().name, 2)
                 disconnectBot()
-                sleep(delay_specific_mod * 60 * 1000)
+                sleep(check_delay * 60 * 1000)
                 getModList()
                 status, value = haveSame(specific_mod_list, mods_list)
             end 
@@ -588,7 +607,7 @@ function restPlayer()
                 last_diff = diff
                 last_player = player_count
                 disconnectBot()
-                sleep(delay_player * 60 * 1000)
+                sleep(check_delay * 60 * 1000)
                 getModList()
                 diff = player_count - last_player
             end
@@ -596,7 +615,7 @@ function restPlayer()
                 webhookRest(getBot().name, 5)
                 last_player = player_count
                 disconnectBot()
-                sleep(delay_player * 60 * 1000)
+                sleep(check_delay * 60 * 1000)
                 getModList()
             end
         end
@@ -612,7 +631,7 @@ function restBanrate()
                 webhookRest(getBot().name, 4)
                 last_banrate = banrate
                 disconnectBot()
-                sleep(delay_specific_mod * 60 * 1000)
+                sleep(banrate_delay * 1000)
                 banrate = getBanRate()
             end
         end
@@ -703,7 +722,7 @@ function restSchedule()
             if getBot().index == captain then 
                 webhookRest(getBot().name, 3)
                 disconnectBot()
-                sleep(delay_schedule * 1000 * 60)
+                sleep(check_delay * 1000 * 60)
             end
         end
     end
@@ -725,8 +744,11 @@ function restAll()
 end
 
 function sare(varlist, netid)
-    print("sare")
-    sleep(check_delay * 60 * 1000)
+    if auto_rest_banrate then 
+        sleep(banrate_delay * 1000) 
+    else
+        sleep(check_delay * 60 * 1000)
+    end
     unlistenEvents()
 end 
 
@@ -748,10 +770,19 @@ function startThisSoGoodScriptAnjayy()
     
     if enable and getBot().index == captain then 
         addEvent(Event.varianlist, sare)
+        local bansleep = 0
         local num = 0
         while true do 
-            restAll()
+            restBanrate() 
             listenEvents(1)
+            print("banrate; "..getBanRate())
+            bansleep = bansleep + 1 
+            if bansleep >= (check_delay * 60) then
+                print("restAll, bansleep: "
+                    ..bansleep)
+                restAll()
+                bansleep = 0
+            end
         end
     end
 end
