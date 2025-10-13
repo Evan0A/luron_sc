@@ -1,4 +1,4 @@
-print("VERSION 1")
+print("VERSION 2")
 
 ---[=== CONFIG ===]---
 auto_rest_many_mods = false
@@ -449,7 +449,8 @@ function GTverify(data)
             end
             for _, plr in pairs(getPlayers()) do 
                 for _, user in pairs(data.accessList) do
-                    if removeColor(plr.name):upper() == user.growID then 
+                    if removeColor(plr.name):upper() == user.growID:upper() then 
+                        sleep(5000)
                         getBot():say("Verified.")
                         enable = true 
                         return true 
