@@ -1,10 +1,10 @@
 print("VERSION 2")
 
 ---[=== CONFIG ===]---
-auto_rest_many_mods = false
+auto_rest_many_mods = true
 minimum_many_mods = 5
 
-auto_rest_specific_mod = false
+auto_rest_specific_mod = true
 specific_mod_list = {"kailyx", "misthios", "windyplay"} -- uppercase is not nessesary
 
 auto_rest_schedule = true
