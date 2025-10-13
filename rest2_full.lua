@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 1")
 
 ---[=== CONFIG ===]---
 auto_rest_many_mods = false
@@ -476,7 +476,7 @@ function getUserData(bool)
         getBot():stopScript()
     end 
     if verify_method:upper() == "GROWTOPIA" then 
-        return GTverify()
+        return GTverify(data)
     end 
     for _, users in pairs(data.accessList) do
         if users.lucifer == myUsername then
