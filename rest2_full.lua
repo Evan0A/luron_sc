@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 3")
 
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
@@ -526,11 +526,13 @@ function disconnectBot()
                 sleep(delay_connect_disconnect)
             end
         elseif run_setting:upper() == "ALL" then 
-            if not reconnect_captain and ib == captain then 
-                getBot(ib).auto_reconnect = false 
+            for _, ib in ipairs(bot_indexs) do 
+                if not reconnect_captain and ib == captain then 
+                    getBot(ib).auto_reconnect = false 
+                end
+                getBot(ib):disconnect()
+                sleep(delay_connect_disconnect)
             end
-            getBot(ib):disconnect()
-            sleep(delay_connect_disconnect)
         end 
     end 
 end
