@@ -1,4 +1,4 @@
-print("VERSION 2")
+print("VERSION 1")
 
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
@@ -439,7 +439,7 @@ end
 
 function GTverify(data) 
     if verify_method:upper() == "GROWTOPIA" then
-        webhookAny("Waiting someone at world: "..verify_world:upper())
+        webhookAny("Waiting someone at verify world")
         while true do 
             getBot().auto_reconnect = true 
             sleep(2000)
@@ -449,9 +449,10 @@ function GTverify(data)
             end
             for _, plr in pairs(getPlayers()) do 
                 for _, user in pairs(data.accessList) do
-                    if removeColor(plr.name):upper() == user.growID:upper() then 
+                    if removeColor(plr.name):upper() == user.lock:upper() then 
                         sleep(5000)
                         getBot():say("Verified.")
+                        webhookAny("GrowID verified.")
                         enable = true 
                         return true 
                     end 
@@ -480,14 +481,15 @@ function getUserData(bool)
         return GTverify(data)
     end 
     for _, users in pairs(data.accessList) do
-        if users.lucifer == myUsername then
+        if users.lock:upper() == myUsername:upper() then
             found = true
+            webhookAny("Lucifer verified.")
             return true
         end
     end
     if not found then 
         enable = false
-        reason = "Cannot find your username"
+        reason = "Cannot find your Lucifer"
         print(reason)
         webhookAny(reason)
         return false
