@@ -63,7 +63,7 @@ api_mods = ""
 api_player = ""
 api_use = ""
 image_url = ""
-access_url = "https://gist.githubusercontent.com/NEXT0bit/11515bf4bdd553d955979731ec8e125e/raw/rest_access.lua"
+access_url = "https://gist.githubusercontent.com/NEXT0bit/11515bf4bdd553d955979731ec8e125e/raw/rest_access.lua?t="..os.time()
 nexmodule = {"dkjson.lua"} 
 myUsername = getUsername() 
 myExpired = ""
@@ -604,7 +604,7 @@ function restPlayer()
                 last_player = player_count
             end
             local diff = player_count - last_player
-            while diff <= minimum_difference and diff ~= 0 do 
+            while diff <= minimum_difference and diff ~= 0 and diff < 0 do 
                 webhookRest(getBot().name, 6)
                 last_diff = diff
                 last_player = player_count
