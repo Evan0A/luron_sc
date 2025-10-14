@@ -17,9 +17,9 @@ schedule_list = {
     "23:00 - 01:00"
 }
 
-auto_rest_player = false
-minimum_player = 30000
-maximum_player = 130000
+auto_rest_player = true
+minimum_player = 10000
+maximum_player = 999999
 minimum_difference = -1000 -- minimum diffrence from last count player to new player count (only minus player counted)
 
 auto_rest_banrate = true 
@@ -30,10 +30,10 @@ banrate_delay = 1 --second
 ---[=== SETTINGS ===]---
 run_setting = "ALL" -- support "SELECTED" or "ALL" bots to run script 
 verify_method = "GROWTOPIA" -- support "LUCIFER" or "GROWTOPIA"
-verify_world = "WZZQJ"
+verify_world = "WZZQJ" -- world to meet bot when verify
 
 use_webhook = true
-webhook_link = "https://discord.com/api/webhooks/1114483839444729936/yQzzCt22cCIF3Wz9XdhGMSmD78yCx3UxyzZNGThl01kbmM34Z2ern42Sy3slDjPI3xto"
+webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
 edit_message_reconnect = false -- true if edit message rest to reconnect/false if send new message
 
 hide_bot_identity = true
@@ -103,7 +103,6 @@ wh_diff = -1
 wh_schedule = ""
 
 function getJson()
-    print("entering getJson")
     local client = HttpClient.new()
     client.url = "https://raw.githubusercontent.com/LuaDist/dkjson/refs/heads/master/dkjson.lua"
 
@@ -450,7 +449,7 @@ function GTverify(data)
             for _, plr in pairs(getPlayers()) do 
                 for _, user in pairs(data.accessList) do
                     if removeColor(plr.name):upper() == user.lock:upper() then 
-                        sleep(5000)
+                        sleep(3000)
                         getBot():say("Verified.")
                         webhookAny("GrowID verified.")
                         enable = true 
@@ -778,7 +777,6 @@ function startThisSoGoodScriptAnjayy()
         while true do 
             restBanrate() 
             listenEvents(1)
-            print("banrate; "..getBanRate())
             bansleep = bansleep + 1 
             if bansleep >= (check_delay * 60) then
                 print("restAll, bansleep: "
