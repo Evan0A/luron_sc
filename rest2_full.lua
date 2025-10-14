@@ -1,4 +1,4 @@
-print("VERSION 1")
+print("VERSION 2")
 
 ---[=== CONFIG ===]---
 auto_rest_many_mods = true
@@ -29,8 +29,8 @@ banrate_delay = 1 --second
 
 ---[=== SETTINGS ===]---
 run_setting = "ALL" -- support "SELECTED" or "ALL" bots to run script 
-verify_method = "GROWTOPIA" -- support "LUCIFER" or "GROWTOPIA"
-verify_world = "WZZQJ" -- world to meet bot when verify
+verify_method = "LUCIFER" -- support "LUCIFER" or "GROWTOPIA"
+verify_world = "" -- world to meet bot when verify
 
 use_webhook = true
 webhook_link = "https://discord.com/api/webhooks/1366255322607517717/hl1MVXqFyjcw8KEYjkqVbBC4S-gjPrJlMlU46mG9ADbftSlT_-LVNLtFqnZEtubcx5se"
