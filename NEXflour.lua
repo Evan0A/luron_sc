@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -188,7 +188,6 @@ tileBreak = {}
 breakTile = 1
 Poss = {}
 position = 0
-world_pack = string.upper(world_pack)
 startTime = os.time()
 itemInVend = 0
 wrenchP = false
@@ -1710,6 +1709,7 @@ else
     getBot().custom_status = "User not found"
     print("user not found")
 end
+
 
 
 
