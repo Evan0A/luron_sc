@@ -1,4 +1,4 @@
-print("v2")
+print("v1")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -11,13 +11,13 @@ max_drop = 20
 
 
 --== PACK ==-- 
-take_gems = false
-buy_pack = false
+take_gems = true
+buy_pack = true
 pack_name = "world_lock"
 pack_price = 2000
 pack_item = {242}
 world_packs = {"SOILWARE"}
-door_pack = ""
+door_pack = "PTVVL1140"
 max_drop_pack = 10000 -- max drop items each world
 
 
@@ -43,7 +43,7 @@ bot_webhook = 1 --bot index to send webhook
 auto_flour = true -- false if didnt use grinder 
 world_grinders = {"BUYGRINDER"}
 door_grinder = ""
-save_flour = 8
+save_flour = 4
 
 
 --== SETTING ==--
@@ -95,7 +95,8 @@ customStatus = {
     removeMalady = "Removing malady", 
     getMalady = "Getting malady",
     reconnect = "Reconnecting",
-    data = "Getting farm data"
+    data = "Getting farm data",
+	take_item = "taking item"
 }
 webhookEmoji = {
     bot = ":robot:", 
@@ -107,8 +108,7 @@ webhookEmoji = {
     vending = "<:vending:1187331638296846346>",
     online = "<a:Online1:1365647772468117636>", 
     offline = ":black_circle:", 
-    banned = ":Banned:", 
-    takeItem = "Taking item"
+    banned = ":no_entry_sign:"
 }
 status_map = {
     [0] = "Offline",
@@ -272,6 +272,9 @@ function callWebhook()
         local max_show = webhookMaxShowBot
         local max_limit = false
         local savetem = "" 
+		if #getBots() < webhookMaxShowBot then 
+			webhookMaxShowBot = #getBots() 
+		end
         local scinfo = "**[START]**: <t:"..startTime..":R>\n**[UPDATED]**: <t:"..os.time()..":R>\n"
         for _, bot in pairs(getBots()) do 
             if bot.index <= max_show then 
@@ -337,9 +340,9 @@ function getStatus(stat)
     local online = webhookEmoji.online
     local offline = webhookEmoji.offline
     if stat == 1 then
-        return status_map[stat].." "..online
+        return online
     else
-        return status_map[stat].." "..offline
+        return offline
     end
 end
 
@@ -1709,6 +1712,7 @@ else
     getBot().custom_status = "User not found"
     print("user not found")
 end
+
 
 
 
