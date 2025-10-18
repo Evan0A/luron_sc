@@ -1,4 +1,4 @@
-print("v1")
+print("v2")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -1718,30 +1718,47 @@ function verify()
             getBot():stopScript() 
         end 
     end
-    local url = "https://gist.github.com/NEXT0bit/af4511d96911d0d064832cb43cd6467d/raw?t="..os.time()
+    local url = "https://gist.github.com/NEXT0bit/af4511d96911d0d064832cb43cd6467d/raw"
     local client = HttpClient.new()
     client.url = url 
+    -- Data structure contoh
+    -- return {profile = {useable = true, note = "", link = "", logo = ""}, accessList = {{discordID = "00", lock = "hrtmain"}}}
+
     local respond = load(client:request().body)()
-    if type(respond) == "table" then 
-        note = respond.profile.note 
-        logo = respond.profile.logo 
-        link = respond.profile.link 
-        useable = respond.profile.useable 
-        if verify_method == "LUCIFER" then 
-            for _, user in (respond.accessList) do 
-                if user.lock == getUsername() then 
-                    print("username valid")
-                    return true 
+
+    if type(respond) == "table" then
+        local profile = respond.profile or {}
+        local accessList = respond.accessList or {}
+
+        local note = profile.note or ""
+        local logo = profile.logo or ""
+        local link = profile.link or ""
+        local useable = profile.useable or true
+
+        if verify_method == "LUCIFER" then
+            local validUser = false
+
+            for _, user in pairs(accessList) do
+                if user.lock:upper() == getUsername():upper() then
+                    print("Username valid")
+                    validUser = true
+                    break
                 end
-            end 
-            print("Lucifer username not found")
+            end
+
+            if not validUser then
+                print("Lucifer username not found")
+                return false
+            end
+
+            return true
         else
             return GTverify(respond)
         end
-    else 
+    else
         callAlert("Error at getting username list")
         getBot():stopScript()
-    end 
+    end
 end 
 
 function getData()
@@ -1766,3 +1783,4 @@ else
     getBot().custom_status = "User not found"
     print("user not found")
 end
+
