@@ -1,4 +1,4 @@
-print("v2")
+print("v3")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -872,7 +872,7 @@ function dropItem(itemID)
             if worldStorageIndex > #world_storage then 
                 bmax = max_drop 
                 max_drop = max_drop * 2
-                callAlert(string.format("All storage reached max drop, max drop "..getInfo(flourID).." will be doubled\n%d --> %d", bmax, max_drop))
+                callAlert(string.format("All storage reached max drop, max drop "..getInfo(flourID).name.." will be doubled\n%d --> %d", bmax, max_drop))
                 worldStorageIndex = 1
             end 
         end
@@ -1783,4 +1783,5 @@ else
     getBot().custom_status = "User not found"
     print("user not found")
 end
+
 
