@@ -1,4 +1,4 @@
-print("v3")
+print("v4")
 
 --== WORLD ==--
 world_farm = {"VAIIIII1140"}
@@ -7,7 +7,7 @@ door_farm = "PTVVL1140"
 
 world_storage = {"SOILWARE", "STHRTPA0"} 
 door_storage = "PTVVL1140"
-max_drop = 20
+max_drop = 160
 
 
 --== PACK ==-- 
@@ -1524,7 +1524,7 @@ end
 
 function joinRandom() 
 	if warp_random_world then 
-	    local function limit(varlist, netid)
+	    local function limit(variant, netid)
 	        if variant:get(0):getString() == "OnConsoleMessage" then
                 if variant:get(1):getString():find("Oops, you've created too many worlds today.") then 
                     limitCreate = true 
@@ -1783,5 +1783,6 @@ else
     getBot().custom_status = "User not found"
     print("user not found")
 end
+
 
 
